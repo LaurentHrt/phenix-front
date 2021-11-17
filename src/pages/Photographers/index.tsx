@@ -1,33 +1,27 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import PhotographerCard from '../../components/PhotographerCard'
+import { fetchOrUpdatePhotographers } from '../../features/photographers'
 import { StyledPhotographersContainer } from './style'
+import { selectPhotographers } from '../../utils/selectors'
+import { useDispatch, useSelector } from 'react-redux'
+import { PhotographerCardProps } from '../../components/PhotographerCard/index'
 
 export default function Photographers() {
-  const [data, setData] = useState({
-    photographers: [
-      {
-        id: 0,
-        name: '',
-        city: '',
-        tags: [],
-        tagline: '',
-        price: 0,
-        portrait: '',
-      },
-    ],
-  })
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    ;(async () => {
-      const response = await fetch('./photographers.json')
-      const data = await response.json()
-      setData(data)
-    })()
-  })
+    dispatch(fetchOrUpdatePhotographers)
+  }, [dispatch])
+
+  const photographers = useSelector(selectPhotographers)
+
+  if (photographers.status === 'rejected') {
+    return <span>Il y a un problème</span>
+  }
 
   return (
     <StyledPhotographersContainer>
-      {data.photographers.map((photographer) => (
+      {photographers.data?.map((photographer: PhotographerCardProps) => (
         <PhotographerCard
           key={photographer.id}
           id={photographer.id}
@@ -39,6 +33,7 @@ export default function Photographers() {
           portrait={photographer.portrait}
         />
       ))}
+      {JSON.stringify(photographers)}
     </StyledPhotographersContainer>
   )
 }

@@ -6,18 +6,22 @@ import Home from './pages/Home'
 import Profile from './pages/Profile'
 import Photographers from './pages/Photographers'
 import { GlobalStyle } from './utils/style/global'
+import { store } from './utils/store'
+import { Provider } from 'react-redux'
 
 ReactDOM.render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <GlobalStyle />
-      <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/photographers" element={<Photographers />} />
-        <Route path="/profile/:id" element={<Profile />} />
-      </Routes>
-    </BrowserRouter>
-  </React.StrictMode>,
+  <Provider store={store}>
+    <React.StrictMode>
+      <BrowserRouter>
+        <GlobalStyle />
+        <Header />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/photographers" element={<Photographers />} />
+          <Route path="/profile/:id" element={<Profile />} />
+        </Routes>
+      </BrowserRouter>
+    </React.StrictMode>
+  </Provider>,
   document.getElementById('root')
 )

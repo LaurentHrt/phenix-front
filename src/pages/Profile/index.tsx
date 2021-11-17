@@ -3,35 +3,23 @@ import { useParams } from 'react-router'
 import { PhotographerCardProps } from '../../components/PhotographerCard'
 import Tag from '../../components/Tag'
 import { StyledBanner, StyledProfilePage } from './style'
-import { StyledButton } from '../../components/Button/style'
 import Button from '../../components/Button'
 import Dropdown from '../../components/Dropdown'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchOrUpdatePhotographer } from '../../features/photographer'
+import { selectPhotographer } from '../../utils/selectors'
 
 export default function Profile() {
   const params = useParams()
-  const id = parseInt(params.id || '')
-  const [data, setData] = useState({
-    id: 0,
-    name: '',
-    city: '',
-    country: '',
-    tags: [],
-    tagline: '',
-    price: 0,
-    portrait: '',
-  })
+  const photographerId = params.id
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    ;(async () => {
-      const response = await fetch('../photographers.json')
-      const data = await response.json()
-      const filteredData = data.photographers.filter(
-        (photographer: PhotographerCardProps) => photographer.id === id
-      )
+    dispatch(fetchOrUpdatePhotographer(photographerId))
+  }, [dispatch, photographerId])
 
-      setData(filteredData[0])
-    })()
-  })
+  const photographer = useSelector(selectPhotographer(photographerId))
+  const profileData = photographer.data ?? {}
 
   return (
     <StyledProfilePage>
@@ -39,16 +27,18 @@ export default function Profile() {
         <Button text="Contactez-moi" />
 
         <div className="card-banner-photograph__textContainer">
-          <h1 className="card-banner-photograph__name">{data.name}</h1>
+          <h1 className="card-banner-photograph__name">{profileData.name}</h1>
           <div className="card-banner-photograph__city">
-            {data.city}, {data.country}
+            {profileData.city}, {profileData.country}
           </div>
-          <div className="card-banner-photograph__tagline">{data.tagline}</div>
+          <div className="card-banner-photograph__tagline">
+            {profileData.tagline}
+          </div>
           <div className="tag-list card-banner-photograph__tags"></div>
         </div>
 
         <div className="card-banner-photograph__portrait">
-          <img src={data.portrait} alt="" />
+          <img src={profileData.portrait} alt="" />
         </div>
       </StyledBanner>
 
