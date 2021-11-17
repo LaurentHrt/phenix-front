@@ -5,10 +5,12 @@ import Header from './components/Header'
 import Home from './pages/Home'
 import Profile from './pages/Profile'
 import Photographers from './pages/Photographers'
+import { GlobalStyle } from './utils/style/global'
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
+      <GlobalStyle />
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
