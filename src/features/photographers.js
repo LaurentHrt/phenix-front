@@ -1,6 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { selectPhotographers } from '../utils/selectors'
 
+const api = 'http://localhost:3000/api/photographers'
+
 const initialState = {
   status: 'void',
   data: null,
@@ -14,7 +16,7 @@ export async function fetchOrUpdatePhotographers(dispatch, getState) {
   }
   dispatch(actions.fetching())
   try {
-    const response = await fetch('./photographers.json')
+    const response = await fetch(api)
     const data = await response.json()
     dispatch(actions.resolved(data))
   } catch (error) {

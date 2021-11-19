@@ -1,6 +1,8 @@
 import { selectPhotographer } from '../utils/selectors'
 import { createSlice } from '@reduxjs/toolkit'
 
+const api = 'http://localhost:3000/api/photographers'
+
 // le state initial de cette feature est un objet vide
 const initialState = {
   // chaque propriété de cet objet correspond à l'Id d'un freelance
@@ -18,7 +20,7 @@ export function fetchOrUpdatePhotographer(photographerId) {
     }
     dispatch(actions.fetching(photographerId))
     try {
-      const response = await fetch('../photographers.json')
+      const response = await fetch(api)
       const data = await response.json()
       const filteredData = data.find(
         (photographer) => photographer.id == photographerId
