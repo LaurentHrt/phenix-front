@@ -30,10 +30,9 @@ export default function Photographers() {
           tags={photographer.tags}
           tagline={photographer.tagline}
           price={photographer.price}
-          portrait={photographer.portrait}
+          portrait={`http://${process.env.REACT_APP_API}:${process.env.REACT_APP_PORT}${process.env.REACT_APP_PATH_TO_PORTRAIT}${photographer.portrait}`}
         />
       ))}
-      {JSON.stringify(photographers)}
     </StyledPhotographersContainer>
   )
 }

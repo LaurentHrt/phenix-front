@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { selectPhotographers } from '../utils/selectors'
 
-const api = 'http://localhost:3000/api/photographers'
+const api = `http://${process.env.REACT_APP_API}:${process.env.REACT_APP_PORT}/api/photographers`
 
 const initialState = {
   status: 'void',

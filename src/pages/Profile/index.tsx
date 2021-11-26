@@ -1,12 +1,11 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useParams } from 'react-router'
-import { PhotographerCardProps } from '../../components/PhotographerCard'
-import Tag from '../../components/Tag'
 import { StyledBanner, StyledProfilePage } from './style'
 import Button from '../../components/Button'
 import Dropdown from '../../components/Dropdown'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchOrUpdatePhotographer } from '../../features/photographer'
+import { fetchOrUpdateMedias } from '../../features/medias'
 import { selectPhotographer } from '../../utils/selectors'
 
 export default function Profile() {
@@ -16,12 +15,13 @@ export default function Profile() {
 
   useEffect(() => {
     dispatch(fetchOrUpdatePhotographer(photographerId))
+    dispatch(fetchOrUpdateMedias(photographerId))
   }, [dispatch, photographerId])
 
   const photographer = useSelector(selectPhotographer(photographerId))
-  const profileData = photographer.data ?? {}
+  const profileData = photographer.data ?? null
 
-  return (
+  return profileData ? (
     <StyledProfilePage>
       <StyledBanner>
         <Button text="Contactez-moi" />
@@ -38,7 +38,10 @@ export default function Profile() {
         </div>
 
         <div className="card-banner-photograph__portrait">
-          <img src={profileData.portrait} alt="" />
+          <img
+            src={`http://${process.env.REACT_APP_API}:${process.env.REACT_APP_PORT}${process.env.REACT_APP_PATH_TO_PORTRAIT}${profileData.portrait}`}
+            alt=""
+          />
         </div>
       </StyledBanner>
 
@@ -47,12 +50,16 @@ export default function Profile() {
         <Dropdown />
       </section>
 
-      <section className="media-list"></section>
+      <section className="media-list">
+        {/* {profileData.media.map((mediaId) => (
+          <MediaCard />
+        ))} */}
+      </section>
 
       <section className="info-box">
         <p className="info-box__like"></p>
         <p className="info-box__price"></p>
       </section>
     </StyledProfilePage>
-  )
+  ) : null
 }

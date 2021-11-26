@@ -1,7 +1,7 @@
-import { selectPhotographer } from '../utils/selectors'
+import { selectMedias } from '../utils/selectors'
 import { createSlice } from '@reduxjs/toolkit'
 
-const api = `http://${process.env.REACT_APP_API}:${process.env.REACT_APP_PORT}/api/photographers/`
+const api = `http://${process.env.REACT_APP_API}:${process.env.REACT_APP_PORT}/api/medias/`
 
 // le state initial de cette feature est un objet vide
 const initialState = {
@@ -9,12 +9,12 @@ const initialState = {
   // 3: { status: 'void' }
 }
 
-export function fetchOrUpdatePhotographer(photographerId) {
+export function fetchOrUpdateMedias(photographerId) {
   // on retourne un thunk
   return async (dispatch, getState) => {
     // ...
-    const selectPhotographerById = selectPhotographer(photographerId)
-    const status = selectPhotographerById(getState()).status
+    const selectMediaByPhotographerId = selectMedias(photographerId)
+    const status = selectMediaByPhotographerId(getState()).status
     if (status === 'pending' || status === 'updating') {
       return
     }
@@ -36,7 +36,7 @@ function setVoidIfUndefined(draft, photographerId) {
 }
 
 const { actions, reducer } = createSlice({
-  name: 'photographer',
+  name: 'medias',
   initialState,
   reducers: {
     fetching: {
