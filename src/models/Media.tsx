@@ -1,8 +1,11 @@
 export interface MediaModel {
   id: number
-  title: string
+  photographerId: number
   filename: string
-  price: number
+  tags: string[]
   likes: number
+  title: string
+  date: string
+  price: number
   alt: string
 }

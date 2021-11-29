@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useParams } from 'react-router'
-import { StyledBanner, StyledProfilePage } from './style'
+import { StyledBanner, StyledMediaList, StyledProfilePage } from './style'
 import Button from '../../components/Button'
 import Dropdown from '../../components/Dropdown'
 import { useDispatch, useSelector } from 'react-redux'
@@ -55,7 +55,7 @@ export default function Profile() {
         <Dropdown />
       </section>
 
-      <section className="media-list">
+      <StyledMediaList>
         {mediasData?.map((media: MediaModel) => (
           <MediaCard
             key={media.id}
@@ -66,8 +66,7 @@ export default function Profile() {
             alt={media.alt}
           />
         ))}
-      </section>
-
+      </StyledMediaList>
       <section className="info-box">
         <p className="info-box__like"></p>
         <p className="info-box__price"></p>

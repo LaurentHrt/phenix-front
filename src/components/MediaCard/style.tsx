@@ -37,12 +37,13 @@ export const StyledMediaCard = styled.section`
     align-items: baseline;
     font-size: 0.875em;
     font-weight: 500;
-    color: ${colors.primary} @media ${device.tablet} {
+    color: ${colors.primary};
+    @media ${device.tablet} {
       font-size: 1.5em;
     }
   }
 
-  title {
+  .title {
     font-weight: 400;
     flex-grow: 10;
     white-space: nowrap;
@@ -50,12 +51,12 @@ export const StyledMediaCard = styled.section`
     overflow: hidden;
   }
 
-  price {
+  .price {
     padding: 0 20px;
     white-space: nowrap;
   }
 
-  likes {
+  .likes {
     white-space: nowrap;
     cursor: pointer;
   }

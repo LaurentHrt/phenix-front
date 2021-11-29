@@ -44,7 +44,8 @@ export default function MediaCard({
         <div className="title">{title}</div>
         <div className="price">{price}€</div>
         <div className="likes">
-          {likes} <i className="far fa-heart"></i>
+          {likes}
+          {'<3'}
         </div>
       </div>
     </StyledMediaCard>
