@@ -60,7 +60,7 @@ export default function Profile() {
           <MediaCard
             key={media.id}
             title={media.title}
-            image={media.image}
+            filename={media.filename}
             price={media.price}
             likes={media.likes}
             alt={media.alt}
