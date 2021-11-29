@@ -3,7 +3,7 @@ import { StyledMediaCard } from './style'
 interface MediaCardProps {
   title: string
   image: string
-  price: string
+  price: number
   likes: number
   alt: string
 }
