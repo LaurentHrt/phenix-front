@@ -1,6 +1,6 @@
 import { StyledMediaCard } from './style'
 
-export interface MediaCardProps {
+interface MediaCardProps {
   title: string
   image: string
   price: string
