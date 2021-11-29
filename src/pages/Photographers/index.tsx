@@ -4,7 +4,7 @@ import { fetchOrUpdatePhotographers } from '../../features/photographers'
 import { StyledPhotographersContainer } from './style'
 import { selectPhotographers } from '../../utils/selectors'
 import { useDispatch, useSelector } from 'react-redux'
-import { PhotographerCardProps } from '../../components/PhotographerCard/index'
+import { PhotographerCardProps } from '../../components/PhotographerCard'
 
 export default function Photographers() {
   const dispatch = useDispatch()

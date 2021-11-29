@@ -6,7 +6,9 @@ import Dropdown from '../../components/Dropdown'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchOrUpdatePhotographer } from '../../features/photographer'
 import { fetchOrUpdateMedias } from '../../features/medias'
-import { selectPhotographer } from '../../utils/selectors'
+import { selectMedias, selectPhotographer } from '../../utils/selectors'
+import MediaCard from '../../components/MediaCard'
+import { MediaCardProps } from '../../components/MediaCard'
 
 export default function Profile() {
   const params = useParams()
@@ -20,6 +22,9 @@ export default function Profile() {
 
   const photographer = useSelector(selectPhotographer(photographerId))
   const profileData = photographer.data ?? null
+
+  const medias = useSelector(selectMedias(photographerId))
+  const mediasData = medias.data ?? null
 
   return profileData ? (
     <StyledProfilePage>
@@ -51,9 +56,15 @@ export default function Profile() {
       </section>
 
       <section className="media-list">
-        {/* {profileData.media.map((mediaId) => (
-          <MediaCard />
-        ))} */}
+        {mediasData?.map((media: MediaCardProps) => (
+          <MediaCard
+            title={media.title}
+            image={media.image}
+            price={media.price}
+            likes={media.likes}
+            alt={media.alt}
+          />
+        ))}
       </section>
 
       <section className="info-box">
