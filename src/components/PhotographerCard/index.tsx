@@ -10,10 +10,11 @@ import {
   StyledTagline,
 } from './style'
 
-export interface PhotographerCardProps {
+interface PhotographerCardProps {
   id: number
   name: string
   city: string
+  country: string
   tags: string[]
   tagline: string
   price: number
@@ -24,6 +25,7 @@ export default function PhotographerCard({
   id,
   name,
   city,
+  country,
   tags,
   tagline,
   price,
@@ -37,7 +39,9 @@ export default function PhotographerCard({
         </StyledPortrait>
         <StyledName>{name}</StyledName>
       </Link>
-      <StyledCity>{city}</StyledCity>
+      <StyledCity>
+        {city}, {country}
+      </StyledCity>
       <StyledTagline>{tagline}</StyledTagline>
       <StyledPrice>{price}</StyledPrice>
       <StyledTagContainer>

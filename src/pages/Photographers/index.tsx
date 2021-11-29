@@ -4,7 +4,7 @@ import { fetchOrUpdatePhotographers } from '../../features/photographers'
 import { StyledPhotographersContainer } from './style'
 import { selectPhotographers } from '../../utils/selectors'
 import { useDispatch, useSelector } from 'react-redux'
-import { PhotographerCardProps } from '../../components/PhotographerCard'
+import { PhotographerModel } from '../../models/Photographer'
 
 export default function Photographers() {
   const dispatch = useDispatch()
@@ -21,12 +21,13 @@ export default function Photographers() {
 
   return (
     <StyledPhotographersContainer>
-      {photographers.data?.map((photographer: PhotographerCardProps) => (
+      {photographers.data?.map((photographer: PhotographerModel) => (
         <PhotographerCard
           key={photographer.id}
           id={photographer.id}
           name={photographer.name}
           city={photographer.city}
+          country={photographer.country}
           tags={photographer.tags}
           tagline={photographer.tagline}
           price={photographer.price}

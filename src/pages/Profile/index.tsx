@@ -8,7 +8,7 @@ import { fetchOrUpdatePhotographer } from '../../features/photographer'
 import { fetchOrUpdateMedias } from '../../features/medias'
 import { selectMedias, selectPhotographer } from '../../utils/selectors'
 import MediaCard from '../../components/MediaCard'
-import { MediaCardProps } from '../../components/MediaCard'
+import { MediaModel } from '../../models/Media'
 
 export default function Profile() {
   const params = useParams()
@@ -56,8 +56,9 @@ export default function Profile() {
       </section>
 
       <section className="media-list">
-        {mediasData?.map((media: MediaCardProps) => (
+        {mediasData?.map((media: MediaModel) => (
           <MediaCard
+            key={media.id}
             title={media.title}
             image={media.image}
             price={media.price}
