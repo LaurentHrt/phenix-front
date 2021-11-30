@@ -1,19 +1,21 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 import { StyledBanner, StyledMediaList, StyledProfilePage } from './style'
 import Button from '../../components/Button'
 import Dropdown from '../../components/Dropdown'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchOrUpdatePhotographer } from '../../features/photographer'
-import { fetchOrUpdateMedias } from '../../features/medias'
 import { selectMedias, selectPhotographer } from '../../utils/selectors'
 import MediaCard from '../../components/MediaCard'
 import { MediaModel } from '../../models/Media'
+import { fetchOrUpdateMedias } from '../../features/medias'
+import ReactModal from 'react-modal'
 
 export default function Profile() {
   const params = useParams()
   const photographerId = params.id
   const dispatch = useDispatch()
+  const [modalIsOpen, setModalIsOpen] = useState(false)
 
   useEffect(() => {
     dispatch(fetchOrUpdatePhotographer(photographerId))
@@ -26,10 +28,28 @@ export default function Profile() {
   const medias = useSelector(selectMedias(photographerId))
   const mediasData = medias.data ?? null
 
+  const handleOpenModal = () => {
+    setModalIsOpen(true)
+  }
+  const handleCloseModal = () => {
+    setModalIsOpen(false)
+  }
+
   return profileData ? (
     <StyledProfilePage>
       <StyledBanner>
-        <Button text="Contactez-moi" />
+        {/* <Button text="Contactez-moi" onClick={handleOpenModal} /> */}
+        <button onClick={handleOpenModal}>Contact</button>
+
+        <ReactModal
+          isOpen={modalIsOpen}
+          contentLabel="onRequestClose Example"
+          onRequestClose={handleCloseModal}
+          shouldCloseOnOverlayClick={true}
+        >
+          <p>Modal text!</p>
+          <button onClick={handleCloseModal}>Close Modal</button>
+        </ReactModal>
 
         <div className="card-banner-photograph__textContainer">
           <h1 className="card-banner-photograph__name">{profileData.name}</h1>
