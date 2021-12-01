@@ -10,6 +10,7 @@ import MediaCard from '../../components/MediaCard'
 import { MediaModel } from '../../models/Media'
 import { fetchOrUpdateMedias } from '../../features/medias'
 import ReactModal from 'react-modal'
+import ContactModal from '../../components/contactModal'
 
 export default function Profile() {
   const params = useParams()
@@ -35,21 +36,16 @@ export default function Profile() {
     setModalIsOpen(false)
   }
 
+  ReactModal.setAppElement('#root')
+
   return profileData ? (
     <StyledProfilePage>
       <StyledBanner>
-        {/* <Button text="Contactez-moi" onClick={handleOpenModal} /> */}
-        <button onClick={handleOpenModal}>Contact</button>
-
-        <ReactModal
+        <Button text="Contactez-moi" onClick={handleOpenModal} />
+        <ContactModal
           isOpen={modalIsOpen}
-          contentLabel="onRequestClose Example"
-          onRequestClose={handleCloseModal}
-          shouldCloseOnOverlayClick={true}
-        >
-          <p>Modal text!</p>
-          <button onClick={handleCloseModal}>Close Modal</button>
-        </ReactModal>
+          handleCloseModal={handleCloseModal}
+        />
 
         <div className="card-banner-photograph__textContainer">
           <h1 className="card-banner-photograph__name">{profileData.name}</h1>

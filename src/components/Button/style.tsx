@@ -11,7 +11,6 @@ export const StyledButton = styled.button`
   font-size: 1.125rem;
   border: none;
   transition: 0.2s;
-  z-index: 1000;
 
   @media ${device.tablet} {
     min-width: 170px;
