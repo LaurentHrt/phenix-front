@@ -26,6 +26,11 @@ export default function Profile() {
   const medias = useSelector(selectMedias(photographerId))
   const mediasData = medias.data ?? null
 
+  const handleSortChange = (e: string) => {
+    console.log(e)
+    console.log(mediasData)
+  }
+
   return profileData ? (
     <StyledProfilePage>
       <PhotographerBanner
@@ -37,7 +42,7 @@ export default function Profile() {
       />
 
       <section className="filter">
-        <SortButton />
+        <SortButton onSortChange={handleSortChange} />
       </section>
 
       <StyledMediaList>

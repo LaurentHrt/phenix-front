@@ -8,10 +8,15 @@ import {
 } from '@mui/material'
 import { useState } from 'react'
 
-export default function SortButton() {
+interface SortButtonProps {
+  onSortChange: any
+}
+
+export default function SortButton({ onSortChange }: SortButtonProps) {
   const [tri, setTri] = useState('Popularité')
   const handleChange = (event: SelectChangeEvent) => {
     setTri(event.target.value as string)
+    onSortChange(event.target.value as string)
   }
 
   return (
