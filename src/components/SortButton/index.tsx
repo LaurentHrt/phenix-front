@@ -9,7 +9,7 @@ import {
 import { useState } from 'react'
 
 export default function SortButton() {
-  const [tri, setTri] = useState('10')
+  const [tri, setTri] = useState('Popularité')
   const handleChange = (event: SelectChangeEvent) => {
     setTri(event.target.value as string)
   }
@@ -25,9 +25,9 @@ export default function SortButton() {
           label="Trier par"
           onChange={handleChange}
         >
-          <MenuItem value={10}>Popularité</MenuItem>
-          <MenuItem value={20}>Date</MenuItem>
-          <MenuItem value={30}>Titre</MenuItem>
+          <MenuItem value={'Popularité'}>Popularité</MenuItem>
+          <MenuItem value={'Date'}>Date</MenuItem>
+          <MenuItem value={'Titre'}>Titre</MenuItem>
         </Select>
       </FormControl>
     </Box>

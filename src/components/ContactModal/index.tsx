@@ -33,6 +33,8 @@ export default function ContactModal({
     },
   })
 
+  ReactModal.setAppElement('#root')
+
   return (
     <ReactModal
       isOpen={isOpen}
