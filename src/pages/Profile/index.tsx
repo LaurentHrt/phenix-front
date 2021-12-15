@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 import { StyledBanner, StyledMediaList, StyledProfilePage } from './style'
-import Button from '../../components/Button'
-import Dropdown from '../../components/Dropdown'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchOrUpdatePhotographer } from '../../features/photographer'
 import { selectMedias, selectPhotographer } from '../../utils/selectors'
@@ -11,6 +9,8 @@ import { MediaModel } from '../../models/Media'
 import { fetchOrUpdateMedias } from '../../features/medias'
 import ReactModal from 'react-modal'
 import ContactModal from '../../components/contactModal'
+import SortButton from '../../components/SortButton'
+import SimpleButton from '../../components/SimpleButton'
 
 export default function Profile() {
   const params = useParams()
@@ -41,7 +41,8 @@ export default function Profile() {
   return profileData ? (
     <StyledProfilePage>
       <StyledBanner>
-        <Button text="Contactez-moi" onClick={handleOpenModal} />
+        <SimpleButton onClick={handleOpenModal} text="Contact" />
+
         <ContactModal
           isOpen={modalIsOpen}
           handleCloseModal={handleCloseModal}
@@ -66,8 +67,7 @@ export default function Profile() {
       </StyledBanner>
 
       <section className="filter">
-        <span id="trierPar">Trier par </span>
-        <Dropdown />
+        <SortButton />
       </section>
 
       <StyledMediaList>

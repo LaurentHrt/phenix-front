@@ -1,7 +1,7 @@
 const colors = {
   primary: '#264653',
   secondary: '#2A9D8F',
-  secondaryLight: '#2A9D8F',
+  secondaryLight: '#54b0a5',
   tertiary: '#E9C46A',
   // quadrary: '#F4A261',
   cinquary: '#E76F51',

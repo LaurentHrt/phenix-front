@@ -1,17 +1,38 @@
 import ReactModal from 'react-modal'
 import { MouseEventHandler } from 'react'
-import './style'
 import { StyledContactModal } from './style'
+import closeIcon from '../../assets/icons/close.svg'
+import { FormikHelpers, useFormik } from 'formik'
+import { TextField } from '@mui/material'
 
 interface ContactModalProps {
   isOpen: boolean
   handleCloseModal: MouseEventHandler<HTMLButtonElement>
 }
 
+interface Values {
+  firstname: string
+  lastname: string
+  email: string
+  message: string
+}
+
 export default function ContactModal({
   handleCloseModal,
   isOpen,
 }: ContactModalProps) {
+  const formik = useFormik({
+    initialValues: {
+      firstname: '',
+      lastname: '',
+      email: '',
+      message: '',
+    },
+    onSubmit: (values: Values, { setSubmitting }: FormikHelpers<Values>) => {
+      alert(JSON.stringify(values, null, 2))
+    },
+  })
+
   return (
     <ReactModal
       isOpen={isOpen}
@@ -20,66 +41,47 @@ export default function ContactModal({
       shouldCloseOnOverlayClick={true}
     >
       <StyledContactModal>
-        <button className="content__close" onClick={handleCloseModal}>
-          ×
+        <button onClick={handleCloseModal}>
+          <img src={closeIcon} alt="close" />
         </button>
 
-        <div className="content__form">
-          {/* <form name="contact" action="index.js" method="get" onSubmit=""> */}
-          <p id="contactModalTitle" className="content__title">
-            Contactez-moi
-            <br />
-            Mimi Keel
-          </p>
-          <div className="formData" data-error="Veuillez entrer votre prénom">
-            <label htmlFor="firstname">Prénom</label>
-            <input
-              id="firstname"
-              className="text-control"
-              type="text"
-              name="firstname"
-              minLength={2}
-              placeholder="Jean"
-              required={true}
-            />
-          </div>
-          <div className="formData">
-            <label htmlFor="lastname">Nom</label>
-            <input
-              id="lastname"
-              className="text-control"
-              type="text"
-              name="lastname"
-              placeholder="Dupont"
-            />
-          </div>
-          <div className="formData" data-error="L'e-mail entré est invalide">
-            <label htmlFor="email">E-mail</label>
-            <input
-              id="email"
-              className="text-control"
-              type="email"
-              name="email"
-              placeholder="jean.dupont@mail.com"
-            />
-          </div>
-          <div className="formData" data-error="Vous devez écrire un message">
-            <label htmlFor="message">Votre message</label>
-            <textarea
-              id="message"
-              className="textarea-control"
-              name="message"
-              placeholder="Votre message..."
-              maxLength={500}
-            ></textarea>
-          </div>
+        <form onSubmit={formik.handleSubmit}>
+          <TextField
+            name="firstname"
+            label="Firstname"
+            variant="outlined"
+            onChange={formik.handleChange}
+            value={formik.values.firstname}
+          />
 
-          <div className="content__btn-submit">
-            <input className="button" type="submit" value="Envoyer" />
-          </div>
-          {/* </form> */}
-        </div>
-        <div className="content__confirmation">Merci de votre message !</div>
+          <TextField
+            name="lastname"
+            label="Lastname"
+            variant="outlined"
+            onChange={formik.handleChange}
+            value={formik.values.lastname}
+          />
+
+          <TextField
+            name="email"
+            label="E-mail"
+            variant="outlined"
+            onChange={formik.handleChange}
+            value={formik.values.email}
+            type="email"
+          />
+
+          <TextField
+            name="message"
+            label="Message"
+            variant="outlined"
+            onChange={formik.handleChange}
+            value={formik.values.message}
+            type="text"
+          />
+
+          <button type="submit">Envoyer</button>
+        </form>
       </StyledContactModal>
     </ReactModal>
   )
