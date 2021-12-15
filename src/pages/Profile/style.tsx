@@ -15,14 +15,14 @@ export const StyledProfilePage = styled.main`
 export const StyledMediaList = styled.section`
   display: grid;
   width: 100%;
-  row-gap: 15px;
+  max-width: 1400px;
 
   @media ${device.tablet} {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 20px 75px;
+    column-gap: 50px;
   }
 
   @media ${device.desktop} {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    justify-self: center;
   }
 `

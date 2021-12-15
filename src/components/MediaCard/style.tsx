@@ -9,17 +9,17 @@ export const StyledMediaCard = styled.section`
     img,
     video {
       width: 100%;
-      height: 60vw;
+      height: 100%;
       object-fit: cover;
       object-position: top;
       border-radius: $standard-border-radius;
 
       @media ${device.tablet} {
-        height: 35vw;
+        // height: 35vw;
       }
 
       @media ${device.desktop} {
-        height: 25vw;
+        // height: 25vw;
       }
     }
   }

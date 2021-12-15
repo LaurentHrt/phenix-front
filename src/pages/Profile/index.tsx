@@ -26,6 +26,8 @@ export default function Profile() {
   const medias = useSelector(selectMedias(photographerId))
   const mediasData = medias.data ?? null
 
+  const halfIndex = medias.data ? Math.ceil(medias.data.length / 2) : 0
+
   const handleSortChange = (e: string) => {
     console.log(e)
     console.log(mediasData)
@@ -46,16 +48,30 @@ export default function Profile() {
       </section>
 
       <StyledMediaList>
-        {mediasData?.map((media: MediaModel) => (
-          <MediaCard
-            key={media.id}
-            title={media.title}
-            filename={media.filename}
-            price={media.price}
-            likes={media.likes}
-            alt={media.alt}
-          />
-        ))}
+        <div>
+          {mediasData?.slice(0, halfIndex).map((media: MediaModel) => (
+            <MediaCard
+              key={media.id}
+              title={media.title}
+              filename={media.filename}
+              price={media.price}
+              likes={media.likes}
+              alt={media.alt}
+            />
+          ))}
+        </div>
+        <div>
+          {mediasData?.slice(halfIndex).map((media: MediaModel) => (
+            <MediaCard
+              key={media.id}
+              title={media.title}
+              filename={media.filename}
+              price={media.price}
+              likes={media.likes}
+              alt={media.alt}
+            />
+          ))}
+        </div>
       </StyledMediaList>
     </StyledProfilePage>
   ) : null
