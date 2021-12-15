@@ -28,7 +28,6 @@ export default function Photographers() {
           name={photographer.name}
           city={photographer.city}
           country={photographer.country}
-          tags={photographer.tags}
           tagline={photographer.tagline}
           price={photographer.price}
           portrait={`http://${process.env.REACT_APP_API}:${process.env.REACT_APP_PORT}${process.env.REACT_APP_PATH_TO_PORTRAIT}${photographer.portrait}`}

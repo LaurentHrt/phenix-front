@@ -55,7 +55,6 @@ export default function Profile() {
           <div className="card-banner-photograph__tagline">
             {profileData.tagline}
           </div>
-          <div className="tag-list card-banner-photograph__tags"></div>
         </div>
 
         <div className="card-banner-photograph__portrait">

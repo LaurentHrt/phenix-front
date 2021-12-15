@@ -43,11 +43,3 @@ export const StyledPrice = styled.div`
   color: #757575;
   font-size: 0.7em;
 `
-
-export const StyledTagContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-`

@@ -3,7 +3,6 @@ export interface PhotographerModel {
   name: string
   city: string
   country: string
-  tags: string[]
   tagline: string
   price: number
   portrait: string

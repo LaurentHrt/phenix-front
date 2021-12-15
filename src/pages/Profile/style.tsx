@@ -81,9 +81,6 @@ export const StyledBanner = styled.div`
     }
   }
 
-  .card-banner-photograph__tags {
-  }
-
   .card-banner-photograph__button {
     position: fixed;
     bottom: 20px;
