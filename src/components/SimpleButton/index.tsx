@@ -1,11 +1,11 @@
 import { Button, ButtonProps } from '@mui/material'
-import { MouseEventHandler } from 'react'
+import { FormEvent, FormEventHandler, MouseEventHandler } from 'react'
 import colors from '../../utils/style/colors'
 import { styled } from '@mui/material/styles'
 
 interface StyledButtonProps {
   text: string
-  onClick: MouseEventHandler<HTMLButtonElement>
+  onClick: any
 }
 
 export default function SimpleButton({ text, onClick }: StyledButtonProps) {

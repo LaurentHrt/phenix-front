@@ -4,6 +4,7 @@ import { StyledContactModal } from './style'
 import closeIcon from '../../assets/icons/close.svg'
 import { FormikHelpers, useFormik } from 'formik'
 import { TextField } from '@mui/material'
+import SimpleButton from '../SimpleButton'
 
 interface ContactModalProps {
   isOpen: boolean
@@ -30,6 +31,7 @@ export default function ContactModal({
     },
     onSubmit: (values: Values, { setSubmitting }: FormikHelpers<Values>) => {
       alert(JSON.stringify(values, null, 2))
+      // TODO: Send to backend with confirmation
     },
   })
 
@@ -38,7 +40,7 @@ export default function ContactModal({
   return (
     <ReactModal
       isOpen={isOpen}
-      contentLabel="onRequestClose Example"
+      contentLabel="Formulaire de contact"
       onRequestClose={handleCloseModal}
       shouldCloseOnOverlayClick={true}
     >
@@ -82,7 +84,7 @@ export default function ContactModal({
             type="text"
           />
 
-          <button type="submit">Envoyer</button>
+          <SimpleButton onClick={formik.handleSubmit} text="Envoyer" />
         </form>
       </StyledContactModal>
     </ReactModal>
