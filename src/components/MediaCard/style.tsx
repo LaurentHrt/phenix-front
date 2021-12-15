@@ -6,13 +6,6 @@ export const StyledMediaCard = styled.section`
   min-width: 100px;
 
   .media {
-    transition: 0.5s;
-
-    &:hover,
-    &:focus {
-      transform: scale(1.02) rotateZ(-1deg);
-    }
-
     img,
     video {
       width: 100%;
