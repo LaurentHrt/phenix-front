@@ -1,56 +1,41 @@
 import styled from 'styled-components'
 import { device } from '../../utils/style/responsive'
-import colors from '../../utils/style/colors'
 
 export const StyledMediaCard = styled.section`
-  min-width: 100px;
+  margin-bottom: 35px;
+  overflow: hidden;
+  box-shadow: 0px 20px 20px 1px hsl(229deg 6% 66%);
+  position: relative;
+  border-radius: 20px;
+  transition: 500ms;
 
-  .media {
-    img,
-    video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: top;
-      border-radius: $standard-border-radius;
+  img,
+  video {
+    width: 100%;
+    display: block;
+  }
 
-      @media ${device.tablet} {
-        // height: 35vw;
-      }
-
-      @media ${device.desktop} {
-        // height: 25vw;
-      }
+  &:hover {
+    transform: scale(1.05);
+    & .slidingBanner {
+      transform: translateY(-60px);
     }
   }
-
-  .textContainer {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    font-size: 0.875em;
-    font-weight: 500;
-    color: ${colors.primary};
-    @media ${device.tablet} {
-      font-size: 1.5em;
-    }
+  &:active {
+    transform: scale(1.5) translateZ(200px);
+    z-index: 100;
   }
-
-  .title {
-    font-weight: 400;
-    flex-grow: 10;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-  }
-
-  .price {
-    padding: 0 20px;
-    white-space: nowrap;
-  }
-
-  .likes {
-    white-space: nowrap;
-    cursor: pointer;
-  }
+`
+export const StyledSlidingBanner = styled.div`
+  background-color: #1d1d1da6;
+  color: white;
+  width: -webkit-fill-available;
+  height: 60px;
+  position: absolute;
+  bottom: -80px;
+  padding: 10px 25px;
+  transition: 500ms;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 `

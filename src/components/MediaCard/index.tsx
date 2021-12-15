@@ -1,4 +1,6 @@
-import { StyledMediaCard } from './style'
+import { Fragment } from 'react'
+import { device } from '../../utils/style/responsive'
+import { StyledMediaCard, StyledSlidingBanner } from './style'
 
 interface MediaCardProps {
   title: string
@@ -19,35 +21,32 @@ export default function MediaCard({
 
   return (
     <StyledMediaCard>
-      <div className="media">
-        {isVideo ? (
-          <video controls loop>
-            <source
-              src={`http://${process.env.REACT_APP_API}:${process.env.REACT_APP_PORT}${process.env.REACT_APP_PATH_TO_MEDIA_SMALL}${filename}`}
-              type="video/mp4"
-            />
-          </video>
-        ) : (
+      {isVideo ? (
+        <video controls loop>
+          <source
+            src={`http://${process.env.REACT_APP_API}:${process.env.REACT_APP_PORT}${process.env.REACT_APP_PATH_TO_MEDIA_SMALL}${filename}`}
+            type="video/mp4"
+          />
+        </video>
+      ) : (
+        <>
           <picture>
             <source
               srcSet={`http://${process.env.REACT_APP_API}:${process.env.REACT_APP_PORT}${process.env.REACT_APP_PATH_TO_MEDIA_MEDIUM}${filename}`}
-              media="(min-width: 768px)"
+              media={device.tablet}
             />
             <img
               src={`http://${process.env.REACT_APP_API}:${process.env.REACT_APP_PORT}${process.env.REACT_APP_PATH_TO_MEDIA_SMALL}${filename}`}
               alt={alt}
             />
           </picture>
-        )}
-      </div>
-      <div className="textContainer">
-        <div className="title">{title}</div>
-        <div className="price">{price}€</div>
-        <div className="likes">
-          {likes}
-          {'<3'}
-        </div>
-      </div>
+
+          <StyledSlidingBanner className="slidingBanner">
+            <div>{title}</div>
+            <div>{price}€</div>
+          </StyledSlidingBanner>
+        </>
+      )}
     </StyledMediaCard>
   )
 }

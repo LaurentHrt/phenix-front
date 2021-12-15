@@ -19,7 +19,7 @@ export const StyledMediaList = styled.section`
 
   @media ${device.tablet} {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    column-gap: 50px;
+    column-gap: 35px;
   }
 
   @media ${device.desktop} {
