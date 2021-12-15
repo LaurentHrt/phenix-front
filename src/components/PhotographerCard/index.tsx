@@ -5,7 +5,7 @@ import {
   CardMedia,
   Typography,
 } from '@mui/material'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Tag from '../Tag'
 import {
   StyledCity,
@@ -38,9 +38,10 @@ export default function PhotographerCard({
   price,
   portrait,
 }: PhotographerCardProps) {
+  const navigate = useNavigate()
   return (
-    <Card sx={{ width: 300, height: 300 }}>
-      <CardActionArea href={`/profile/${id}`}>
+    <Card sx={{ width: 300 }}>
+      <CardActionArea component={Link} to={`/profile/${id}`}>
         <CardMedia
           component="img"
           image={portrait}
@@ -53,7 +54,7 @@ export default function PhotographerCard({
           <Typography gutterBottom variant="h5" component="div">
             {name}
           </Typography>
-          <Typography variant="body2" color="text.secondary">
+          <Typography variant="h6" color="text.secondary">
             {tagline}
           </Typography>
         </CardContent>
