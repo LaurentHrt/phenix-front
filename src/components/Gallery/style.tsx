@@ -4,7 +4,6 @@ import styled from 'styled-components'
 export const StyledGallery = styled.section`
   display: grid;
   width: 100%;
-  max-width: 1400px;
 
   @media ${device.smallDesktop} {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -12,6 +11,7 @@ export const StyledGallery = styled.section`
   }
 
   @media ${device.desktop} {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     justify-self: center;
   }
 `

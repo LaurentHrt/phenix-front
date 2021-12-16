@@ -1,10 +1,10 @@
 import { createGlobalStyle } from 'styled-components'
 import colors from './colors'
-import { device } from './responsive'
+import { device, size } from './responsive'
 
 export const GlobalStyle = createGlobalStyle`
 #root {
-  max-width: 1000px;
+  max-width: ${size.maxWidth}px;
   margin: auto;
 }
 

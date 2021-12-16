@@ -1,4 +1,5 @@
 import { MediaModel } from '../../models/Media'
+import { size } from '../../utils/style/responsive'
 import MediaCard from '../MediaCard'
 import { StyledGallery } from './style'
 
@@ -41,7 +42,9 @@ function getFilterFunction(filter: string) {
     case 'image':
       return (media: MediaModel) => {
         const ext = media.filename.split('.').pop()
-        return ext === 'png' || ext === 'webp' || ext === 'jpg'
+        return (
+          ext === 'png' || ext === 'webp' || ext === 'jpg' || ext === 'jpeg'
+        )
       }
 
     case 'gif':
@@ -66,36 +69,83 @@ export default function Gallery({ medias, sort, filter }: GalleryProps) {
     .filter(getFilterFunction(filter))
     .sort(getSortFunction(sort))
   const halfIndex = Math.ceil(displayedMedias.length / 2)
+  const thirdIndex = Math.round(displayedMedias.length / 3)
   const nothingToDisplay = displayedMedias.length <= 0
 
-  return nothingToDisplay ? (
-    <p>Pas de média displonible...</p>
-  ) : (
-    <StyledGallery>
-      <div>
-        {displayedMedias.slice(0, halfIndex).map((media: MediaModel) => (
-          <MediaCard
-            key={media.id}
-            title={media.title}
-            filename={media.filename}
-            price={media.price}
-            likes={media.likes}
-            alt={media.alt}
-          />
-        ))}
-      </div>
-      <div>
-        {displayedMedias.slice(halfIndex).map((media: MediaModel) => (
-          <MediaCard
-            key={media.id}
-            title={media.title}
-            filename={media.filename}
-            price={media.price}
-            likes={media.likes}
-            alt={media.alt}
-          />
-        ))}
-      </div>
-    </StyledGallery>
-  )
+  let test = null
+  if (window.innerWidth >= size.desktop) {
+    test = (
+      <StyledGallery>
+        <div>
+          {displayedMedias.slice(0, thirdIndex).map((media: MediaModel) => (
+            <MediaCard
+              key={media.id}
+              title={media.title}
+              filename={media.filename}
+              price={media.price}
+              likes={media.likes}
+              alt={media.alt}
+            />
+          ))}
+        </div>
+        <div>
+          {displayedMedias
+            .slice(thirdIndex, thirdIndex * 2)
+            .map((media: MediaModel) => (
+              <MediaCard
+                key={media.id}
+                title={media.title}
+                filename={media.filename}
+                price={media.price}
+                likes={media.likes}
+                alt={media.alt}
+              />
+            ))}
+        </div>
+        <div>
+          {displayedMedias.slice(thirdIndex * 2).map((media: MediaModel) => (
+            <MediaCard
+              key={media.id}
+              title={media.title}
+              filename={media.filename}
+              price={media.price}
+              likes={media.likes}
+              alt={media.alt}
+            />
+          ))}
+        </div>
+      </StyledGallery>
+    )
+  } else {
+    test = (
+      <StyledGallery>
+        <div>
+          {displayedMedias.slice(0, halfIndex).map((media: MediaModel) => (
+            <MediaCard
+              key={media.id}
+              title={media.title}
+              filename={media.filename}
+              price={media.price}
+              likes={media.likes}
+              alt={media.alt}
+            />
+          ))}
+        </div>
+        <div>
+          {displayedMedias.slice(halfIndex).map((media: MediaModel) => (
+            <MediaCard
+              key={media.id}
+              title={media.title}
+              filename={media.filename}
+              price={media.price}
+              likes={media.likes}
+              alt={media.alt}
+            />
+          ))}
+        </div>
+      </StyledGallery>
+    )
+  }
+
+  return nothingToDisplay ? <p>Pas de média displonible...</p> : test
 }
