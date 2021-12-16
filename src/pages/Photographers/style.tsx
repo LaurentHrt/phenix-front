@@ -8,7 +8,7 @@ export const StyledPhotographersContainer = styled.section`
   column-gap: 20px;
   row-gap: 20px;
 
-  @media ${device.tablet} {
+  @media ${device.smallDesktop} {
     grid-template-columns: repeat(2, 1fr);
   }
 

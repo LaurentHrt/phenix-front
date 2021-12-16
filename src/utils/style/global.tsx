@@ -3,10 +3,15 @@ import colors from './colors'
 import { device } from './responsive'
 
 export const GlobalStyle = createGlobalStyle`
+#root {
+  max-width: 1000px;
+  margin: auto;
+}
+
   body {
     font-family: 'DM Sans', sans-serif;
     margin: 8px 20px;
-    @media ${device.tablet} {
+    @media ${device.smallDesktop} {
       margin: 0;
     }
   }

@@ -22,7 +22,7 @@ export default function MediaCard({
   return (
     <StyledMediaCard>
       {isVideo ? (
-        <video controls loop>
+        <video loop autoPlay>
           <source
             src={`http://${process.env.REACT_APP_API}:${process.env.REACT_APP_PORT}${process.env.REACT_APP_PATH_TO_MEDIA_SMALL}${filename}`}
             type="video/mp4"
@@ -33,7 +33,7 @@ export default function MediaCard({
           <picture>
             <source
               srcSet={`http://${process.env.REACT_APP_API}:${process.env.REACT_APP_PORT}${process.env.REACT_APP_PATH_TO_MEDIA_MEDIUM}${filename}`}
-              media={device.tablet}
+              media={device.smallDesktop}
             />
             <img
               src={`http://${process.env.REACT_APP_API}:${process.env.REACT_APP_PORT}${process.env.REACT_APP_PATH_TO_MEDIA_SMALL}${filename}`}

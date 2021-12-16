@@ -28,23 +28,22 @@ export default function PhotographerBanner({
 
   return (
     <StyledBanner>
-      <SimpleButton onClick={handleOpenModal} text="Contact" />
-
       <ContactModal isOpen={modalIsOpen} handleCloseModal={handleCloseModal} />
 
-      <div className="card-banner-photograph__textContainer">
-        <h1 className="card-banner-photograph__name">{name}</h1>
-        <div className="card-banner-photograph__city">
-          {city}, {country}
-        </div>
-        <div className="card-banner-photograph__tagline">{tagline}</div>
-      </div>
-
-      <div className="card-banner-photograph__portrait">
+      <div className="portrait">
         <img
           src={`http://${process.env.REACT_APP_API}:${process.env.REACT_APP_PORT}${process.env.REACT_APP_PATH_TO_PORTRAIT}${portrait}`}
           alt=""
         />
+      </div>
+
+      <div className="textContainer">
+        <h1 className="name">{name}</h1>
+        <div className="city">
+          {city}, {country}
+        </div>
+        <div className="tagline">{tagline}</div>
+        <SimpleButton onClick={handleOpenModal} text="Contact" />
       </div>
     </StyledBanner>
   )

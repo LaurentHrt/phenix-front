@@ -1,19 +1,20 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
-import { StyledMediaList, StyledProfilePage } from './style'
+import { StyledProfilePage } from './style'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchOrUpdatePhotographer } from '../../features/photographer'
 import { selectMedias, selectPhotographer } from '../../utils/selectors'
-import MediaCard from '../../components/MediaCard'
-import { MediaModel } from '../../models/Media'
 import { fetchOrUpdateMedias } from '../../features/medias'
 import SortButton from '../../components/SortButton'
 import PhotographerBanner from '../../components/PhotographerBanner'
+import SearchBar from '../../components/SearchBar/SearchBar'
+import Gallery from '../../components/Gallery'
 
 export default function Profile() {
   const params = useParams()
   const photographerId = params.id
   const dispatch = useDispatch()
+  const [sort, setSort] = useState('likes')
 
   useEffect(() => {
     dispatch(fetchOrUpdatePhotographer(photographerId))
@@ -23,14 +24,11 @@ export default function Profile() {
   const photographer = useSelector(selectPhotographer(photographerId))
   const profileData = photographer.data ?? null
 
-  const medias = useSelector(selectMedias(photographerId))
-  const mediasData = medias.data ?? null
-
-  const halfIndex = medias.data ? Math.ceil(medias.data.length / 2) : 0
+  const medias = useSelector(selectMedias(photographerId, sort))
 
   const handleSortChange = (e: string) => {
-    console.log(e)
-    console.log(mediasData)
+    setSort(e)
+    console.log(medias)
   }
 
   return profileData ? (
@@ -43,36 +41,12 @@ export default function Profile() {
         portrait={profileData.portrait}
       />
 
-      <section className="filter">
+      <section className="controls">
         <SortButton onSortChange={handleSortChange} />
+        <SearchBar />
       </section>
 
-      <StyledMediaList>
-        <div>
-          {mediasData?.slice(0, halfIndex).map((media: MediaModel) => (
-            <MediaCard
-              key={media.id}
-              title={media.title}
-              filename={media.filename}
-              price={media.price}
-              likes={media.likes}
-              alt={media.alt}
-            />
-          ))}
-        </div>
-        <div>
-          {mediasData?.slice(halfIndex).map((media: MediaModel) => (
-            <MediaCard
-              key={media.id}
-              title={media.title}
-              filename={media.filename}
-              price={media.price}
-              likes={media.likes}
-              alt={media.alt}
-            />
-          ))}
-        </div>
-      </StyledMediaList>
+      <Gallery medias={medias} sort={sort} />
     </StyledProfilePage>
   ) : null
 }

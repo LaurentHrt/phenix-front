@@ -10,7 +10,7 @@ export const StyledHeader = styled.header`
   grid-column-gap: 15px;
   align-items: center;
 
-  @media ${device.tablet} {
+  @media ${device.smallDesktop} {
     padding: 30px 35px 15px;
   }
 
