@@ -5,6 +5,7 @@ import { StyledGallery } from './style'
 interface GalleryProps {
   medias: MediaModel[]
   sort: string
+  filter: string
 }
 
 function getSortFunction(sort: string) {
@@ -35,15 +36,44 @@ function getSortFunction(sort: string) {
   }
 }
 
-export default function Gallery({ medias, sort }: GalleryProps) {
-  const halfIndex = Math.ceil(medias.length / 2)
+function getFilterFunction(filter: string) {
+  switch (filter) {
+    case 'image':
+      return (media: MediaModel) => {
+        const ext = media.filename.split('.').pop()
+        return ext === 'png' || ext === 'webp' || ext === 'jpg'
+      }
 
-  medias.sort(getSortFunction(sort))
+    case 'gif':
+      return (media: MediaModel) => {
+        const ext = media.filename.split('.').pop()
+        return ext === 'gif'
+      }
 
-  return (
+    case 'video':
+      return (media: MediaModel) => {
+        const ext = media.filename.split('.').pop()
+        return ext === 'mp4'
+      }
+
+    default:
+      return () => true
+  }
+}
+
+export default function Gallery({ medias, sort, filter }: GalleryProps) {
+  const displayedMedias = medias
+    .filter(getFilterFunction(filter))
+    .sort(getSortFunction(sort))
+  const halfIndex = Math.ceil(displayedMedias.length / 2)
+  const nothingToDisplay = displayedMedias.length <= 0
+
+  return nothingToDisplay ? (
+    <p>Pas de média displonible...</p>
+  ) : (
     <StyledGallery>
       <div>
-        {medias.slice(0, halfIndex).map((media: MediaModel) => (
+        {displayedMedias.slice(0, halfIndex).map((media: MediaModel) => (
           <MediaCard
             key={media.id}
             title={media.title}
@@ -55,7 +85,7 @@ export default function Gallery({ medias, sort }: GalleryProps) {
         ))}
       </div>
       <div>
-        {medias.slice(halfIndex).map((media: MediaModel) => (
+        {displayedMedias.slice(halfIndex).map((media: MediaModel) => (
           <MediaCard
             key={media.id}
             title={media.title}

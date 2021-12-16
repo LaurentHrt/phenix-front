@@ -10,13 +10,13 @@ export const StyledProfilePage = styled.main`
   @media ${device.smallDesktop} {
     padding: 0 35px 50px;
   }
+`
 
-  .controls {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    @media ${device.tablet} {
-      flex-direction: row;
-    }
+export const StyledControlsContainer = styled.section`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  @media ${device.tablet} {
+    flex-direction: row;
   }
 `

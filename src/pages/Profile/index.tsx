@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
-import { StyledProfilePage } from './style'
+import { StyledControlsContainer, StyledProfilePage } from './style'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchOrUpdatePhotographer } from '../../features/photographer'
 import { selectMedias, selectPhotographer } from '../../utils/selectors'
@@ -9,12 +9,14 @@ import SortButton from '../../components/SortButton'
 import PhotographerBanner from '../../components/PhotographerBanner'
 import SearchBar from '../../components/SearchBar/SearchBar'
 import Gallery from '../../components/Gallery'
+import FilterButton from '../../components/FilterButton'
 
 export default function Profile() {
   const params = useParams()
   const photographerId = params.id
   const dispatch = useDispatch()
   const [sort, setSort] = useState('likes')
+  const [filter, setFilter] = useState('all')
 
   useEffect(() => {
     dispatch(fetchOrUpdatePhotographer(photographerId))
@@ -24,11 +26,13 @@ export default function Profile() {
   const photographer = useSelector(selectPhotographer(photographerId))
   const profileData = photographer.data ?? null
 
-  const medias = useSelector(selectMedias(photographerId, sort))
+  const medias = useSelector(selectMedias(photographerId))
 
   const handleSortChange = (e: string) => {
     setSort(e)
-    console.log(medias)
+  }
+  const handleFilterChange = (e: string) => {
+    setFilter(e)
   }
 
   return profileData ? (
@@ -41,12 +45,13 @@ export default function Profile() {
         portrait={profileData.portrait}
       />
 
-      <section className="controls">
+      <StyledControlsContainer>
         <SortButton onSortChange={handleSortChange} />
+        <FilterButton onFilterChange={handleFilterChange} />
         <SearchBar />
-      </section>
+      </StyledControlsContainer>
 
-      <Gallery medias={medias} sort={sort} />
+      <Gallery medias={medias} sort={sort} filter={filter} />
     </StyledProfilePage>
   ) : null
 }
