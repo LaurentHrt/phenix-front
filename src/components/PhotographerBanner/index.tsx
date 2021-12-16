@@ -2,6 +2,7 @@ import { StyledBanner } from './style'
 import SimpleButton from '../SimpleButton'
 import ContactModal from '../ContactModal'
 import { useState } from 'react'
+import NewMediaModal from '../NewMediaModal'
 
 interface PhotographerBannerProps {
   name: string
@@ -18,17 +19,32 @@ export default function PhotographerBanner({
   country,
   tagline,
 }: PhotographerBannerProps) {
-  const [modalIsOpen, setModalIsOpen] = useState(false)
-  const handleOpenModal = () => {
-    setModalIsOpen(true)
+  const [contactModalIsOpen, setContactModalIsOpen] = useState(false)
+  const [newMediaModalIsOpen, setNewMediaModalIsOpen] = useState(false)
+
+  const handleOpenContactModal = () => {
+    setContactModalIsOpen(true)
   }
-  const handleCloseModal = () => {
-    setModalIsOpen(false)
+  const handleCloseContactModal = () => {
+    setContactModalIsOpen(false)
+  }
+  const handleOpenNewMediaModal = () => {
+    setNewMediaModalIsOpen(true)
+  }
+  const handleCloseNewMediaModal = () => {
+    setNewMediaModalIsOpen(false)
   }
 
   return (
     <StyledBanner>
-      <ContactModal isOpen={modalIsOpen} handleCloseModal={handleCloseModal} />
+      <ContactModal
+        isOpen={contactModalIsOpen}
+        handleCloseModal={handleCloseContactModal}
+      />
+      <NewMediaModal
+        isOpen={newMediaModalIsOpen}
+        handleCloseModal={handleCloseNewMediaModal}
+      />
 
       <div className="portrait">
         <img
@@ -43,7 +59,8 @@ export default function PhotographerBanner({
           {city}, {country}
         </div>
         <div className="tagline">{tagline}</div>
-        <SimpleButton onClick={handleOpenModal} text="Contact" />
+        <SimpleButton onClick={handleOpenContactModal} text="Contact" />
+        <SimpleButton onClick={handleOpenNewMediaModal} text="Nouveau média" />
       </div>
     </StyledBanner>
   )
