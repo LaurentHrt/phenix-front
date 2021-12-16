@@ -5,76 +5,31 @@ import { StyledGallery } from './style'
 
 interface GalleryProps {
   medias: MediaModel[]
-  sort: string
-  filter: string
+  sortFunction: (a: MediaModel, b: MediaModel) => number
+  filterFunction: (a: MediaModel) => boolean
+  searchFunction: (a: MediaModel) => boolean
 }
 
-function getSortFunction(sort: string) {
-  switch (sort) {
-    case 'likes':
-      return (a: MediaModel, b: MediaModel) => b.likes - a.likes
-
-    case 'title':
-      return (a: MediaModel, b: MediaModel) => {
-        if (a.title < b.title) return -1
-        else return 1
-      }
-
-    case 'date':
-      return (a: MediaModel, b: MediaModel) => {
-        if (new Date(a.date) < new Date(b.date)) return -1
-        else return 1
-      }
-
-    case 'price':
-      return (a: MediaModel, b: MediaModel) => a.price - b.price
-
-    case 'random':
-      return (a: MediaModel, b: MediaModel) => 0.5 - Math.random()
-
-    default:
-      return (a: MediaModel, b: MediaModel) => a.likes - b.likes
-  }
-}
-
-function getFilterFunction(filter: string) {
-  switch (filter) {
-    case 'image':
-      return (media: MediaModel) => {
-        const ext = media.filename.split('.').pop()
-        return (
-          ext === 'png' || ext === 'webp' || ext === 'jpg' || ext === 'jpeg'
-        )
-      }
-
-    case 'gif':
-      return (media: MediaModel) => {
-        const ext = media.filename.split('.').pop()
-        return ext === 'gif'
-      }
-
-    case 'video':
-      return (media: MediaModel) => {
-        const ext = media.filename.split('.').pop()
-        return ext === 'mp4'
-      }
-
-    default:
-      return () => true
-  }
-}
-
-export default function Gallery({ medias, sort, filter }: GalleryProps) {
+export default function Gallery({
+  medias,
+  sortFunction,
+  filterFunction,
+  searchFunction,
+}: GalleryProps) {
   const displayedMedias = medias
-    .filter(getFilterFunction(filter))
-    .sort(getSortFunction(sort))
-  const halfIndex = Math.ceil(displayedMedias.length / 2)
-  const thirdIndex = Math.round(displayedMedias.length / 3)
+    .filter(filterFunction)
+    .filter(searchFunction)
+    .sort(sortFunction)
+
+  const halfIndex =
+    displayedMedias.length > 1 ? Math.ceil(displayedMedias.length / 2) : 1
+  const thirdIndex =
+    displayedMedias.length > 1 ? Math.round(displayedMedias.length / 3) : 1
   const nothingToDisplay = displayedMedias.length <= 0
 
-  let test = null
+  let gallery = null
   if (window.innerWidth >= size.desktop) {
-    test = (
+    gallery = (
       <StyledGallery>
         <div>
           {displayedMedias.slice(0, thirdIndex).map((media: MediaModel) => (
@@ -117,7 +72,7 @@ export default function Gallery({ medias, sort, filter }: GalleryProps) {
       </StyledGallery>
     )
   } else {
-    test = (
+    gallery = (
       <StyledGallery>
         <div>
           {displayedMedias.slice(0, halfIndex).map((media: MediaModel) => (
@@ -147,5 +102,5 @@ export default function Gallery({ medias, sort, filter }: GalleryProps) {
     )
   }
 
-  return nothingToDisplay ? <p>Pas de média displonible...</p> : test
+  return nothingToDisplay ? <p>Pas de média displonible...</p> : gallery
 }
