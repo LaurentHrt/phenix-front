@@ -1,0 +1,11 @@
+import styled from 'styled-components'
+import { device } from '../../utils/style/responsive'
+
+export const StyledControlsContainer = styled.section`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  @media ${device.tablet} {
+    flex-direction: row;
+  }
+`

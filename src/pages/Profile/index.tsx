@@ -1,24 +1,23 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
-import { StyledControlsContainer, StyledProfilePage } from './style'
+import { StyledProfilePage } from './style'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchOrUpdatePhotographer } from '../../features/photographer'
 import { selectMedias, selectPhotographer } from '../../utils/selectors'
 import { fetchOrUpdateMedias } from '../../features/medias'
-import SortButton from '../../components/SortButton'
 import PhotographerBanner from '../../components/PhotographerBanner'
-import SearchBar from '../../components/SearchBar/SearchBar'
 import Gallery from '../../components/Gallery'
-import FilterButton from '../../components/FilterButton'
 import { MediaModel } from '../../models/Media'
-import SimpleButton from '../../components/SimpleButton/index'
+import { PhotographerModel } from '../../models/Photographer'
+import ControlBar from '../../components/ControlBar/index'
+import { filterValues, sortValues } from '../../utils/type'
 
 export default function Profile() {
   const params = useParams()
   const photographerId = params.id
   const dispatch = useDispatch()
-  const [sort, setSort] = useState('likes')
-  const [filter, setFilter] = useState('all')
+  const [sort, setSort] = useState<sortValues>('likes')
+  const [filter, setFilter] = useState<filterValues>('all')
   const [search, setSearch] = useState('')
 
   useEffect(() => {
@@ -27,14 +26,19 @@ export default function Profile() {
   }, [dispatch, photographerId])
 
   const photographer = useSelector(selectPhotographer(photographerId))
-  const profileData = photographer.data ?? null
+  const profileData: PhotographerModel = photographer.data
 
-  const medias = useSelector(selectMedias(photographerId))
+  const medias: MediaModel[] = useSelector(selectMedias(photographerId))
+  const displayedMedias: MediaModel[] = medias
+    .filter(getFilterFunction(filter))
+    .filter(getSearchFunction(search))
+    .sort(getSortFunction(sort))
+    .slice()
 
-  const handleSortChange = (e: string) => {
+  const handleSortChange = (e: sortValues) => {
     setSort(e)
   }
-  const handleFilterChange = (e: string) => {
+  const handleFilterChange = (e: filterValues) => {
     setFilter(e)
   }
   const handleSearchChange = (e: string) => {
@@ -46,7 +50,7 @@ export default function Profile() {
     setSearch('')
   }
 
-  function getSortFunction(sort: string) {
+  function getSortFunction(sort: sortValues) {
     switch (sort) {
       case 'likes':
         return (a: MediaModel, b: MediaModel) => b.likes - a.likes
@@ -74,7 +78,7 @@ export default function Profile() {
     }
   }
 
-  function getFilterFunction(filter: string) {
+  function getFilterFunction(filter: filterValues) {
     switch (filter) {
       case 'image':
         return (media: MediaModel) => {
@@ -121,19 +125,17 @@ export default function Profile() {
         portrait={profileData.portrait}
       />
 
-      <StyledControlsContainer>
-        <SortButton onSortChange={handleSortChange} />
-        <FilterButton onFilterChange={handleFilterChange} />
-        <SearchBar onSearchChange={handleSearchChange} />
-        <SimpleButton text="Réinitialiser" onClick={handleClickReset} />
-      </StyledControlsContainer>
-
-      <Gallery
-        medias={medias}
-        sortFunction={getSortFunction(sort)}
-        filterFunction={getFilterFunction(filter)}
-        searchFunction={getSearchFunction(search)}
+      <ControlBar
+        sortValue={sort}
+        handleSortChange={handleSortChange}
+        filterValue={filter}
+        handleFilterChange={handleFilterChange}
+        searchValue={search}
+        handleSearchChange={handleSearchChange}
+        handleClickReset={handleClickReset}
       />
+
+      <Gallery medias={displayedMedias} />
     </StyledProfilePage>
   ) : null
 }

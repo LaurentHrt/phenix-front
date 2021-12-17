@@ -5,8 +5,9 @@ export const StyledPhotographersContainer = styled.section`
   display: grid;
   grid-template-columns: 1fr;
   justify-items: center;
-  column-gap: 20px;
-  row-gap: 20px;
+  column-gap: 40px;
+  row-gap: 40px;
+  margin: 20px;
 
   @media ${device.smallDesktop} {
     grid-template-columns: repeat(2, 1fr);

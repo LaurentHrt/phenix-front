@@ -6,18 +6,19 @@ export const StyledMediaCard = styled.section`
   box-shadow: 0px 20px 20px 1px hsl(229deg 6% 66%);
   position: relative;
   border-radius: 20px;
-  transition: all 0.5s cubic-bezier(0.34, 0.07, 0.26, 1);
+  transition: all 500ms cubic-bezier(0.34, 0.07, 0.26, 1);
 
   img,
   video {
     width: 100%;
     display: block;
-    transition: all 1s cubic-bezier(0.49, 0.19, 0.1, 0.99);
+    transition: all 300ms cubic-bezier(0.49, 0.19, 0.1, 0.99);
   }
 
   &:hover {
     transform: scale(1.02);
-    & img {
+    & img,
+    video {
       transform: scale(1.2);
     }
     & .slidingBanner {
@@ -40,7 +41,7 @@ export const StyledSlidingBanner = styled.div`
   position: absolute;
   bottom: -100px;
   padding: 10px 25px;
-  transition: all 500ms cubic-bezier(0.02, 0.89, 0.45, 1);
+  transition: all 200ms cubic-bezier(0.02, 0.89, 0.45, 1);
   display: flex;
   flex-direction: row;
   justify-content: space-between;

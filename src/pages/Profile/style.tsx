@@ -11,12 +11,3 @@ export const StyledProfilePage = styled.main`
     padding: 0 35px 50px;
   }
 `
-
-export const StyledControlsContainer = styled.section`
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  @media ${device.tablet} {
-    flex-direction: row;
-  }
-`

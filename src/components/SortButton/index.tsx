@@ -5,17 +5,16 @@ import {
   Select,
   SelectChangeEvent,
 } from '@mui/material'
-import { useState } from 'react'
+import { sortValues } from '../../utils/type'
 
 interface SortButtonProps {
-  onSortChange: any
+  value: sortValues
+  onSortChange: (e: sortValues) => void
 }
 
-export default function SortButton({ onSortChange }: SortButtonProps) {
-  const [sort, setSort] = useState('likes')
+export default function SortButton({ value, onSortChange }: SortButtonProps) {
   const handleChange = (event: SelectChangeEvent) => {
-    setSort(event.target.value as string)
-    onSortChange(event.target.value as string)
+    onSortChange(event.target.value as sortValues)
   }
 
   return (
@@ -24,7 +23,7 @@ export default function SortButton({ onSortChange }: SortButtonProps) {
       <Select
         labelId="sort"
         id="sort"
-        value={sort}
+        value={value}
         label="Trier par"
         onChange={handleChange}
       >

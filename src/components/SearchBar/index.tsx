@@ -1,16 +1,18 @@
 import { InputAdornment, TextField } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
-import { useState } from 'react'
+import { ChangeEvent } from 'react'
 
 interface SearchButtonProps {
-  onSearchChange: any
+  value: string
+  onSearchChange: (e: string) => void
 }
 
-export default function SearchBar({ onSearchChange }: SearchButtonProps) {
-  const [input, setInput] = useState('')
-  const handleChange = (event: any) => {
-    setInput(event?.target.value ?? '')
-    onSearchChange(event?.target.value ?? '')
+export default function SearchBar({
+  value,
+  onSearchChange,
+}: SearchButtonProps) {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    onSearchChange(event.target.value as string)
   }
 
   return (
@@ -26,7 +28,7 @@ export default function SearchBar({ onSearchChange }: SearchButtonProps) {
       name="searchbar"
       label="Rechercher"
       variant="outlined"
-      value={input}
+      value={value}
       onChange={handleChange}
     />
   )

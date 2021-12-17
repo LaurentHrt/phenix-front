@@ -14,14 +14,15 @@ export default function Photographers() {
   }, [dispatch])
 
   const photographers = useSelector(selectPhotographers)
+  const photographersData: PhotographerModel[] = photographers?.data
 
   if (photographers.status === 'rejected') {
     return <span>Il y a un problème</span>
   }
 
-  return (
+  return photographersData ? (
     <StyledPhotographersContainer>
-      {photographers.data?.map((photographer: PhotographerModel) => (
+      {photographersData.map((photographer: PhotographerModel) => (
         <PhotographerCard
           key={photographer.id}
           id={photographer.id}
@@ -34,5 +35,5 @@ export default function Photographers() {
         />
       ))}
     </StyledPhotographersContainer>
-  )
+  ) : null
 }

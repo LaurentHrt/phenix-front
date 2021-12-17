@@ -11,15 +11,13 @@ export const GlobalStyle = createGlobalStyle`
   body {
     font-family: 'DM Sans', sans-serif;
     margin: 8px 20px;
-    @media ${device.smallDesktop} {
-      margin: 0;
-    }
   }
 
   a,
   a:visited {
     text-decoration: none;
-    display: block;
+    display: contents;
+    color: inital;
   }
 
   h1 {

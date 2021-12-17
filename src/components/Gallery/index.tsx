@@ -5,21 +5,10 @@ import { StyledGallery } from './style'
 
 interface GalleryProps {
   medias: MediaModel[]
-  sortFunction: (a: MediaModel, b: MediaModel) => number
-  filterFunction: (a: MediaModel) => boolean
-  searchFunction: (a: MediaModel) => boolean
 }
 
-export default function Gallery({
-  medias,
-  sortFunction,
-  filterFunction,
-  searchFunction,
-}: GalleryProps) {
+export default function Gallery({ medias }: GalleryProps) {
   const displayedMedias = medias
-    .filter(filterFunction)
-    .filter(searchFunction)
-    .sort(sortFunction)
 
   const halfIndex =
     displayedMedias.length > 1 ? Math.ceil(displayedMedias.length / 2) : 1

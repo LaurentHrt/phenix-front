@@ -5,17 +5,19 @@ import {
   Select,
   SelectChangeEvent,
 } from '@mui/material'
-import { useState } from 'react'
+import { filterValues } from '../../utils/type'
 
 interface FilterButtonProps {
-  onFilterChange: any
+  value: filterValues
+  onFilterChange: (e: filterValues) => void
 }
 
-export default function FilterButton({ onFilterChange }: FilterButtonProps) {
-  const [filter, setFilter] = useState('all')
+export default function FilterButton({
+  value,
+  onFilterChange,
+}: FilterButtonProps) {
   const handleChange = (event: SelectChangeEvent) => {
-    setFilter(event.target.value as string)
-    onFilterChange(event.target.value as string)
+    onFilterChange(event.target.value as filterValues)
   }
 
   return (
@@ -24,7 +26,7 @@ export default function FilterButton({ onFilterChange }: FilterButtonProps) {
       <Select
         labelId="filter"
         id="filter"
-        value={filter}
+        value={value}
         label="Filtre"
         onChange={handleChange}
       >

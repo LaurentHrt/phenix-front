@@ -2,6 +2,11 @@ import styled from 'styled-components'
 import colors from '../../utils/style/colors'
 
 export const StyledPhotographerCard = styled.section`
+  box-shadow: 0px 0px 10px 2px hsl(229deg 6% 66%);
+  border-radius: 10px;
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
   text-align: center;
   transition: all 0.5s cubic-bezier(0.34, 0.07, 0.26, 1);
   &:hover {
@@ -35,6 +40,7 @@ export const StyledCity = styled.div`
 `
 
 export const StyledTagline = styled.div`
+  color: #757575;
   font-size: 0.8em;
   padding-bottom: 5px;
 `

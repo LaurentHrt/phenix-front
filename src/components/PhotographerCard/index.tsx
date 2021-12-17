@@ -28,18 +28,18 @@ export default function PhotographerCard({
   portrait,
 }: PhotographerCardProps) {
   return (
-    <StyledPhotographerCard>
-      <Link to={`/profile/${id}`}>
+    <Link to={`/profile/${id}`}>
+      <StyledPhotographerCard>
         <StyledPortrait>
           <img src={portrait} alt="" />
         </StyledPortrait>
         <StyledName>{name}</StyledName>
-      </Link>
-      <StyledCity>
-        {city}, {country}
-      </StyledCity>
-      <StyledTagline>{tagline}</StyledTagline>
-      <StyledPrice>{price}</StyledPrice>
-    </StyledPhotographerCard>
+        <StyledCity>
+          {city}, {country}
+        </StyledCity>
+        <StyledTagline>{tagline}</StyledTagline>
+        <StyledPrice>{price}</StyledPrice>
+      </StyledPhotographerCard>
+    </Link>
   )
 }
