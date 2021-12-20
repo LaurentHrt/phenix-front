@@ -4,6 +4,7 @@ import { StyledMediaCard, StyledSlidingBanner } from './style'
 interface MediaCardProps {
   title: string
   filename: string
+  type: string
   price: number
   likes: number
   alt: string
@@ -12,11 +13,12 @@ interface MediaCardProps {
 export default function MediaCard({
   title,
   filename,
+  type,
   price,
   likes,
   alt,
 }: MediaCardProps) {
-  const isVideo = filename?.split('.').pop() === 'mp4'
+  const isVideo = type === 'video'
 
   return (
     <StyledMediaCard>
