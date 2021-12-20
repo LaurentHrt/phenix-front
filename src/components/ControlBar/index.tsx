@@ -1,35 +1,61 @@
-import FilterButton from '../FilterButton'
+import FilterButton, { IFilterItem } from '../FilterButton'
 import SearchBar from '../SearchBar'
-import SortButton from '../SortButton'
+import SortButton, { ISortItem } from '../SortButton'
 import { StyledControlsContainer } from './style'
 import SimpleButton from '../SimpleButton/index'
 import { IFilterType, ISortType } from '../../utils/type'
 
+interface ISort {
+  value: ISortType
+  items: ISortItem[]
+  handleChange: (e: ISortType) => void
+}
+interface IFilter {
+  value: IFilterType
+  items: IFilterItem[]
+  handleChange: (e: IFilterType) => void
+}
+
+interface ISearch {
+  value: string
+  handleChange: (e: string) => void
+}
+
 interface ControlBarProps {
-  sortValue: ISortType
-  handleSortChange: (e: ISortType) => void
-  filterValue: IFilterType
-  handleFilterChange: (e: IFilterType) => void
-  searchValue: string
-  handleSearchChange: (e: string) => void
-  handleClickReset: () => void
+  sort?: ISort
+  filter?: IFilter
+  search?: ISearch
+  handleClickReset?: () => void
 }
 
 export default function ControlBar({
-  sortValue,
-  handleSortChange,
-  filterValue,
-  handleFilterChange,
-  searchValue,
-  handleSearchChange,
+  sort,
+  filter,
+  search,
   handleClickReset,
 }: ControlBarProps) {
   return (
     <StyledControlsContainer>
-      <SortButton onSortChange={handleSortChange} value={sortValue} />
-      <FilterButton onFilterChange={handleFilterChange} value={filterValue} />
-      <SearchBar onSearchChange={handleSearchChange} value={searchValue} />
-      <SimpleButton text="Réinitialiser" onClick={handleClickReset} />
+      {sort && (
+        <SortButton
+          onChange={sort.handleChange}
+          value={sort.value}
+          items={sort.items}
+        />
+      )}
+      {filter && (
+        <FilterButton
+          onChange={filter.handleChange}
+          value={filter.value}
+          items={filter.items}
+        />
+      )}
+      {search && (
+        <SearchBar onChange={search?.handleChange} value={search?.value} />
+      )}
+      {handleClickReset && (
+        <SimpleButton text="Réinitialiser" onClick={handleClickReset} />
+      )}
     </StyledControlsContainer>
   )
 }

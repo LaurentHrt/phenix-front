@@ -5,16 +5,26 @@ import {
   Select,
   SelectChangeEvent,
 } from '@mui/material'
-import { ISortType, SORT_TYPES } from '../../utils/type'
+import { ISortType } from '../../utils/type'
 
-interface SortButtonProps {
+export interface ISortItem {
   value: ISortType
-  onSortChange: (e: ISortType) => void
+  display: string
 }
 
-export default function SortButton({ value, onSortChange }: SortButtonProps) {
+interface ISortButtonProps {
+  value: ISortType
+  onChange: (e: ISortType) => void
+  items: ISortItem[]
+}
+
+export default function SortButton({
+  value,
+  onChange,
+  items,
+}: ISortButtonProps) {
   const handleChange = (event: SelectChangeEvent) => {
-    onSortChange(event.target.value as ISortType)
+    onChange(event.target.value as ISortType)
   }
 
   return (
@@ -27,11 +37,9 @@ export default function SortButton({ value, onSortChange }: SortButtonProps) {
         label="Trier par"
         onChange={handleChange}
       >
-        <MenuItem value={SORT_TYPES.LIKE}>Popularité</MenuItem>
-        <MenuItem value={SORT_TYPES.DATE}>Date</MenuItem>
-        <MenuItem value={SORT_TYPES.TITLE}>Titre</MenuItem>
-        <MenuItem value={SORT_TYPES.PRICE}>Prix</MenuItem>
-        <MenuItem value={SORT_TYPES.RANDOM}>Aléatoire</MenuItem>
+        {items.map((item: ISortItem) => (
+          <MenuItem value={item.value}>{item.display}</MenuItem>
+        ))}
       </Select>
     </FormControl>
   )

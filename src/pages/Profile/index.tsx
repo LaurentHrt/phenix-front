@@ -11,11 +11,15 @@ import { MediaModel } from '../../models/Media'
 import { PhotographerModel } from '../../models/Photographer'
 import ControlBar from '../../components/ControlBar/index'
 import {
+  FILTER_DISPLAY,
   FILTER_TYPES,
   IFilterType,
   ISortType,
+  SORT_DISPLAY,
   SORT_TYPES,
 } from '../../utils/type'
+import { IFilterItem } from '../../components/FilterButton'
+import { ISortItem } from '../../components/SortButton'
 
 export default function Profile() {
   const params = useParams()
@@ -54,6 +58,21 @@ export default function Profile() {
     setFilter(FILTER_TYPES.ALL)
     setSearch('')
   }
+
+  const filterItems: IFilterItem[] = [
+    { value: FILTER_TYPES.ALL, display: FILTER_DISPLAY.ALL },
+    { value: FILTER_TYPES.IMAGE, display: FILTER_DISPLAY.IMAGE },
+    { value: FILTER_TYPES.GIF, display: FILTER_DISPLAY.GIF },
+    { value: FILTER_TYPES.VIDEO, display: FILTER_DISPLAY.VIDEO },
+  ]
+
+  const sortItems: ISortItem[] = [
+    { value: SORT_TYPES.TITLE, display: SORT_DISPLAY.TITLE },
+    { value: SORT_TYPES.DATE, display: SORT_DISPLAY.DATE },
+    { value: SORT_TYPES.LIKE, display: SORT_DISPLAY.LIKE },
+    { value: SORT_TYPES.PRICE, display: SORT_DISPLAY.PRICE },
+    { value: SORT_TYPES.RANDOM, display: SORT_DISPLAY.RANDOM },
+  ]
 
   function getSortFunction(sort: ISortType) {
     switch (sort) {
@@ -109,12 +128,20 @@ export default function Profile() {
       />
 
       <ControlBar
-        sortValue={sort}
-        handleSortChange={handleSortChange}
-        filterValue={filter}
-        handleFilterChange={handleFilterChange}
-        searchValue={search}
-        handleSearchChange={handleSearchChange}
+        sort={{
+          value: sort,
+          handleChange: handleSortChange,
+          items: sortItems,
+        }}
+        filter={{
+          value: filter,
+          handleChange: handleFilterChange,
+          items: filterItems,
+        }}
+        search={{
+          value: search,
+          handleChange: handleSearchChange,
+        }}
         handleClickReset={handleClickReset}
       />
 

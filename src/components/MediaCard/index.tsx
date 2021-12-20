@@ -20,6 +20,10 @@ export default function MediaCard({
 }: MediaCardProps) {
   const isVideo = type === 'video'
 
+  function numberWithSpaces(x: number) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
+  }
+
   return (
     <StyledMediaCard>
       {isVideo ? (
@@ -43,7 +47,7 @@ export default function MediaCard({
       )}
       <StyledSlidingBanner className="slidingBanner">
         <div>{title}</div>
-        <div>{price}€</div>
+        <div>{numberWithSpaces(price)}€</div>
       </StyledSlidingBanner>
     </StyledMediaCard>
   )
