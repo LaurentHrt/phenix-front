@@ -3,13 +3,13 @@ import SearchBar from '../SearchBar'
 import SortButton from '../SortButton'
 import { StyledControlsContainer } from './style'
 import SimpleButton from '../SimpleButton/index'
-import { filterValues, sortValues } from '../../utils/type'
+import { IFilterType, ISortType } from '../../utils/type'
 
 interface ControlBarProps {
-  sortValue: sortValues
-  handleSortChange: (e: sortValues) => void
-  filterValue: filterValues
-  handleFilterChange: (e: filterValues) => void
+  sortValue: ISortType
+  handleSortChange: (e: ISortType) => void
+  filterValue: IFilterType
+  handleFilterChange: (e: IFilterType) => void
   searchValue: string
   handleSearchChange: (e: string) => void
   handleClickReset: () => void

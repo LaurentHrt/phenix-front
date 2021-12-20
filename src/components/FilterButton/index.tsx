@@ -5,11 +5,11 @@ import {
   Select,
   SelectChangeEvent,
 } from '@mui/material'
-import { filterValues } from '../../utils/type'
+import { FILTER_TYPES, IFilterType } from '../../utils/type'
 
 interface FilterButtonProps {
-  value: filterValues
-  onFilterChange: (e: filterValues) => void
+  value: IFilterType
+  onFilterChange: (e: IFilterType) => void
 }
 
 export default function FilterButton({
@@ -17,7 +17,7 @@ export default function FilterButton({
   onFilterChange,
 }: FilterButtonProps) {
   const handleChange = (event: SelectChangeEvent) => {
-    onFilterChange(event.target.value as filterValues)
+    onFilterChange(event.target.value as IFilterType)
   }
 
   return (
@@ -30,10 +30,10 @@ export default function FilterButton({
         label="Filtre"
         onChange={handleChange}
       >
-        <MenuItem value={'all'}>Tout</MenuItem>
-        <MenuItem value={'image'}>Image</MenuItem>
-        <MenuItem value={'gif'}>Gif</MenuItem>
-        <MenuItem value={'video'}>Vidéo</MenuItem>
+        <MenuItem value={FILTER_TYPES.ALL}>Tout</MenuItem>
+        <MenuItem value={FILTER_TYPES.IMAGE}>Image</MenuItem>
+        <MenuItem value={FILTER_TYPES.GIF}>Gif</MenuItem>
+        <MenuItem value={FILTER_TYPES.VIDEO}>Vidéo</MenuItem>
       </Select>
     </FormControl>
   )

@@ -10,14 +10,19 @@ import Gallery from '../../components/Gallery'
 import { MediaModel } from '../../models/Media'
 import { PhotographerModel } from '../../models/Photographer'
 import ControlBar from '../../components/ControlBar/index'
-import { filterValues, sortValues } from '../../utils/type'
+import {
+  FILTER_TYPES,
+  IFilterType,
+  ISortType,
+  SORT_TYPES,
+} from '../../utils/type'
 
 export default function Profile() {
   const params = useParams()
   const photographerId = params.id
   const dispatch = useDispatch()
-  const [sort, setSort] = useState<sortValues>('likes')
-  const [filter, setFilter] = useState<filterValues>('all')
+  const [sort, setSort] = useState<ISortType>(SORT_TYPES.LIKE)
+  const [filter, setFilter] = useState<IFilterType>(FILTER_TYPES.ALL)
   const [search, setSearch] = useState('')
 
   useEffect(() => {
@@ -35,42 +40,42 @@ export default function Profile() {
     .sort(getSortFunction(sort))
     .slice()
 
-  const handleSortChange = (e: sortValues) => {
+  const handleSortChange = (e: ISortType) => {
     setSort(e)
   }
-  const handleFilterChange = (e: filterValues) => {
+  const handleFilterChange = (e: IFilterType) => {
     setFilter(e)
   }
   const handleSearchChange = (e: string) => {
     setSearch(e)
   }
   const handleClickReset = () => {
-    setSort('likes')
-    setFilter('all')
+    setSort(SORT_TYPES.LIKE)
+    setFilter(FILTER_TYPES.ALL)
     setSearch('')
   }
 
-  function getSortFunction(sort: sortValues) {
+  function getSortFunction(sort: ISortType) {
     switch (sort) {
-      case 'likes':
+      case SORT_TYPES.LIKE:
         return (a: MediaModel, b: MediaModel) => b.likes - a.likes
 
-      case 'title':
+      case SORT_TYPES.TITLE:
         return (a: MediaModel, b: MediaModel) => {
           if (a.title < b.title) return -1
           else return 1
         }
 
-      case 'date':
+      case SORT_TYPES.DATE:
         return (a: MediaModel, b: MediaModel) => {
           if (new Date(a.date) < new Date(b.date)) return -1
           else return 1
         }
 
-      case 'price':
+      case SORT_TYPES.PRICE:
         return (a: MediaModel, b: MediaModel) => a.price - b.price
 
-      case 'random':
+      case SORT_TYPES.RANDOM:
         return (a: MediaModel, b: MediaModel) => 0.5 - Math.random()
 
       default:
@@ -78,31 +83,9 @@ export default function Profile() {
     }
   }
 
-  function getFilterFunction(filter: filterValues) {
-    switch (filter) {
-      case 'image':
-        return (media: MediaModel) => {
-          const ext = media.filename.split('.').pop()
-          return (
-            ext === 'png' || ext === 'webp' || ext === 'jpg' || ext === 'jpeg'
-          )
-        }
-
-      case 'gif':
-        return (media: MediaModel) => {
-          const ext = media.filename.split('.').pop()
-          return ext === 'gif'
-        }
-
-      case 'video':
-        return (media: MediaModel) => {
-          const ext = media.filename.split('.').pop()
-          return ext === 'mp4'
-        }
-
-      default:
-        return () => true
-    }
+  function getFilterFunction(filter: IFilterType) {
+    if (filter === FILTER_TYPES.ALL) return () => true
+    return (media: MediaModel) => media.type === filter
   }
 
   function getSearchFunction(search: string) {
