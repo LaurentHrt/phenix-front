@@ -20,6 +20,7 @@ import {
 } from '../../utils/type'
 import { IFilterItem } from '../../components/FilterButton'
 import { ISortItem } from '../../components/SortButton'
+import Spinner from '../../components/Spinner'
 
 export default function Profile() {
   const params = useParams()
@@ -88,7 +89,7 @@ export default function Profile() {
 
       case SORT_TYPES.DATE:
         return (a: MediaModel, b: MediaModel) => {
-          if (new Date(a.date) < new Date(b.date)) return -1
+          if (new Date(a.date) > new Date(b.date)) return -1
           else return 1
         }
 
@@ -150,7 +151,11 @@ export default function Profile() {
         handleClickReset={handleClickReset}
       />
 
-      <Gallery medias={displayedMedias} />
+      {medias.status === 'pending' ? (
+        <Spinner />
+      ) : (
+        <Gallery medias={displayedMedias} />
+      )}
     </StyledProfilePage>
   )
 }
