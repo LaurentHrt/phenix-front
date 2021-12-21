@@ -38,7 +38,9 @@ export default function FilterButton({
         onChange={handleChange}
       >
         {items.map((item: IFilterItem) => (
-          <MenuItem value={item.value}>{item.display}</MenuItem>
+          <MenuItem key={item.value} value={item.value}>
+            {item.display}
+          </MenuItem>
         ))}
       </Select>
     </FormControl>

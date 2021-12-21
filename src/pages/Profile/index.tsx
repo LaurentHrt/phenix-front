@@ -37,12 +37,13 @@ export default function Profile() {
   const photographer = useSelector(selectPhotographer(photographerId))
   const profileData: PhotographerModel = photographer.data
 
-  const medias: MediaModel[] = useSelector(selectMedias(photographerId))
-  const displayedMedias: MediaModel[] = medias
-    .filter(getFilterFunction(filter))
-    .filter(getSearchFunction(search))
-    .sort(getSortFunction(sort))
-    .slice()
+  const medias = useSelector(selectMedias(photographerId))
+  const displayedMedias: MediaModel[] =
+    medias.data
+      ?.filter(getFilterFunction(filter))
+      .filter(getSearchFunction(search))
+      .sort(getSortFunction(sort))
+      .slice() ?? []
 
   const handleSortChange = (e: ISortType) => {
     setSort(e)
@@ -117,14 +118,18 @@ export default function Profile() {
     }
   }
 
-  return profileData ? (
+  if (photographer.status === 'rejected' || medias.status === 'rejected') {
+    return <span>Il y a un problème de serveur</span>
+  }
+
+  return (
     <StyledProfilePage>
       <PhotographerBanner
-        name={profileData.name}
-        city={profileData.city}
-        country={profileData.country}
-        tagline={profileData.tagline}
-        portrait={profileData.portrait}
+        name={profileData?.name}
+        city={profileData?.city}
+        country={profileData?.country}
+        tagline={profileData?.tagline}
+        portrait={profileData?.portrait}
       />
 
       <ControlBar
@@ -147,5 +152,5 @@ export default function Profile() {
 
       <Gallery medias={displayedMedias} />
     </StyledProfilePage>
-  ) : null
+  )
 }

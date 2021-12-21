@@ -38,7 +38,9 @@ export default function SortButton({
         onChange={handleChange}
       >
         {items.map((item: ISortItem) => (
-          <MenuItem value={item.value}>{item.display}</MenuItem>
+          <MenuItem key={item.value} value={item.value}>
+            {item.display}
+          </MenuItem>
         ))}
       </Select>
     </FormControl>

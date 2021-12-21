@@ -19,8 +19,8 @@ export default function Photographers() {
   }, [dispatch])
 
   const photographers = useSelector(selectPhotographers)
-  const displayedPhotographers: PhotographerModel[] = photographers
-    .filter(getSearchFunction(search))
+  const displayedPhotographers: PhotographerModel[] = photographers.data
+    ?.filter(getSearchFunction(search))
     .sort(getSortFunction(sort))
     .slice()
 
@@ -76,11 +76,11 @@ export default function Photographers() {
     }
   }
 
-  if (photographers?.status === 'rejected') {
-    return <span>Il y a un problème</span>
+  if (photographers.status === 'rejected') {
+    return <span>Il y a un problème de serveur</span>
   }
 
-  return displayedPhotographers ? (
+  return (
     <>
       <ControlBar
         sort={{ value: sort, items: sortItems, handleChange: handleSortChange }}
@@ -88,7 +88,7 @@ export default function Photographers() {
         handleClickReset={handleClickReset}
       />
       <StyledPhotographersContainer>
-        {displayedPhotographers.map((photographer: PhotographerModel) => (
+        {displayedPhotographers?.map((photographer: PhotographerModel) => (
           <PhotographerCard
             key={photographer.id}
             id={photographer.id}
@@ -102,5 +102,5 @@ export default function Photographers() {
         ))}
       </StyledPhotographersContainer>
     </>
-  ) : null
+  )
 }

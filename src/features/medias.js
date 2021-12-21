@@ -22,7 +22,8 @@ export function fetchOrUpdateMedias(photographerId) {
     try {
       const response = await fetch(api + photographerId)
       const data = await response.json()
-      dispatch(actions.resolved(photographerId, data))
+      if (response.ok) dispatch(actions.resolved(photographerId, data))
+      else throw data.error
     } catch (error) {
       dispatch(actions.rejected(photographerId, error))
     }
