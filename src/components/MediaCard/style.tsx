@@ -49,3 +49,10 @@ export const StyledSlidingBanner = styled.div`
   background: linear-gradient(0deg, rgba(2,0,36,1) 0%, rgba(0,0,0,0.8001401244091386) 20%, rgba(0,0,0,0.6012605725884104) 40%, rgba(0,0,0,0.39957990031950286) 60%, rgba(0,0,0,0.19789922805059523) 80%, rgba(0,0,0,0) 100%); 
   );
 `
+
+export const StyledHider = styled.div`
+  z-index: 999;
+  width: 100%;
+  height: 100%;
+  background-color: green;
+`

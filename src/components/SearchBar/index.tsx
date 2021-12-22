@@ -4,15 +4,12 @@ import { ChangeEvent } from 'react'
 
 interface SearchButtonProps {
   value: string
-  onSearchChange: (e: string) => void
+  onChange: (e: string) => void
 }
 
-export default function SearchBar({
-  value,
-  onSearchChange,
-}: SearchButtonProps) {
+export default function SearchBar({ value, onChange }: SearchButtonProps) {
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    onSearchChange(event.target.value as string)
+    onChange(event.target.value as string)
   }
 
   return (

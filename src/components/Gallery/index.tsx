@@ -26,6 +26,7 @@ export default function Gallery({ medias }: GalleryProps) {
               key={media.id}
               title={media.title}
               filename={media.filename}
+              type={media.type}
               price={media.price}
               likes={media.likes}
               alt={media.alt}
@@ -40,6 +41,7 @@ export default function Gallery({ medias }: GalleryProps) {
                 key={media.id}
                 title={media.title}
                 filename={media.filename}
+                type={media.type}
                 price={media.price}
                 likes={media.likes}
                 alt={media.alt}
@@ -52,6 +54,7 @@ export default function Gallery({ medias }: GalleryProps) {
               key={media.id}
               title={media.title}
               filename={media.filename}
+              type={media.type}
               price={media.price}
               likes={media.likes}
               alt={media.alt}
@@ -69,6 +72,7 @@ export default function Gallery({ medias }: GalleryProps) {
               key={media.id}
               title={media.title}
               filename={media.filename}
+              type={media.type}
               price={media.price}
               likes={media.likes}
               alt={media.alt}
@@ -81,6 +85,7 @@ export default function Gallery({ medias }: GalleryProps) {
               key={media.id}
               title={media.title}
               filename={media.filename}
+              type={media.type}
               price={media.price}
               likes={media.likes}
               alt={media.alt}

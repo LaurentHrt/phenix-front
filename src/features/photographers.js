@@ -18,7 +18,8 @@ export async function fetchOrUpdatePhotographers(dispatch, getState) {
   try {
     const response = await fetch(api)
     const data = await response.json()
-    dispatch(actions.resolved(data))
+    if (response.ok) dispatch(actions.resolved(data))
+    else throw data.error
   } catch (error) {
     dispatch(actions.rejected(error))
   }

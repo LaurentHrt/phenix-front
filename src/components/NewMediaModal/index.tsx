@@ -5,6 +5,8 @@ import closeIcon from '../../assets/icons/close.svg'
 import { FormikHelpers, useFormik } from 'formik'
 import { TextField } from '@mui/material'
 import SimpleButton from '../SimpleButton'
+import axios from 'axios'
+import { useParams } from 'react-router'
 
 interface NewMediaModalProps {
   isOpen: boolean
@@ -15,13 +17,16 @@ interface Values {
   title: string
   price: number
   description: string
-  file: string
+  file: any
 }
 
 export default function NewMediaModal({
   handleCloseModal,
   isOpen,
 }: NewMediaModalProps) {
+  const params = useParams()
+  const photographerId = params.id
+
   const formik = useFormik({
     initialValues: {
       title: '',
@@ -29,9 +34,23 @@ export default function NewMediaModal({
       description: '',
       file: '',
     },
-    onSubmit: (values: Values, { setSubmitting }: FormikHelpers<Values>) => {
-      alert(JSON.stringify(values, null, 2))
-      // TODO: Send to backend with confirmation
+    onSubmit: async (
+      values: Values,
+      { setSubmitting }: FormikHelpers<Values>
+    ) => {
+      const api = `http://${process.env.REACT_APP_API}:${process.env.REACT_APP_PORT}/api/medias/`
+
+      const data = new FormData()
+      data.append('file', values.file)
+      data.append('title', values.title)
+      data.append('price', values.price.toString())
+      data.append('alt', values.description)
+      data.append('photographerId', photographerId || '')
+
+      try {
+        const response = await axios.post(api, data)
+        console.log(response)
+      } catch (error) {}
     },
   })
 
@@ -74,12 +93,13 @@ export default function NewMediaModal({
             value={formik.values.price}
           />
 
-          <TextField
+          <input
             name="file"
-            label="Fichier"
-            variant="outlined"
-            onChange={formik.handleChange}
-            value={formik.values.file}
+            // label="Fichier"
+            // variant="outlined"
+            onChange={(event: any) => {
+              formik.setFieldValue('file', event.currentTarget.files[0])
+            }}
             type="file"
           />
 
