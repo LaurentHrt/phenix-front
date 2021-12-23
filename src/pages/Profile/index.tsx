@@ -1,14 +1,16 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 import { StyledProfilePage } from './style'
-import { useDispatch, useSelector } from 'react-redux'
 import { fetchOrUpdatePhotographer } from '../../features/photographer'
 import { selectMedias, selectPhotographer } from '../../utils/selectors'
 import { fetchOrUpdateMedias } from '../../features/medias'
 import PhotographerBanner from '../../components/PhotographerBanner'
 import Gallery from '../../components/Gallery'
-import { MediaModel } from '../../models/Media'
-import { PhotographerModel } from '../../models/Photographer'
+import { I_MediaModel, T_MediaType } from '../../models/Media'
+import {
+  I_PhotographerModel,
+  T_PhotographerId,
+} from '../../models/Photographer'
 import ControlBar from '../../components/ControlBar/index'
 import {
   FILTER_DISPLAY,
@@ -22,11 +24,12 @@ import {
 import { IFilterItem } from '../../components/FilterButton'
 import { ISortItem } from '../../components/SortButton'
 import Spinner from '../../components/Spinner'
+import { useAppDispatch, useAppSelector } from '../../utils/hooks'
 
 export default function Profile() {
   const params = useParams()
-  const photographerId = params.id
-  const dispatch = useDispatch()
+  const photographerId: T_PhotographerId = params.id ? parseInt(params.id) : 0
+  const dispatch = useAppDispatch()
   const [sort, setSort] = useState<ISortType>(SORT_TYPES.LIKE)
   const [filter, setFilter] = useState<IFilterType>(FILTER_TYPES.ALL)
   const [search, setSearch] = useState('')
@@ -36,11 +39,11 @@ export default function Profile() {
     dispatch(fetchOrUpdateMedias(photographerId))
   }, [dispatch, photographerId])
 
-  const photographer = useSelector(selectPhotographer(photographerId))
-  const profileData: PhotographerModel = photographer.data
+  const photographer: any = useAppSelector(selectPhotographer(photographerId))
+  const profileData: I_PhotographerModel = photographer.data
 
-  const medias = useSelector(selectMedias(photographerId))
-  const displayedMedias: MediaModel[] =
+  const medias: any = useAppSelector(selectMedias(photographerId))
+  const displayedMedias: I_MediaModel[] =
     medias.data
       ?.filter(getFilterFunction(filter))
       .filter(getSearchFunction(search))
@@ -80,38 +83,38 @@ export default function Profile() {
   function getSortFunction(sort: ISortType) {
     switch (sort) {
       case SORT_TYPES.LIKE:
-        return (a: MediaModel, b: MediaModel) => b.likes - a.likes
+        return (a: I_MediaModel, b: I_MediaModel) => b.likes - a.likes
 
       case SORT_TYPES.TITLE:
-        return (a: MediaModel, b: MediaModel) => {
+        return (a: I_MediaModel, b: I_MediaModel) => {
           if (a.title < b.title) return -1
           else return 1
         }
 
       case SORT_TYPES.DATE:
-        return (a: MediaModel, b: MediaModel) => {
+        return (a: I_MediaModel, b: I_MediaModel) => {
           if (new Date(a.date) > new Date(b.date)) return -1
           else return 1
         }
 
       case SORT_TYPES.PRICE:
-        return (a: MediaModel, b: MediaModel) => a.price - b.price
+        return (a: I_MediaModel, b: I_MediaModel) => a.price - b.price
 
       case SORT_TYPES.RANDOM:
-        return (a: MediaModel, b: MediaModel) => 0.5 - Math.random()
+        return (a: I_MediaModel, b: I_MediaModel) => 0.5 - Math.random()
 
       default:
-        return (a: MediaModel, b: MediaModel) => a.likes - b.likes
+        return (a: I_MediaModel, b: I_MediaModel) => a.likes - b.likes
     }
   }
 
-  function getFilterFunction(filter: IFilterType) {
+  function getFilterFunction(filter: T_MediaType | IFilterType) {
     if (filter === FILTER_TYPES.ALL) return () => true
-    return (media: MediaModel) => media.type === filter
+    return (media: I_MediaModel) => media.type === filter
   }
 
   function getSearchFunction(search: string) {
-    return (media: MediaModel) => {
+    return (media: I_MediaModel) => {
       return (
         media.title.toLowerCase().includes(search.toLowerCase()) ||
         media.price.toString().includes(search.toLowerCase()) ||

@@ -3,8 +3,7 @@ import PhotographerCard from '../../components/PhotographerCard'
 import { fetchOrUpdatePhotographers } from '../../features/photographers'
 import { StyledPhotographersContainer } from './style'
 import { selectPhotographers } from '../../utils/selectors'
-import { useDispatch, useSelector } from 'react-redux'
-import { PhotographerModel } from '../../models/Photographer'
+import { I_PhotographerModel } from '../../models/Photographer'
 import ControlBar from '../../components/ControlBar'
 import {
   ISortType,
@@ -13,9 +12,10 @@ import {
   STATUS_TYPES,
 } from '../../utils/type'
 import { ISortItem } from '../../components/SortButton'
+import { useAppDispatch, useAppSelector } from '../../utils/hooks'
 
 export default function Photographers() {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const [sort, setSort] = useState<ISortType>(SORT_TYPES.NAME)
   const [search, setSearch] = useState('')
 
@@ -23,8 +23,8 @@ export default function Photographers() {
     dispatch(fetchOrUpdatePhotographers)
   }, [dispatch])
 
-  const photographers = useSelector(selectPhotographers)
-  const displayedPhotographers: PhotographerModel[] = photographers.data
+  const photographers = useAppSelector(selectPhotographers)
+  const displayedPhotographers: I_PhotographerModel[] = photographers.data
     ?.filter(getSearchFunction(search))
     .sort(getSortFunction(sort))
     .slice()
@@ -49,20 +49,21 @@ export default function Photographers() {
   function getSortFunction(sort: ISortType) {
     switch (sort) {
       case SORT_TYPES.NAME:
-        return (a: PhotographerModel, b: PhotographerModel) => {
+        return (a: I_PhotographerModel, b: I_PhotographerModel) => {
           if (a.name < b.name) return -1
           else return 1
         }
 
       case SORT_TYPES.PRICE:
-        return (a: PhotographerModel, b: PhotographerModel) => a.price - b.price
+        return (a: I_PhotographerModel, b: I_PhotographerModel) =>
+          a.price - b.price
 
       case SORT_TYPES.RANDOM:
-        return (a: PhotographerModel, b: PhotographerModel) =>
+        return (a: I_PhotographerModel, b: I_PhotographerModel) =>
           0.5 - Math.random()
 
       default:
-        return (a: PhotographerModel, b: PhotographerModel) => {
+        return (a: I_PhotographerModel, b: I_PhotographerModel) => {
           if (a.name < b.name) return -1
           else return 1
         }
@@ -70,7 +71,7 @@ export default function Photographers() {
   }
 
   function getSearchFunction(search: string) {
-    return (media: PhotographerModel) => {
+    return (media: I_PhotographerModel) => {
       return (
         media.name.toLowerCase().includes(search.toLowerCase()) ||
         media.country.toLowerCase().includes(search.toLowerCase()) ||
@@ -93,7 +94,7 @@ export default function Photographers() {
         handleClickReset={handleClickReset}
       />
       <StyledPhotographersContainer>
-        {displayedPhotographers?.map((photographer: PhotographerModel) => (
+        {displayedPhotographers?.map((photographer: I_PhotographerModel) => (
           <PhotographerCard
             key={photographer.id}
             id={photographer.id}

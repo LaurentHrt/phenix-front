@@ -1,17 +1,25 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { selectPhotographers } from '../utils/selectors'
-import { STATUS_TYPES, IStatusType } from '../utils/type'
+import { STATUS_TYPES } from '../utils/type'
+import type { I_StatusType } from '../utils/type'
+import type { RootState } from '../utils/store'
 
 const api = `http://${process.env.REACT_APP_API}:${process.env.REACT_APP_PORT}/api/photographers`
 
-const initialState = {
+interface PhotographersState {
+  status: I_StatusType
+  data: any
+  error: any
+}
+
+const initialState: PhotographersState = {
   status: STATUS_TYPES.VOID,
   data: null,
   error: null,
 }
 
-export async function fetchOrUpdatePhotographers(dispatch, getState) {
-  const status: IStatusType = selectPhotographers(getState()).status
+export async function fetchOrUpdatePhotographers(dispatch: any, getState: any) {
+  const status: I_StatusType = selectPhotographers(getState()).status
   if (status === STATUS_TYPES.PENDING || status === STATUS_TYPES.UPDATING) {
     return
   }
@@ -46,7 +54,7 @@ const { actions, reducer } = createSlice({
       }
       return
     },
-    resolved: (draft, action) => {
+    resolved: (draft, action: PayloadAction<any>) => {
       if (
         draft.status === STATUS_TYPES.PENDING ||
         draft.status === STATUS_TYPES.UPDATING
@@ -57,7 +65,7 @@ const { actions, reducer } = createSlice({
       }
       return
     },
-    rejected: (draft, action) => {
+    rejected: (draft, action: PayloadAction<any>) => {
       if (
         draft.status === STATUS_TYPES.PENDING ||
         draft.status === STATUS_TYPES.UPDATING

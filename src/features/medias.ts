@@ -1,18 +1,25 @@
 import { selectMedias } from '../utils/selectors'
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { STATUS_TYPES } from '../utils/type'
+import type { I_StatusType } from '../utils/type'
+import type { RootState } from '../utils/store'
+import { T_PhotographerId } from '../models/Photographer'
 
 const api = `http://${process.env.REACT_APP_API}:${process.env.REACT_APP_PORT}/api/medias/`
 
+interface MediasState {
+  [index: number]: any
+}
+
 // le state initial de cette feature est un objet vide
-const initialState = {
+const initialState: MediasState = {
   // chaque propriété de cet objet correspond à l'Id d'un freelance
   // 3: { status: STATUS_TYPES.VOID }
 }
 
-export function fetchOrUpdateMedias(photographerId) {
+export function fetchOrUpdateMedias(photographerId: T_PhotographerId) {
   // on retourne un thunk
-  return async (dispatch, getState) => {
+  return async (dispatch: any, getState: any) => {
     // ...
     const selectMediaByPhotographerId = selectMedias(photographerId)
     const status = selectMediaByPhotographerId(getState()).status
@@ -31,7 +38,10 @@ export function fetchOrUpdateMedias(photographerId) {
   }
 }
 
-function setVoidIfUndefined(draft, photographerId) {
+function setVoidIfUndefined(
+  draft: MediasState,
+  photographerId: T_PhotographerId
+): any {
   if (draft[photographerId] === undefined) {
     draft[photographerId] = { status: STATUS_TYPES.VOID }
   }
@@ -45,7 +55,7 @@ const { actions, reducer } = createSlice({
       prepare: (photographerId) => ({
         payload: { photographerId },
       }),
-      reducer: (draft, action) => {
+      reducer: (draft, action: PayloadAction<any>) => {
         setVoidIfUndefined(draft, action.payload.photographerId)
         if (draft[action.payload.photographerId].status === STATUS_TYPES.VOID) {
           draft[action.payload.photographerId].status = STATUS_TYPES.PENDING
@@ -72,7 +82,7 @@ const { actions, reducer } = createSlice({
         payload: { photographerId, data },
       }),
       // la fonction de reducer
-      reducer: (draft, action) => {
+      reducer: (draft, action: PayloadAction<any>) => {
         setVoidIfUndefined(draft, action.payload.photographerId)
         if (
           draft[action.payload.photographerId].status ===
@@ -90,7 +100,7 @@ const { actions, reducer } = createSlice({
       prepare: (photographerId, error) => ({
         payload: { photographerId, error },
       }),
-      reducer: (draft, action) => {
+      reducer: (draft, action: PayloadAction<any>) => {
         setVoidIfUndefined(draft, action.payload.photographerId)
         if (
           draft[action.payload.photographerId].status ===

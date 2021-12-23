@@ -1,3 +1,5 @@
+import { MEDIA_TYPES } from '../models/Media'
+
 export enum STATUS_TYPES {
   VOID = 'void',
   PENDING = 'pending',
@@ -6,7 +8,7 @@ export enum STATUS_TYPES {
   RESOLVED = 'resolved',
 }
 
-export type IStatusType =
+export type I_StatusType =
   | STATUS_TYPES.VOID
   | STATUS_TYPES.PENDING
   | STATUS_TYPES.UPDATING
@@ -23,7 +25,7 @@ export enum FILTER_TYPES {
 export enum FILTER_DISPLAY {
   ALL = 'Tout',
   IMAGE = 'Image',
-  VIDEO = 'Video',
+  VIDEO = 'Vidéo',
   GIF = 'Gif',
 }
 

@@ -5,7 +5,7 @@ import {
   Select,
   SelectChangeEvent,
 } from '@mui/material'
-import { ISortType } from '../../utils/type'
+import type { ISortType } from '../../utils/type'
 
 export interface ISortItem {
   value: ISortType

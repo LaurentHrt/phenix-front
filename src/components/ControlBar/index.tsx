@@ -3,7 +3,7 @@ import SearchBar from '../SearchBar'
 import SortButton, { ISortItem } from '../SortButton'
 import { StyledControlsContainer } from './style'
 import SimpleButton from '../SimpleButton/index'
-import { IFilterType, ISortType } from '../../utils/type'
+import type { IFilterType, ISortType } from '../../utils/type'
 
 interface ISort {
   value: ISortType

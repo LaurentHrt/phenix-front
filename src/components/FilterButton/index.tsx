@@ -5,7 +5,7 @@ import {
   Select,
   SelectChangeEvent,
 } from '@mui/material'
-import { IFilterType } from '../../utils/type'
+import type { IFilterType } from '../../utils/type'
 
 export interface IFilterItem {
   value: IFilterType
