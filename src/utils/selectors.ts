@@ -1,5 +1,7 @@
-const voidPhotographer = { status: 'void' }
-const voidMedia = { status: 'void' }
+import { STATUS_TYPES } from './type'
+
+const voidPhotographer = { status: STATUS_TYPES.VOID }
+const voidMedia = { status: STATUS_TYPES.VOID }
 
 export const selectPhotographers = (state) => state.photographers
 

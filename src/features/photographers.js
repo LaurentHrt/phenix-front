@@ -1,17 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { selectPhotographers } from '../utils/selectors'
+import { STATUS_TYPES, IStatusType } from '../utils/type'
 
 const api = `http://${process.env.REACT_APP_API}:${process.env.REACT_APP_PORT}/api/photographers`
 
 const initialState = {
-  status: 'void',
+  status: STATUS_TYPES.VOID,
   data: null,
   error: null,
 }
 
 export async function fetchOrUpdatePhotographers(dispatch, getState) {
-  const status = selectPhotographers(getState()).status
-  if (status === 'pending' || status === 'updating') {
+  const status: IStatusType = selectPhotographers(getState()).status
+  if (status === STATUS_TYPES.PENDING || status === STATUS_TYPES.UPDATING) {
     return
   }
   dispatch(actions.fetching())
@@ -30,32 +31,38 @@ const { actions, reducer } = createSlice({
   initialState,
   reducers: {
     fetching: (draft) => {
-      if (draft.status === 'void') {
-        draft.status = 'pending'
+      if (draft.status === STATUS_TYPES.VOID) {
+        draft.status = STATUS_TYPES.PENDING
         return
       }
-      if (draft.status === 'rejected') {
+      if (draft.status === STATUS_TYPES.REJECTED) {
         draft.error = null
-        draft.status = 'pending'
+        draft.status = STATUS_TYPES.PENDING
         return
       }
-      if (draft.status === 'resolved') {
-        draft.status = 'updating'
+      if (draft.status === STATUS_TYPES.RESOLVED) {
+        draft.status = STATUS_TYPES.UPDATING
         return
       }
       return
     },
     resolved: (draft, action) => {
-      if (draft.status === 'pending' || draft.status === 'updating') {
+      if (
+        draft.status === STATUS_TYPES.PENDING ||
+        draft.status === STATUS_TYPES.UPDATING
+      ) {
         draft.data = action.payload
-        draft.status = 'resolved'
+        draft.status = STATUS_TYPES.RESOLVED
         return
       }
       return
     },
     rejected: (draft, action) => {
-      if (draft.status === 'pending' || draft.status === 'updating') {
-        draft.status = 'rejected'
+      if (
+        draft.status === STATUS_TYPES.PENDING ||
+        draft.status === STATUS_TYPES.UPDATING
+      ) {
+        draft.status = STATUS_TYPES.REJECTED
         draft.error = action.payload
         draft.data = null
         return

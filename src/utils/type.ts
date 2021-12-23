@@ -1,3 +1,18 @@
+export enum STATUS_TYPES {
+  VOID = 'void',
+  PENDING = 'pending',
+  UPDATING = 'updating',
+  REJECTED = 'rejected',
+  RESOLVED = 'resolved',
+}
+
+export type IStatusType =
+  | STATUS_TYPES.VOID
+  | STATUS_TYPES.PENDING
+  | STATUS_TYPES.UPDATING
+  | STATUS_TYPES.REJECTED
+  | STATUS_TYPES.RESOLVED
+
 export enum FILTER_TYPES {
   ALL = 'all',
   IMAGE = 'image',

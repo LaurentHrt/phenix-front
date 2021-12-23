@@ -17,6 +17,7 @@ import {
   ISortType,
   SORT_DISPLAY,
   SORT_TYPES,
+  STATUS_TYPES,
 } from '../../utils/type'
 import { IFilterItem } from '../../components/FilterButton'
 import { ISortItem } from '../../components/SortButton'
@@ -119,7 +120,10 @@ export default function Profile() {
     }
   }
 
-  if (photographer.status === 'rejected' || medias.status === 'rejected') {
+  if (
+    photographer.status === STATUS_TYPES.REJECTED ||
+    medias.status === STATUS_TYPES.REJECTED
+  ) {
     return <span>Il y a un problème de serveur</span>
   }
 
@@ -151,7 +155,7 @@ export default function Profile() {
         handleClickReset={handleClickReset}
       />
 
-      {medias.status === 'pending' ? (
+      {medias.status === STATUS_TYPES.PENDING ? (
         <Spinner />
       ) : (
         <Gallery medias={displayedMedias} />

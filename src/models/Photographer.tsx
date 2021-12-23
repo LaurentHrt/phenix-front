@@ -1,5 +1,7 @@
+export type photographerId = number
+
 export interface PhotographerModel {
-  id: number
+  id: photographerId
   name: string
   city: string
   country: string

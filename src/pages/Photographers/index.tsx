@@ -6,7 +6,12 @@ import { selectPhotographers } from '../../utils/selectors'
 import { useDispatch, useSelector } from 'react-redux'
 import { PhotographerModel } from '../../models/Photographer'
 import ControlBar from '../../components/ControlBar'
-import { ISortType, SORT_DISPLAY, SORT_TYPES } from '../../utils/type'
+import {
+  ISortType,
+  SORT_DISPLAY,
+  SORT_TYPES,
+  STATUS_TYPES,
+} from '../../utils/type'
 import { ISortItem } from '../../components/SortButton'
 
 export default function Photographers() {
@@ -76,7 +81,7 @@ export default function Photographers() {
     }
   }
 
-  if (photographers.status === 'rejected') {
+  if (photographers.status === STATUS_TYPES.REJECTED) {
     return <span>Il y a un problème de serveur</span>
   }
 

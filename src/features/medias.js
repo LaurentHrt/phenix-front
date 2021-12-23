@@ -1,12 +1,13 @@
 import { selectMedias } from '../utils/selectors'
 import { createSlice } from '@reduxjs/toolkit'
+import { STATUS_TYPES } from '../utils/type'
 
 const api = `http://${process.env.REACT_APP_API}:${process.env.REACT_APP_PORT}/api/medias/`
 
 // le state initial de cette feature est un objet vide
 const initialState = {
   // chaque propriété de cet objet correspond à l'Id d'un freelance
-  // 3: { status: 'void' }
+  // 3: { status: STATUS_TYPES.VOID }
 }
 
 export function fetchOrUpdateMedias(photographerId) {
@@ -15,7 +16,7 @@ export function fetchOrUpdateMedias(photographerId) {
     // ...
     const selectMediaByPhotographerId = selectMedias(photographerId)
     const status = selectMediaByPhotographerId(getState()).status
-    if (status === 'pending' || status === 'updating') {
+    if (status === STATUS_TYPES.PENDING || status === STATUS_TYPES.UPDATING) {
       return
     }
     dispatch(actions.fetching(photographerId))
@@ -32,7 +33,7 @@ export function fetchOrUpdateMedias(photographerId) {
 
 function setVoidIfUndefined(draft, photographerId) {
   if (draft[photographerId] === undefined) {
-    draft[photographerId] = { status: 'void' }
+    draft[photographerId] = { status: STATUS_TYPES.VOID }
   }
 }
 
@@ -46,17 +47,21 @@ const { actions, reducer } = createSlice({
       }),
       reducer: (draft, action) => {
         setVoidIfUndefined(draft, action.payload.photographerId)
-        if (draft[action.payload.photographerId].status === 'void') {
-          draft[action.payload.photographerId].status = 'pending'
+        if (draft[action.payload.photographerId].status === STATUS_TYPES.VOID) {
+          draft[action.payload.photographerId].status = STATUS_TYPES.PENDING
           return
         }
-        if (draft[action.payload.photographerId].status === 'rejected') {
+        if (
+          draft[action.payload.photographerId].status === STATUS_TYPES.REJECTED
+        ) {
           draft[action.payload.photographerId].error = null
-          draft[action.payload.photographerId].status = 'pending'
+          draft[action.payload.photographerId].status = STATUS_TYPES.PENDING
           return
         }
-        if (draft[action.payload.photographerId].status === 'resolved') {
-          draft[action.payload.photographerId].status = 'updating'
+        if (
+          draft[action.payload.photographerId].status === STATUS_TYPES.RESOLVED
+        ) {
+          draft[action.payload.photographerId].status = STATUS_TYPES.UPDATING
           return
         }
       },
@@ -70,11 +75,12 @@ const { actions, reducer } = createSlice({
       reducer: (draft, action) => {
         setVoidIfUndefined(draft, action.payload.photographerId)
         if (
-          draft[action.payload.photographerId].status === 'pending' ||
-          draft[action.payload.photographerId].status === 'updating'
+          draft[action.payload.photographerId].status ===
+            STATUS_TYPES.PENDING ||
+          draft[action.payload.photographerId].status === STATUS_TYPES.UPDATING
         ) {
           draft[action.payload.photographerId].data = action.payload.data
-          draft[action.payload.photographerId].status = 'resolved'
+          draft[action.payload.photographerId].status = STATUS_TYPES.RESOLVED
           return
         }
         return
@@ -87,12 +93,13 @@ const { actions, reducer } = createSlice({
       reducer: (draft, action) => {
         setVoidIfUndefined(draft, action.payload.photographerId)
         if (
-          draft[action.payload.photographerId].status === 'pending' ||
-          draft[action.payload.photographerId].status === 'updating'
+          draft[action.payload.photographerId].status ===
+            STATUS_TYPES.PENDING ||
+          draft[action.payload.photographerId].status === STATUS_TYPES.UPDATING
         ) {
           draft[action.payload.photographerId].error = action.payload.error
           draft[action.payload.photographerId].data = null
-          draft[action.payload.photographerId].status = 'rejected'
+          draft[action.payload.photographerId].status = STATUS_TYPES.REJECTED
           return
         }
         return
