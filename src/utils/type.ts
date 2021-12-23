@@ -1,4 +1,6 @@
-import { MEDIA_TYPES } from '../models/Media'
+export interface I_Error {
+  error: string
+}
 
 export enum STATUS_TYPES {
   VOID = 'void',

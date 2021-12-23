@@ -1,21 +1,21 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { selectPhotographers } from '../utils/selectors'
-import { STATUS_TYPES } from '../utils/type'
+import { I_Error, STATUS_TYPES } from '../utils/type'
 import type { I_StatusType } from '../utils/type'
-import type { RootState } from '../utils/store'
+import { I_PhotographerModel } from '../models/Photographer'
 
 const api = `http://${process.env.REACT_APP_API}:${process.env.REACT_APP_PORT}/api/photographers`
 
-interface PhotographersState {
+export interface I_PhotographersQuery {
   status: I_StatusType
-  data: any
-  error: any
+  data: I_PhotographerModel[]
+  error?: I_Error
 }
 
-const initialState: PhotographersState = {
+const initialState: I_PhotographersQuery = {
   status: STATUS_TYPES.VOID,
-  data: null,
-  error: null,
+  data: [],
+  error: undefined,
 }
 
 export async function fetchOrUpdatePhotographers(dispatch: any, getState: any) {
@@ -26,7 +26,7 @@ export async function fetchOrUpdatePhotographers(dispatch: any, getState: any) {
   dispatch(actions.fetching())
   try {
     const response = await fetch(api)
-    const data = await response.json()
+    const data: I_PhotographersQuery = await response.json()
     if (response.ok) dispatch(actions.resolved(data))
     else throw data.error
   } catch (error) {
@@ -44,7 +44,7 @@ const { actions, reducer } = createSlice({
         return
       }
       if (draft.status === STATUS_TYPES.REJECTED) {
-        draft.error = null
+        draft.error = undefined
         draft.status = STATUS_TYPES.PENDING
         return
       }
@@ -72,7 +72,7 @@ const { actions, reducer } = createSlice({
       ) {
         draft.status = STATUS_TYPES.REJECTED
         draft.error = action.payload
-        draft.data = null
+        draft.data = []
         return
       }
       return

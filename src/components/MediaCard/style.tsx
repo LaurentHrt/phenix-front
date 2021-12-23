@@ -12,7 +12,7 @@ export const StyledMediaCard = styled.section`
   video {
     width: 100%;
     display: block;
-    transition: all 300ms cubic-bezier(0.49, 0.19, 0.1, 0.99);
+    // transition: all 300ms cubic-bezier(0.49, 0.19, 0.1, 0.99);
   }
 
   &:hover {

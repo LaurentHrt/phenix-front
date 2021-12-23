@@ -150,6 +150,7 @@ export default function MediaCard({
             src={`http://${process.env.REACT_APP_API}:${process.env.REACT_APP_PORT}${process.env.REACT_APP_PATH_TO_MEDIA_MEDIUM}${filename}`}
             // onLoad={(e) => handlePictureLoaded(e)}
             alt=""
+            transitionDuration={0.5}
           />
 
           // </Suspense>

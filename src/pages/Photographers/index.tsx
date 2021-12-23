@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react'
 import PhotographerCard from '../../components/PhotographerCard'
-import { fetchOrUpdatePhotographers } from '../../features/photographers'
+import {
+  fetchOrUpdatePhotographers,
+  I_PhotographersQuery,
+} from '../../features/photographers'
 import { StyledPhotographersContainer } from './style'
 import { selectPhotographers } from '../../utils/selectors'
 import { I_PhotographerModel } from '../../models/Photographer'
@@ -23,9 +26,10 @@ export default function Photographers() {
     dispatch(fetchOrUpdatePhotographers)
   }, [dispatch])
 
-  const photographers = useAppSelector(selectPhotographers)
+  const photographers: I_PhotographersQuery =
+    useAppSelector(selectPhotographers)
   const displayedPhotographers: I_PhotographerModel[] = photographers.data
-    ?.filter(getSearchFunction(search))
+    .filter(getSearchFunction(search))
     .sort(getSortFunction(sort))
     .slice()
 

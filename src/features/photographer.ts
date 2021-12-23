@@ -1,19 +1,23 @@
 import { selectPhotographer } from '../utils/selectors'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { STATUS_TYPES } from '../utils/type'
+import { I_Error, STATUS_TYPES } from '../utils/type'
 import type { I_StatusType } from '../utils/type'
-import type { RootState } from '../utils/store'
-import { T_PhotographerId } from '../models/Photographer'
+import { I_PhotographerModel, T_PhotographerId } from '../models/Photographer'
 
 const api = `http://${process.env.REACT_APP_API}:${process.env.REACT_APP_PORT}/api/photographers/`
 
-interface PhotographerState {
-  [index: number]: any
+export interface I_PhotographerQuery {
+  status: I_StatusType
+  data?: I_PhotographerModel
+  error?: I_Error
 }
 
-// le state initial de cette feature est un objet vide
+interface PhotographerState {
+  [index: T_PhotographerId]: I_PhotographerQuery
+}
+
 const initialState: PhotographerState = {
-  // chaque propriété de cet objet correspond à l'Id d'un freelance
+  // chaque propriété de cet objet correspond à l'Id d'un photographe
   // 3: { status: STATUS_TYPES.VOID }
 }
 
@@ -21,15 +25,16 @@ export function fetchOrUpdatePhotographer(photographerId: T_PhotographerId) {
   // on retourne un thunk
   return async (dispatch: any, getState: any) => {
     // ...
-    const selectPhotographerById = selectPhotographer(photographerId)
-    const status: I_StatusType = selectPhotographerById(getState()).status
+    const status: I_StatusType = selectPhotographer(photographerId)(
+      getState()
+    ).status
     if (status === STATUS_TYPES.PENDING || status === STATUS_TYPES.UPDATING) {
       return
     }
     dispatch(actions.fetching(photographerId))
     try {
       const response = await fetch(api + photographerId)
-      const data = await response.json()
+      const data: I_PhotographerQuery = await response.json()
       if (response.ok) dispatch(actions.resolved(photographerId, data))
       else throw data.error
     } catch (error) {
@@ -64,7 +69,7 @@ const { actions, reducer } = createSlice({
         if (
           draft[action.payload.photographerId].status === STATUS_TYPES.REJECTED
         ) {
-          draft[action.payload.photographerId].error = null
+          draft[action.payload.photographerId].error = undefined
           draft[action.payload.photographerId].status = STATUS_TYPES.PENDING
           return
         }
@@ -108,7 +113,7 @@ const { actions, reducer } = createSlice({
           draft[action.payload.photographerId].status === STATUS_TYPES.UPDATING
         ) {
           draft[action.payload.photographerId].error = action.payload.error
-          draft[action.payload.photographerId].data = null
+          draft[action.payload.photographerId].data = undefined
           draft[action.payload.photographerId].status = STATUS_TYPES.REJECTED
           return
         }

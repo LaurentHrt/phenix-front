@@ -3,7 +3,7 @@ import { useParams } from 'react-router'
 import { StyledProfilePage } from './style'
 import { fetchOrUpdatePhotographer } from '../../features/photographer'
 import { selectMedias, selectPhotographer } from '../../utils/selectors'
-import { fetchOrUpdateMedias } from '../../features/medias'
+import { fetchOrUpdateMedias, I_MediasQuery } from '../../features/medias'
 import PhotographerBanner from '../../components/PhotographerBanner'
 import Gallery from '../../components/Gallery'
 import { I_MediaModel, T_MediaType } from '../../models/Media'
@@ -25,6 +25,7 @@ import { IFilterItem } from '../../components/FilterButton'
 import { ISortItem } from '../../components/SortButton'
 import Spinner from '../../components/Spinner'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks'
+import { I_PhotographerQuery } from '../../features/photographer'
 
 export default function Profile() {
   const params = useParams()
@@ -39,10 +40,12 @@ export default function Profile() {
     dispatch(fetchOrUpdateMedias(photographerId))
   }, [dispatch, photographerId])
 
-  const photographer: any = useAppSelector(selectPhotographer(photographerId))
-  const profileData: I_PhotographerModel = photographer.data
+  const photographer: I_PhotographerQuery = useAppSelector(
+    selectPhotographer(photographerId)
+  )
+  const profileData: I_PhotographerModel | undefined = photographer.data
 
-  const medias: any = useAppSelector(selectMedias(photographerId))
+  const medias: I_MediasQuery = useAppSelector(selectMedias(photographerId))
   const displayedMedias: I_MediaModel[] =
     medias.data
       ?.filter(getFilterFunction(filter))
@@ -132,13 +135,15 @@ export default function Profile() {
 
   return (
     <StyledProfilePage>
-      <PhotographerBanner
-        name={profileData?.name}
-        city={profileData?.city}
-        country={profileData?.country}
-        tagline={profileData?.tagline}
-        portrait={profileData?.portrait}
-      />
+      {profileData && (
+        <PhotographerBanner
+          name={profileData.name}
+          city={profileData.city}
+          country={profileData.country}
+          tagline={profileData.tagline}
+          portrait={profileData.portrait}
+        />
+      )}
 
       <ControlBar
         sort={{
