@@ -2,13 +2,13 @@ import { selectMedias } from '../utils/selectors'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { I_Error, I_StatusType, STATUS_TYPES } from '../utils/type'
 import { T_PhotographerId } from '../models/Photographer'
-import { I_MediaModel, T_MediaId } from '../models/Media'
+import { I_Media, T_MediaId } from '../models/Media'
 
 const api = `http://${process.env.REACT_APP_API}:${process.env.REACT_APP_PORT}/api/medias/`
 
 export interface I_MediasQuery {
   status: I_StatusType
-  data?: I_MediaModel[]
+  data?: I_Media[]
   error?: I_Error
 }
 

@@ -6,7 +6,7 @@ import { selectMedias, selectPhotographer } from '../../utils/selectors'
 import { fetchOrUpdateMedias, I_MediasQuery } from '../../features/medias'
 import PhotographerBanner from '../../components/PhotographerBanner'
 import Gallery from '../../components/Gallery'
-import { I_MediaModel, T_MediaType } from '../../models/Media'
+import { I_Media, T_MediaType } from '../../models/Media'
 import {
   I_PhotographerModel,
   T_PhotographerId,
@@ -46,7 +46,7 @@ export default function Profile() {
   const profileData: I_PhotographerModel | undefined = photographer.data
 
   const medias: I_MediasQuery = useAppSelector(selectMedias(photographerId))
-  const displayedMedias: I_MediaModel[] =
+  const displayedMedias: I_Media[] =
     medias.data
       ?.filter(getFilterFunction(filter))
       .filter(getSearchFunction(search))
@@ -86,38 +86,38 @@ export default function Profile() {
   function getSortFunction(sort: ISortType) {
     switch (sort) {
       case SORT_TYPES.LIKE:
-        return (a: I_MediaModel, b: I_MediaModel) => b.likes - a.likes
+        return (a: I_Media, b: I_Media) => b.likes - a.likes
 
       case SORT_TYPES.TITLE:
-        return (a: I_MediaModel, b: I_MediaModel) => {
+        return (a: I_Media, b: I_Media) => {
           if (a.title < b.title) return -1
           else return 1
         }
 
       case SORT_TYPES.DATE:
-        return (a: I_MediaModel, b: I_MediaModel) => {
+        return (a: I_Media, b: I_Media) => {
           if (new Date(a.date) > new Date(b.date)) return -1
           else return 1
         }
 
       case SORT_TYPES.PRICE:
-        return (a: I_MediaModel, b: I_MediaModel) => a.price - b.price
+        return (a: I_Media, b: I_Media) => a.price - b.price
 
       case SORT_TYPES.RANDOM:
-        return (a: I_MediaModel, b: I_MediaModel) => 0.5 - Math.random()
+        return (a: I_Media, b: I_Media) => 0.5 - Math.random()
 
       default:
-        return (a: I_MediaModel, b: I_MediaModel) => a.likes - b.likes
+        return (a: I_Media, b: I_Media) => a.likes - b.likes
     }
   }
 
   function getFilterFunction(filter: T_MediaType | IFilterType) {
     if (filter === FILTER_TYPES.ALL) return () => true
-    return (media: I_MediaModel) => media.type === filter
+    return (media: I_Media) => media.type === filter
   }
 
   function getSearchFunction(search: string) {
-    return (media: I_MediaModel) => {
+    return (media: I_Media) => {
       return (
         media.title.toLowerCase().includes(search.toLowerCase()) ||
         media.price.toString().includes(search.toLowerCase()) ||

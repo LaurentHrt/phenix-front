@@ -1,10 +1,10 @@
-import { I_MediaModel } from '../../models/Media'
+import { I_Media } from '../../models/Media'
 import { size } from '../../utils/style/responsive'
 import MediaCard from '../MediaCard'
 import { StyledGallery } from './style'
 
 interface GalleryProps {
-  medias: I_MediaModel[]
+  medias: I_Media[]
 }
 
 export default function Gallery({ medias }: GalleryProps) {
@@ -21,7 +21,7 @@ export default function Gallery({ medias }: GalleryProps) {
     gallery = (
       <StyledGallery>
         <div>
-          {displayedMedias.slice(0, thirdIndex).map((media: I_MediaModel) => (
+          {displayedMedias.slice(0, thirdIndex).map((media: I_Media) => (
             <MediaCard
               key={media.id}
               title={media.title}
@@ -36,7 +36,7 @@ export default function Gallery({ medias }: GalleryProps) {
         <div>
           {displayedMedias
             .slice(thirdIndex, thirdIndex * 2)
-            .map((media: I_MediaModel) => (
+            .map((media: I_Media) => (
               <MediaCard
                 key={media.id}
                 title={media.title}
@@ -49,7 +49,7 @@ export default function Gallery({ medias }: GalleryProps) {
             ))}
         </div>
         <div>
-          {displayedMedias.slice(thirdIndex * 2).map((media: I_MediaModel) => (
+          {displayedMedias.slice(thirdIndex * 2).map((media: I_Media) => (
             <MediaCard
               key={media.id}
               title={media.title}
@@ -67,7 +67,7 @@ export default function Gallery({ medias }: GalleryProps) {
     gallery = (
       <StyledGallery>
         <div>
-          {displayedMedias.slice(0, halfIndex).map((media: I_MediaModel) => (
+          {displayedMedias.slice(0, halfIndex).map((media: I_Media) => (
             <MediaCard
               key={media.id}
               title={media.title}
@@ -80,7 +80,7 @@ export default function Gallery({ medias }: GalleryProps) {
           ))}
         </div>
         <div>
-          {displayedMedias.slice(halfIndex).map((media: I_MediaModel) => (
+          {displayedMedias.slice(halfIndex).map((media: I_Media) => (
             <MediaCard
               key={media.id}
               title={media.title}

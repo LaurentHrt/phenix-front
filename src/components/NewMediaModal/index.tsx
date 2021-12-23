@@ -3,10 +3,27 @@ import { MouseEventHandler } from 'react'
 import { StyledNewMediaModal } from './style'
 import closeIcon from '../../assets/icons/close.svg'
 import { FormikHelpers, useFormik } from 'formik'
-import { TextField } from '@mui/material'
+import {
+  Button,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  Stack,
+  TextField,
+} from '@mui/material'
 import SimpleButton from '../SimpleButton'
 import axios from 'axios'
 import { useParams } from 'react-router'
+import {
+  MEDIA_TYPES,
+  T_MediaAlt,
+  T_MediaPrice,
+  T_MediaTitle,
+  T_MediaType,
+} from '../../models/Media'
+import DeleteIcon from '@mui/icons-material/Delete'
+import SendIcon from '@mui/icons-material/Send'
 
 interface NewMediaModalProps {
   isOpen: boolean
@@ -14,10 +31,11 @@ interface NewMediaModalProps {
 }
 
 interface Values {
-  title: string
-  price: number
-  description: string
-  file: any
+  title: T_MediaTitle
+  price: T_MediaPrice
+  description: T_MediaAlt
+  type: T_MediaType
+  file: string
 }
 
 export default function NewMediaModal({
@@ -32,6 +50,7 @@ export default function NewMediaModal({
       title: '',
       price: 0,
       description: '',
+      type: MEDIA_TYPES.IMAGE,
       file: '',
     },
     onSubmit: async (
@@ -44,6 +63,7 @@ export default function NewMediaModal({
       data.append('file', values.file)
       data.append('title', values.title)
       data.append('price', values.price.toString())
+      data.append('type', values.type)
       data.append('alt', values.description)
       data.append('photographerId', photographerId || '')
 
@@ -63,11 +83,8 @@ export default function NewMediaModal({
       onRequestClose={handleCloseModal}
       shouldCloseOnOverlayClick={true}
     >
+      <h1>Ajouter une nouvelle photo</h1>
       <StyledNewMediaModal>
-        <button onClick={handleCloseModal}>
-          <img src={closeIcon} alt="close" />
-        </button>
-
         <form onSubmit={formik.handleSubmit}>
           <TextField
             name="title"
@@ -85,6 +102,22 @@ export default function NewMediaModal({
             value={formik.values.description}
           />
 
+          <FormControl>
+            <InputLabel id="type">Type</InputLabel>
+            <Select
+              name="type"
+              labelId="type"
+              id="type"
+              label="Type"
+              value={formik.values.type}
+              onChange={formik.handleChange}
+            >
+              <MenuItem value={MEDIA_TYPES.IMAGE}>Image</MenuItem>
+              <MenuItem value={MEDIA_TYPES.GIF}>Gif</MenuItem>
+              <MenuItem value={MEDIA_TYPES.VIDEO}>Vidéo</MenuItem>
+            </Select>
+          </FormControl>
+
           <TextField
             name="price"
             label="Prix"
@@ -95,15 +128,29 @@ export default function NewMediaModal({
 
           <input
             name="file"
-            // label="Fichier"
-            // variant="outlined"
             onChange={(event: any) => {
               formik.setFieldValue('file', event.currentTarget.files[0])
             }}
             type="file"
           />
 
-          <SimpleButton onClick={formik.handleSubmit} text="Envoyer" />
+          <Stack direction="row" spacing={2}>
+            {/* <SimpleButton onClick={formik.handleSubmit} text="Valider" /> */}
+            <Button
+              variant="outlined"
+              startIcon={<DeleteIcon />}
+              onClick={handleCloseModal}
+            >
+              Annuler
+            </Button>
+            <Button
+              variant="contained"
+              endIcon={<SendIcon />}
+              onClick={() => formik.handleSubmit()}
+            >
+              Valider
+            </Button>
+          </Stack>
         </form>
       </StyledNewMediaModal>
     </ReactModal>

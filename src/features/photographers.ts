@@ -3,6 +3,7 @@ import { selectPhotographers } from '../utils/selectors'
 import { I_Error, STATUS_TYPES } from '../utils/type'
 import type { I_StatusType } from '../utils/type'
 import { I_PhotographerModel } from '../models/Photographer'
+import { I_PhotographerQuery } from './photographer'
 
 const api = `http://${process.env.REACT_APP_API}:${process.env.REACT_APP_PORT}/api/photographers`
 

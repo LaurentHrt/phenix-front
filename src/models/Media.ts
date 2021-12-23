@@ -19,7 +19,7 @@ export type T_MediaDate = string
 export type T_MediaPrice = number
 export type T_MediaAlt = string
 
-export interface I_MediaModel {
+export interface I_Media {
   id: T_MediaId
   photographerId: T_MediaPhotographerId
   filename: T_MediaFilename

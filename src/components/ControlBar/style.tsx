@@ -8,4 +8,5 @@ export const StyledControlsContainer = styled.section`
   @media ${device.tablet} {
     flex-direction: row;
   }
+  z-index: 0;
 `
