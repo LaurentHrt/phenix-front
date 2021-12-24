@@ -6,14 +6,14 @@ import { I_Media, T_MediaId } from '../models/Media'
 
 const api = `http://${process.env.REACT_APP_API}:${process.env.REACT_APP_PORT}/api/medias/`
 
-export interface I_MediasQuery {
+export interface I_MediasResponseData {
   status: I_StatusType
   data?: I_Media[]
   error?: I_Error
 }
 
 interface I_MediasState {
-  [index: T_MediaId]: I_MediasQuery
+  [index: T_MediaId]: I_MediasResponseData
 }
 
 const initialState: I_MediasState = {
@@ -31,7 +31,7 @@ export function fetchOrUpdateMedias(photographerId: T_PhotographerId) {
     dispatch(actions.fetching(photographerId))
     try {
       const response = await fetch(api + photographerId)
-      const data: I_MediasQuery = await response.json()
+      const data: I_MediasResponseData = await response.json()
       if (response.ok) dispatch(actions.resolved(photographerId, data))
       else throw data.error
     } catch (error) {

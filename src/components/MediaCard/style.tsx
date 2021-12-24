@@ -1,18 +1,27 @@
 import styled from 'styled-components'
+import { device } from '../../utils/style/responsive'
 
 export const StyledMediaCard = styled.section`
-  margin-bottom: 35px;
   overflow: hidden;
   box-shadow: 0px 20px 20px 1px hsl(229deg 6% 66%);
   position: relative;
   border-radius: 20px;
   transition: all 500ms cubic-bezier(0.34, 0.07, 0.26, 1);
+  flex: auto;
+  @media ${device.smallDesktop} {
+    max-width: 40vw;
+  }
 
   img,
   video {
     width: 100%;
+    height: 100%;
+    object-fit: cover;
     display: block;
-    // transition: all 300ms cubic-bezier(0.49, 0.19, 0.1, 0.99);
+    transition: all 300ms cubic-bezier(0.49, 0.19, 0.1, 0.99);
+    @media ${device.smallDesktop} {
+      max-height: 50vh;
+    }
   }
 
   &:hover {
@@ -23,13 +32,6 @@ export const StyledMediaCard = styled.section`
     }
     & .slidingBanner {
       transform: translateY(-100px);
-    }
-  }
-  &:active {
-    transform: scale(1.2);
-    z-index: 100;
-    & img {
-      transform: scale(1.7);
     }
   }
 `

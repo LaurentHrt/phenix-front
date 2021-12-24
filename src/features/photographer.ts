@@ -6,14 +6,14 @@ import { I_PhotographerModel, T_PhotographerId } from '../models/Photographer'
 
 const api = `http://${process.env.REACT_APP_API}:${process.env.REACT_APP_PORT}/api/photographers/`
 
-export interface I_PhotographerQuery {
+export interface I_PhotographerResponseData {
   status: I_StatusType
   data?: I_PhotographerModel
   error?: I_Error
 }
 
 interface PhotographerState {
-  [index: T_PhotographerId]: I_PhotographerQuery
+  [index: T_PhotographerId]: I_PhotographerResponseData
 }
 
 const initialState: PhotographerState = {
@@ -34,7 +34,7 @@ export function fetchOrUpdatePhotographer(photographerId: T_PhotographerId) {
     dispatch(actions.fetching(photographerId))
     try {
       const response = await fetch(api + photographerId)
-      const data: I_PhotographerQuery = await response.json()
+      const data: I_PhotographerResponseData = await response.json()
       if (response.ok) dispatch(actions.resolved(photographerId, data))
       else throw data.error
     } catch (error) {

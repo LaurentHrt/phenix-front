@@ -1,7 +1,6 @@
 import ReactModal from 'react-modal'
 import { MouseEventHandler } from 'react'
 import { StyledNewMediaModal } from './style'
-import closeIcon from '../../assets/icons/close.svg'
 import { FormikHelpers, useFormik } from 'formik'
 import {
   Button,

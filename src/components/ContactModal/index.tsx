@@ -1,7 +1,6 @@
 import ReactModal from 'react-modal'
 import { MouseEventHandler } from 'react'
 import { StyledContactModal } from './style'
-import closeIcon from '../../assets/icons/close.svg'
 import { FormikHelpers, useFormik } from 'formik'
 import { TextField } from '@mui/material'
 import SimpleButton from '../SimpleButton'
@@ -45,9 +44,7 @@ export default function ContactModal({
       shouldCloseOnOverlayClick={true}
     >
       <StyledContactModal>
-        <button onClick={handleCloseModal}>
-          <img src={closeIcon} alt="close" />
-        </button>
+        <button onClick={handleCloseModal}>Fermer</button>
 
         <form onSubmit={formik.handleSubmit}>
           <TextField

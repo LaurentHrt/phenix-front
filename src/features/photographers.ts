@@ -3,17 +3,16 @@ import { selectPhotographers } from '../utils/selectors'
 import { I_Error, STATUS_TYPES } from '../utils/type'
 import type { I_StatusType } from '../utils/type'
 import { I_PhotographerModel } from '../models/Photographer'
-import { I_PhotographerQuery } from './photographer'
 
 const api = `http://${process.env.REACT_APP_API}:${process.env.REACT_APP_PORT}/api/photographers`
 
-export interface I_PhotographersQuery {
+export interface I_PhotographersResponseData {
   status: I_StatusType
   data: I_PhotographerModel[]
   error?: I_Error
 }
 
-const initialState: I_PhotographersQuery = {
+const initialState: I_PhotographersResponseData = {
   status: STATUS_TYPES.VOID,
   data: [],
   error: undefined,
@@ -27,7 +26,7 @@ export async function fetchOrUpdatePhotographers(dispatch: any, getState: any) {
   dispatch(actions.fetching())
   try {
     const response = await fetch(api)
-    const data: I_PhotographersQuery = await response.json()
+    const data: I_PhotographersResponseData = await response.json()
     if (response.ok) dispatch(actions.resolved(data))
     else throw data.error
   } catch (error) {

@@ -3,7 +3,10 @@ import { useParams } from 'react-router'
 import { StyledProfilePage } from './style'
 import { fetchOrUpdatePhotographer } from '../../features/photographer'
 import { selectMedias, selectPhotographer } from '../../utils/selectors'
-import { fetchOrUpdateMedias, I_MediasQuery } from '../../features/medias'
+import {
+  fetchOrUpdateMedias,
+  I_MediasResponseData,
+} from '../../features/medias'
 import PhotographerBanner from '../../components/PhotographerBanner'
 import Gallery from '../../components/Gallery'
 import { I_Media, T_MediaType } from '../../models/Media'
@@ -25,7 +28,7 @@ import { IFilterItem } from '../../components/FilterButton'
 import { ISortItem } from '../../components/SortButton'
 import Spinner from '../../components/Spinner'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks'
-import { I_PhotographerQuery } from '../../features/photographer'
+import { I_PhotographerResponseData } from '../../features/photographer'
 
 export default function Profile() {
   const params = useParams()
@@ -40,12 +43,14 @@ export default function Profile() {
     dispatch(fetchOrUpdateMedias(photographerId))
   }, [dispatch, photographerId])
 
-  const photographer: I_PhotographerQuery = useAppSelector(
+  const photographer: I_PhotographerResponseData = useAppSelector(
     selectPhotographer(photographerId)
   )
   const profileData: I_PhotographerModel | undefined = photographer.data
 
-  const medias: I_MediasQuery = useAppSelector(selectMedias(photographerId))
+  const medias: I_MediasResponseData = useAppSelector(
+    selectMedias(photographerId)
+  )
   const displayedMedias: I_Media[] =
     medias.data
       ?.filter(getFilterFunction(filter))

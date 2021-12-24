@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import PhotographerCard from '../../components/PhotographerCard'
 import {
   fetchOrUpdatePhotographers,
-  I_PhotographersQuery,
+  I_PhotographersResponseData,
 } from '../../features/photographers'
 import { StyledPhotographersContainer } from './style'
 import { selectPhotographers } from '../../utils/selectors'
@@ -26,7 +26,7 @@ export default function Photographers() {
     dispatch(fetchOrUpdatePhotographers)
   }, [dispatch])
 
-  const photographers: I_PhotographersQuery =
+  const photographers: I_PhotographersResponseData =
     useAppSelector(selectPhotographers)
   const displayedPhotographers: I_PhotographerModel[] = photographers.data
     .filter(getSearchFunction(search))
