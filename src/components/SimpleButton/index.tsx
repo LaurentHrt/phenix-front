@@ -9,6 +9,7 @@ interface StyledButtonProps {
 
 export default function SimpleButton({ text, onClick }: StyledButtonProps) {
   const StyledButton = styled(Button)<ButtonProps>(({ theme }) => ({
+    minWidth: 'initial',
     color: theme.palette.getContrastText(colors.secondary),
     backgroundColor: colors.secondary,
     '&:hover': {

@@ -5,7 +5,7 @@ export const StyledControlsContainer = styled.section`
   display: flex;
   flex-direction: column;
   gap: 20px;
-  @media ${device.tablet} {
+  @media ${device.smallDesktop} {
     flex-direction: row;
   }
   z-index: 0;
