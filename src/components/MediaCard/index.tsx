@@ -20,18 +20,20 @@ export default function MediaCard({
   alt,
 }: MediaCardProps) {
   const [loaded, setLoaded] = useState(false)
+  const [selected, setSelected] = useState(false)
   const isVideo = type === 'video'
 
   const numberWithSpaces = (x: number) =>
     x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
 
   const handlePictureLoaded = (e: any) => {
-    console.log('loaded: ', e)
+    console.log('loaded: ', e.target.currentSrc)
     setLoaded(true)
   }
 
   const handleClick = (e: any) => {
-    console.log('click: ', e)
+    console.log('click: ', e.target.currentSrc)
+    setSelected(true)
   }
 
   return (
@@ -39,25 +41,26 @@ export default function MediaCard({
       {isVideo ? (
         <video loop autoPlay>
           <source
-            src={`http://${import.meta.env.VITE_API}:${import.meta.env.VITE_PORT}${
-              import.meta.env.VITE_PATH_TO_MEDIA_SMALL
-            }${filename}`}
+            src={`http://${import.meta.env.VITE_API}:${
+              import.meta.env.VITE_PORT
+            }${import.meta.env.VITE_PATH_TO_MEDIA_SMALL}${filename}`}
             type="video/mp4"
           />
         </video>
       ) : (
         <picture>
           <source
-            srcSet={`http://${import.meta.env.VITE_API}:${import.meta.env.VITE_PORT}${
-              import.meta.env.VITE_PATH_TO_MEDIA_MEDIUM
-            }${filename}`}
+            srcSet={`http://${import.meta.env.VITE_API}:${
+              import.meta.env.VITE_PORT
+            }${import.meta.env.VITE_PATH_TO_MEDIA_MEDIUM}${filename}`}
             media={device.smallDesktop}
           />
           <img
-            src={`http://${import.meta.env.VITE_API}:${import.meta.env.VITE_PORT}${
-              import.meta.env.VITE_PATH_TO_MEDIA_SMALL
-            }${filename}`}
+            src={`http://${import.meta.env.VITE_API}:${
+              import.meta.env.VITE_PORT
+            }${import.meta.env.VITE_PATH_TO_MEDIA_SMALL}${filename}`}
             alt={alt}
+            onLoad={handlePictureLoaded}
           />
         </picture>
       )}
