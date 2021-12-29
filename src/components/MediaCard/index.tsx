@@ -39,18 +39,24 @@ export default function MediaCard({
       {isVideo ? (
         <video loop autoPlay>
           <source
-            src={`http://${process.env.REACT_APP_API}:${process.env.REACT_APP_PORT}${process.env.REACT_APP_PATH_TO_MEDIA_SMALL}${filename}`}
+            src={`http://${import.meta.env.VITE_API}:${import.meta.env.VITE_PORT}${
+              import.meta.env.VITE_PATH_TO_MEDIA_SMALL
+            }${filename}`}
             type="video/mp4"
           />
         </video>
       ) : (
         <picture>
           <source
-            srcSet={`http://${process.env.REACT_APP_API}:${process.env.REACT_APP_PORT}${process.env.REACT_APP_PATH_TO_MEDIA_MEDIUM}${filename}`}
+            srcSet={`http://${import.meta.env.VITE_API}:${import.meta.env.VITE_PORT}${
+              import.meta.env.VITE_PATH_TO_MEDIA_MEDIUM
+            }${filename}`}
             media={device.smallDesktop}
           />
           <img
-            src={`http://${process.env.REACT_APP_API}:${process.env.REACT_APP_PORT}${process.env.REACT_APP_PATH_TO_MEDIA_SMALL}${filename}`}
+            src={`http://${import.meta.env.VITE_API}:${import.meta.env.VITE_PORT}${
+              import.meta.env.VITE_PATH_TO_MEDIA_SMALL
+            }${filename}`}
             alt={alt}
           />
         </picture>

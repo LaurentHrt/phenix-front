@@ -48,7 +48,9 @@ export default function PhotographerBanner({
 
       <div className="portrait">
         <img
-          src={`http://${process.env.REACT_APP_API}:${process.env.REACT_APP_PORT}${process.env.REACT_APP_PATH_TO_PORTRAIT}${portrait}`}
+          src={`http://${import.meta.env.VITE_API}:${
+            import.meta.env.VITE_PORT
+          }${import.meta.env.VITE_PATH_TO_PORTRAIT}${portrait}`}
           alt=""
         />
       </div>

@@ -107,7 +107,9 @@ export default function Photographers() {
             country={photographer.country}
             tagline={photographer.tagline}
             price={photographer.price}
-            portrait={`http://${process.env.REACT_APP_API}:${process.env.REACT_APP_PORT}${process.env.REACT_APP_PATH_TO_PORTRAIT}${photographer.portrait}`}
+            portrait={`http://${import.meta.env.VITE_API}:${
+              import.meta.env.VITE_PORT
+            }${import.meta.env.VITE_PATH_TO_PORTRAIT}${photographer.portrait}`}
           />
         ))}
       </StyledPhotographersContainer>

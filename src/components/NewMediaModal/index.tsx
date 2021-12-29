@@ -56,7 +56,9 @@ export default function NewMediaModal({
       values: Values,
       { setSubmitting }: FormikHelpers<Values>
     ) => {
-      const api = `http://${process.env.REACT_APP_API}:${process.env.REACT_APP_PORT}/api/medias/`
+      const api = `http://${import.meta.env.VITE_API}:${
+        import.meta.env.VITE_PORT
+      }/api/medias/`
 
       const data = new FormData()
       data.append('file', values.file)

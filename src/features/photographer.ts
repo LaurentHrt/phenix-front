@@ -4,7 +4,9 @@ import { I_Error, STATUS_TYPES } from '../utils/type'
 import type { I_StatusType } from '../utils/type'
 import { I_PhotographerModel, T_PhotographerId } from '../models/Photographer'
 
-const api = `http://${process.env.REACT_APP_API}:${process.env.REACT_APP_PORT}/api/photographers/`
+const api = `http://${import.meta.env.VITE_API}:${
+  import.meta.env.VITE_PORT
+}/api/photographers/`
 
 export interface I_PhotographerResponseData {
   status: I_StatusType
