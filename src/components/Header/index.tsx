@@ -1,15 +1,15 @@
 import { Link } from 'react-router-dom'
 import { StyledHeader } from './style'
-import logo from '../../assets/img/logo.svg'
+import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 
 export default function Header() {
   return (
     <StyledHeader>
       <Link to="/">
-        <img src={logo} alt="FishEye page d'accueil" />
+        <h1>BirdEye</h1>
       </Link>
-      <Link to="photographers">
-        <h1>Nos photographes</h1>
+      <Link to="login">
+        <AccountCircleIcon color="primary" />
       </Link>
     </StyledHeader>
   )

@@ -7,7 +7,7 @@ export const StyledPhotographersContainer = styled.section`
   justify-items: center;
   column-gap: 40px;
   row-gap: 40px;
-  margin: 20px;
+  margin: 20px 0px;
 
   @media ${device.smallDesktop} {
     grid-template-columns: repeat(2, 1fr);
@@ -15,6 +15,5 @@ export const StyledPhotographersContainer = styled.section`
 
   @media ${device.desktop} {
     grid-template-columns: repeat(3, 1fr);
-    margin-top: 100px;
   }
 `

@@ -48,21 +48,13 @@ export default function MediaCard({
           />
         </video>
       ) : (
-        <picture>
-          <source
-            srcSet={`http://${import.meta.env.VITE_API}:${
-              import.meta.env.VITE_PORT
-            }${import.meta.env.VITE_PATH_TO_MEDIA_MEDIUM}${filename}`}
-            media={device.smallDesktop}
-          />
-          <img
-            src={`http://${import.meta.env.VITE_API}:${
-              import.meta.env.VITE_PORT
-            }${import.meta.env.VITE_PATH_TO_MEDIA_SMALL}${filename}`}
-            alt={alt}
-            onLoad={handlePictureLoaded}
-          />
-        </picture>
+        <img
+          src={`http://${import.meta.env.VITE_API}:${
+            import.meta.env.VITE_PORT
+          }${import.meta.env.VITE_PATH_TO_MEDIA_MEDIUM}${filename}`}
+          alt={alt}
+          onLoad={handlePictureLoaded}
+        />
       )}
       <StyledSlidingBanner className="slidingBanner">
         <div>{title}</div>
