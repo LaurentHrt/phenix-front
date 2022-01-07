@@ -16,11 +16,13 @@ import {
 } from '../../utils/type'
 import { ISortItem } from '../../components/SortButton'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks'
+import Spinner from '../../components/Spinner'
 
 export default function Photographers() {
   const dispatch = useAppDispatch()
   const [sort, setSort] = useState<ISortType>(SORT_TYPES.NAME)
   const [search, setSearch] = useState('')
+  const [temporisation, setTemporisation] = useState('false')
 
   useEffect(() => {
     dispatch(fetchOrUpdatePhotographers)
@@ -33,13 +35,20 @@ export default function Photographers() {
     .sort(getSortFunction(sort))
     .slice()
 
+  if (temporisation) {
+    setTimeout(() => setTemporisation(false), 500)
+  }
+
   const handleSortChange = (e: ISortType) => {
+    setTemporisation(true)
     setSort(e)
   }
   const handleSearchChange = (e: string) => {
+    setTemporisation(true)
     setSearch(e)
   }
   const handleClickReset = () => {
+    setTemporisation(true)
     setSort(SORT_TYPES.NAME)
     setSearch('')
   }
@@ -90,6 +99,9 @@ export default function Photographers() {
     return <span>Il y a un problème de serveur</span>
   }
 
+  const showSpinner =
+    temporisation || photographers.status === STATUS_TYPES.PENDING
+
   return (
     <>
       <ControlBar
@@ -97,22 +109,28 @@ export default function Photographers() {
         search={{ value: search, handleChange: handleSearchChange }}
         handleClickReset={handleClickReset}
       />
-      <StyledPhotographersContainer>
-        {displayedPhotographers?.map((photographer: I_PhotographerModel) => (
-          <PhotographerCard
-            key={photographer.id}
-            id={photographer.id}
-            name={photographer.name}
-            city={photographer.city}
-            country={photographer.country}
-            tagline={photographer.tagline}
-            price={photographer.price}
-            portrait={`http://${import.meta.env.VITE_API}:${
-              import.meta.env.VITE_PORT
-            }${import.meta.env.VITE_PATH_TO_PORTRAIT}${photographer.portrait}`}
-          />
-        ))}
-      </StyledPhotographersContainer>
+      {showSpinner ? (
+        <Spinner />
+      ) : (
+        <StyledPhotographersContainer>
+          {displayedPhotographers?.map((photographer: I_PhotographerModel) => (
+            <PhotographerCard
+              key={photographer.id}
+              id={photographer.id}
+              name={photographer.name}
+              city={photographer.city}
+              country={photographer.country}
+              tagline={photographer.tagline}
+              price={photographer.price}
+              portrait={`http://${import.meta.env.VITE_API}:${
+                import.meta.env.VITE_PORT
+              }${import.meta.env.VITE_PATH_TO_PORTRAIT}${
+                photographer.portrait
+              }`}
+            />
+          ))}
+        </StyledPhotographersContainer>
+      )}
     </>
   )
 }

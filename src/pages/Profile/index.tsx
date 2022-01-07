@@ -37,6 +37,7 @@ export default function Profile() {
   const [sort, setSort] = useState<ISortType>(SORT_TYPES.LIKE)
   const [filter, setFilter] = useState<IFilterType>(FILTER_TYPES.ALL)
   const [search, setSearch] = useState('')
+  const [temporisation, setTemporisation] = useState('false')
 
   useEffect(() => {
     dispatch(fetchOrUpdatePhotographer(photographerId))
@@ -58,16 +59,25 @@ export default function Profile() {
       .sort(getSortFunction(sort))
       .slice() ?? []
 
-  const handleSortChange = (e: ISortType) => {
+  if (temporisation) {
+    setTimeout(() => setTemporisation(false), 500)
+  }
+
+  const handleSortChange = async (e: ISortType) => {
+    setTemporisation(true)
     setSort(e)
   }
+
   const handleFilterChange = (e: IFilterType) => {
+    setTemporisation(true)
     setFilter(e)
   }
   const handleSearchChange = (e: string) => {
+    setTemporisation(true)
     setSearch(e)
   }
   const handleClickReset = () => {
+    setTemporisation(true)
     setSort(SORT_TYPES.LIKE)
     setFilter(FILTER_TYPES.ALL)
     setSearch('')
@@ -138,6 +148,8 @@ export default function Profile() {
     return <span>Il y a un problème de serveur</span>
   }
 
+  const showSpinner = temporisation || medias.status === STATUS_TYPES.PENDING
+
   return (
     <StyledProfilePage>
       {profileData && (
@@ -168,11 +180,7 @@ export default function Profile() {
         handleClickReset={handleClickReset}
       />
 
-      {medias.status === STATUS_TYPES.PENDING ? (
-        <Spinner />
-      ) : (
-        <Gallery medias={displayedMedias} />
-      )}
+      {showSpinner ? <Spinner /> : <Gallery medias={displayedMedias} />}
     </StyledProfilePage>
   )
 }
