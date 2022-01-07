@@ -6,7 +6,7 @@ export default function Header() {
   return (
     <StyledHeader>
       <Link to="/">
-        <h1>BirdEye</h1>
+        <h1>Phenix</h1>
       </Link>
       <Link to="login">
         <AccountCircleIcon color="primary" />
