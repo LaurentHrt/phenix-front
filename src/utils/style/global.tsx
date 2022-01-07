@@ -16,7 +16,7 @@ export const GlobalStyle = createGlobalStyle`
   a,
   a:visited {
     text-decoration: none;
-    display: contents;
+    /* display: contents; */
     color: inital;
   }
 

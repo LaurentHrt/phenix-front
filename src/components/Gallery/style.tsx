@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { fadeinOnChidren } from '../../utils/style/animation'
 
 export const StyledGallery = styled.section`
   display: flex;
@@ -7,4 +8,5 @@ export const StyledGallery = styled.section`
   gap: 35px;
   width: 100%;
   justify-content: space-evenly;
+  ${fadeinOnChidren()};
 `
