@@ -1,6 +1,4 @@
-import { device } from '../../utils/style/responsive'
 import { StyledMediaCard, StyledSlidingBanner } from './style'
-import { useState } from 'react'
 
 interface MediaCardProps {
   title: string
@@ -26,12 +24,10 @@ export default function MediaCard({
 
   const handlePictureLoaded = (e: any) => {
     console.log('loaded: ', e.target.currentSrc)
-    setLoaded(true)
   }
 
   const handleClick = (e: any) => {
     console.log('click: ', e.target.currentSrc)
-    setSelected(true)
   }
 
   return (

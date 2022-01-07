@@ -11,7 +11,6 @@ import {
   Stack,
   TextField,
 } from '@mui/material'
-import axios from 'axios'
 import { useParams } from 'react-router'
 import {
   MEDIA_TYPES,
@@ -22,6 +21,7 @@ import {
 } from '../../models/Media'
 import DeleteIcon from '@mui/icons-material/Delete'
 import SendIcon from '@mui/icons-material/Send'
+import { postMedia } from '../../features/postMedia'
 
 interface NewMediaModalProps {
   isOpen: boolean
@@ -55,22 +55,30 @@ export default function NewMediaModal({
       values: Values,
       { setSubmitting }: FormikHelpers<Values>
     ) => {
-      const api = `http://${import.meta.env.VITE_API}:${
-        import.meta.env.VITE_PORT
-      }/api/medias/`
+      // const api = `http://${import.meta.env.VITE_API}:${
+      //   import.meta.env.VITE_PORT
+      // }/api/medias/`
 
-      const data = new FormData()
-      data.append('file', values.file)
-      data.append('title', values.title)
-      data.append('price', values.price.toString())
-      data.append('type', values.type)
-      data.append('alt', values.description)
-      data.append('photographerId', photographerId || '')
+      // const data = new FormData()
+      // data.append('file', values.file)
+      // data.append('title', values.title)
+      // data.append('price', values.price.toString())
+      // data.append('type', values.type)
+      // data.append('alt', values.description)
+      // data.append('photographerId', photographerId || '')
 
-      try {
-        const response = await axios.post(api, data)
-        console.log(response)
-      } catch (error) {}
+      // try {
+      //   const response = await axios.post(api, data)
+      //   console.log(response)
+      // } catch (error) {}
+      postMedia({
+        file: values.file,
+        title: values.title,
+        price: values.price,
+        type: values.type,
+        alt: values.alt,
+        photographerId: photographerId,
+      })
     },
   })
 
