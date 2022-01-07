@@ -5,6 +5,7 @@ export const StyledControlsContainer = styled.section`
   display: flex;
   flex-direction: column;
   gap: 20px;
+  margin-bottom: 20px;
   @media ${device.smallDesktop} {
     flex-direction: row;
   }

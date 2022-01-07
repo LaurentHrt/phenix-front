@@ -1,5 +1,9 @@
-import { StyledSpinner } from './style'
+import { SpinnerContainer, StyledSpinner } from './style'
 
 export default function Spinner() {
-  return <StyledSpinner />
+  return (
+    <SpinnerContainer>
+      <StyledSpinner />
+    </SpinnerContainer>
+  )
 }

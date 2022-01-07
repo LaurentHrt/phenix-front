@@ -6,7 +6,6 @@ export const StyledMediaCard = styled.section`
   box-shadow: 0px 20px 20px 1px hsl(229deg 6% 66%);
   position: relative;
   border-radius: 20px;
-  transition: all 500ms cubic-bezier(0.34, 0.07, 0.26, 1);
   flex: auto;
   @media ${device.smallDesktop} {
     max-width: 40vw;
@@ -25,7 +24,6 @@ export const StyledMediaCard = styled.section`
   }
 
   &:hover {
-    transform: scale(1.02);
     & img,
     video {
       transform: scale(1.2);

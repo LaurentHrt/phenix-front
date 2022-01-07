@@ -4,7 +4,7 @@ import {
   fetchOrUpdatePhotographers,
   I_PhotographersResponseData,
 } from '../../features/photographers'
-import { StyledPhotographersContainer } from './style'
+import { StyledPhotographersContainer, StyledPhotographersPage } from './style'
 import { selectPhotographers } from '../../utils/selectors'
 import { I_PhotographerModel } from '../../models/Photographer'
 import ControlBar from '../../components/ControlBar'

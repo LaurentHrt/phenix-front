@@ -1,4 +1,4 @@
-import { StyledBanner } from './style'
+import { StyledBanner, StyledName, StyledPortrait } from './style'
 import SimpleButton from '../SimpleButton'
 import ContactModal from '../ContactModal'
 import { useState } from 'react'
@@ -46,17 +46,17 @@ export default function PhotographerBanner({
         handleCloseModal={handleCloseNewMediaModal}
       />
 
-      <div className="portrait">
+      <StyledPortrait>
         <img
           src={`http://${import.meta.env.VITE_API}:${
             import.meta.env.VITE_PORT
           }${import.meta.env.VITE_PATH_TO_PORTRAIT}${portrait}`}
           alt=""
         />
-      </div>
+      </StyledPortrait>
 
-      <div className="textContainer">
-        <h1 className="name">{name}</h1>
+      <div>
+        <StyledName>{name}</StyledName>
         <div className="city">
           {city}, {country}
         </div>

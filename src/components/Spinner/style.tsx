@@ -1,5 +1,11 @@
 import styled from 'styled-components'
 
+export const SpinnerContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 5em;
+`
+
 export const StyledSpinner = styled.span`
   width: 48px;
   height: 48px;

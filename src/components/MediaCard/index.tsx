@@ -19,8 +19,6 @@ export default function MediaCard({
   likes,
   alt,
 }: MediaCardProps) {
-  const [loaded, setLoaded] = useState(false)
-  const [selected, setSelected] = useState(false)
   const isVideo = type === 'video'
 
   const numberWithSpaces = (x: number) =>
