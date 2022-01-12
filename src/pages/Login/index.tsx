@@ -1,6 +1,8 @@
 import { FormikHelpers, useFormik } from 'formik'
 import { TextField } from '@mui/material'
 import SimpleButton from '../../components/SimpleButton/index'
+import { useDispatch } from 'react-redux'
+import { fetchorUpdateUserToken } from '../../features/authentication'
 
 interface I_LoginValues {
   email: string
@@ -23,21 +25,23 @@ const signinInitialValues = {
   password: '',
 }
 
-const onLoginSubmit = (
-  values: I_LoginValues,
-  { setSubmitting }: FormikHelpers<I_LoginValues>
-) => {
-  alert('login')
-}
-
-const onSigninSubmit = (
-  values: I_SigninValues,
-  { setSubmitting }: FormikHelpers<I_SigninValues>
-) => {
-  alert('signin')
-}
-
 export default function Login() {
+  const dispatch = useDispatch()
+
+  const onLoginSubmit = (
+    values: I_LoginValues,
+    { setSubmitting }: FormikHelpers<I_LoginValues>
+  ) => {
+    dispatch(fetchorUpdateUserToken(values.email, values.password))
+  }
+
+  const onSigninSubmit = (
+    values: I_SigninValues,
+    { setSubmitting }: FormikHelpers<I_SigninValues>
+  ) => {
+    alert('login')
+  }
+
   const loginFormik = useFormik({
     initialValues: loginInitialValues,
     onSubmit: onLoginSubmit,

@@ -25,7 +25,7 @@ const initialState: I_MediasState = {
 
 export function fetchOrUpdateMedias(photographerId: T_PhotographerId) {
   // on retourne un thunk
-  return async (dispatch: any, getState: any) => {
+  return async (dispatch: AppDispatch, getState: RootState) => {
     const status: I_StatusType = selectMedias(photographerId)(getState()).status
     if (status === STATUS_TYPES.PENDING || status === STATUS_TYPES.UPDATING) {
       return

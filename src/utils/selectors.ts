@@ -4,12 +4,17 @@ import { STATUS_TYPES } from './type'
 import { I_PhotographersResponseData } from '../features/photographers'
 import { I_PhotographerResponseData } from '../features/photographer'
 import { I_MediasResponseData } from '../features/medias'
+import { I_AuthenticationResponseData } from '../features/authentication'
 
 const voidPhotographerQuery: I_PhotographersResponseData = {
   status: STATUS_TYPES.VOID,
   data: [],
 }
 const voidMediaQuery: I_MediasResponseData = { status: STATUS_TYPES.VOID }
+
+export const selectAuthentication = (
+  state: RootState
+): I_AuthenticationResponseData => state.authentication
 
 export const selectPhotographers = (
   state: RootState
