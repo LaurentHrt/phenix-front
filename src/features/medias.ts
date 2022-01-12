@@ -4,7 +4,7 @@ import { I_Error, I_StatusType, STATUS_TYPES } from '../utils/type'
 import { T_PhotographerId } from '../models/Photographer'
 import { I_Media, T_MediaId } from '../models/Media'
 
-const api = `http://${import.meta.env.VITE_API}:${
+const url = `http://${import.meta.env.VITE_API}:${
   import.meta.env.VITE_PORT
 }/api/medias/`
 
@@ -25,14 +25,14 @@ const initialState: I_MediasState = {
 
 export function fetchOrUpdateMedias(photographerId: T_PhotographerId) {
   // on retourne un thunk
-  return async (dispatch: AppDispatch, getState: RootState) => {
+  return async (dispatch: any, getState: any) => {
     const status: I_StatusType = selectMedias(photographerId)(getState()).status
     if (status === STATUS_TYPES.PENDING || status === STATUS_TYPES.UPDATING) {
       return
     }
     dispatch(actions.fetching(photographerId))
     try {
-      const response = await fetch(api + photographerId)
+      const response = await fetch(url + photographerId)
       const data: I_MediasResponseData = await response.json()
       if (response.ok) dispatch(actions.resolved(photographerId, data))
       else throw data.error
@@ -45,7 +45,7 @@ export function fetchOrUpdateMedias(photographerId: T_PhotographerId) {
 function setVoidIfUndefined(
   draft: I_MediasState,
   photographerId: T_PhotographerId
-): any {
+) {
   if (draft[photographerId] === undefined) {
     draft[photographerId] = { status: STATUS_TYPES.VOID }
   }

@@ -14,7 +14,7 @@ import {
 import { useParams } from 'react-router'
 import {
   MEDIA_TYPES,
-  T_MediaAlt,
+  T_MediaDescription,
   T_MediaPrice,
   T_MediaTitle,
   T_MediaType,
@@ -22,18 +22,20 @@ import {
 import DeleteIcon from '@mui/icons-material/Delete'
 import SendIcon from '@mui/icons-material/Send'
 import { postMedia } from '../../features/postMedia'
+import { T_PhotographerId } from '../../models/Photographer'
 
 interface NewMediaModalProps {
   isOpen: boolean
   handleCloseModal: MouseEventHandler<HTMLButtonElement>
 }
 
-interface Values {
+export interface I_PostMediaFormValues {
   title: T_MediaTitle
   price: T_MediaPrice
-  description: T_MediaAlt
+  description: T_MediaDescription
   type: T_MediaType
   file: string
+  photographerId: T_PhotographerId
 }
 
 export default function NewMediaModal({
@@ -41,7 +43,7 @@ export default function NewMediaModal({
   isOpen,
 }: NewMediaModalProps) {
   const params = useParams()
-  const photographerId = params.id
+  const photographerId = parseInt(params.id || '0')
 
   const formik = useFormik({
     initialValues: {
@@ -50,33 +52,18 @@ export default function NewMediaModal({
       description: '',
       type: MEDIA_TYPES.IMAGE,
       file: '',
+      photographerId: 0,
     },
     onSubmit: async (
-      values: Values,
-      { setSubmitting }: FormikHelpers<Values>
+      values: I_PostMediaFormValues,
+      { setSubmitting }: FormikHelpers<I_PostMediaFormValues>
     ) => {
-      // const api = `http://${import.meta.env.VITE_API}:${
-      //   import.meta.env.VITE_PORT
-      // }/api/medias/`
-
-      // const data = new FormData()
-      // data.append('file', values.file)
-      // data.append('title', values.title)
-      // data.append('price', values.price.toString())
-      // data.append('type', values.type)
-      // data.append('alt', values.description)
-      // data.append('photographerId', photographerId || '')
-
-      // try {
-      //   const response = await axios.post(api, data)
-      //   console.log(response)
-      // } catch (error) {}
       postMedia({
         file: values.file,
         title: values.title,
         price: values.price,
         type: values.type,
-        alt: values.alt,
+        description: values.description,
         photographerId: photographerId,
       })
     },

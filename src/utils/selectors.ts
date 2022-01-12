@@ -36,6 +36,6 @@ export const selectMedias =
     return state.medias[photographerId] ?? { photographerId: voidMediaQuery }
   }
 
-export const selectPostMedia = () => {
+export const selectPostMedia = (state: RootState) => {
   return state.postMedia
 }

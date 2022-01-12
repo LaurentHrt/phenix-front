@@ -1,5 +1,4 @@
 import { I_Media } from '../../models/Media'
-import { size } from '../../utils/style/responsive'
 import MediaCard from '../MediaCard'
 import { StyledGallery } from './style'
 
@@ -8,13 +7,13 @@ interface GalleryProps {
 }
 
 export default function Gallery({ medias }: GalleryProps) {
-  const displayedMedias = medias
+  const displayedMedias: I_Media[] = medias
   const nothingToDisplay = displayedMedias.length <= 0
 
   return nothingToDisplay ? (
     <p>Pas de média displonible...</p>
   ) : (
-    <StyledGallery length={displayedMedias.length}>
+    <StyledGallery>
       {displayedMedias.map((media: I_Media) => (
         <MediaCard
           key={media.id}

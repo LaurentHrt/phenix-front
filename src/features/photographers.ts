@@ -4,7 +4,7 @@ import { I_Error, STATUS_TYPES } from '../utils/type'
 import type { I_StatusType } from '../utils/type'
 import { I_PhotographerModel } from '../models/Photographer'
 
-const api = `http://${import.meta.env.VITE_API}:${
+const url = `http://${import.meta.env.VITE_API}:${
   import.meta.env.VITE_PORT
 }/api/photographers`
 
@@ -27,7 +27,7 @@ export async function fetchOrUpdatePhotographers(dispatch: any, getState: any) {
   }
   dispatch(actions.fetching())
   try {
-    const response = await fetch(api)
+    const response = await fetch(url)
     const data: I_PhotographersResponseData = await response.json()
     if (response.ok) dispatch(actions.resolved(data))
     else throw data.error

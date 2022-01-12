@@ -1,14 +1,16 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import axios from 'axios'
 import { I_Error, I_StatusType, STATUS_TYPES } from '../utils/type'
+import { selectPostMedia } from '../utils/selectors'
+import { I_PostMediaFormValues } from '../components/NewMediaModal/index'
 
-const api = `http://${import.meta.env.VITE_API}:${
+const url = `http://${import.meta.env.VITE_API}:${
   import.meta.env.VITE_PORT
 }/api/medias/`
 
 export interface I_PostMediasResponseData {
   status: I_StatusType
-  response?: I_PostMediasResponse
+  response?: {}
   error?: I_Error
 }
 
@@ -18,9 +20,9 @@ const initialState: I_PostMediasResponseData = {
   error: undefined,
 }
 
-export function postMedia(data) {
+export function postMedia(data: I_PostMediaFormValues) {
   return async (dispatch: any, getState: any) => {
-    const status: I_StatusType = selectPostMedia()(getState()).status
+    const status: I_StatusType = selectPostMedia(getState()).status
     if (status === STATUS_TYPES.PENDING) {
       return
     }
@@ -31,14 +33,14 @@ export function postMedia(data) {
     formData.append('price', data.price.toString())
     formData.append('type', data.type)
     formData.append('alt', data.description)
-    formData.append('photographerId', data.photographerId || '')
+    formData.append('photographerId', data.photographerId.toString() || '')
 
     dispatch(actions.posting(formData))
 
     try {
-      const response = await axios.post(api, formData)
-      const data: I_PostMediasResponseData = await response.json()
-      if (response.ok) dispatch(actions.resolved)
+      const response = await axios.post(url, formData)
+      const data: I_PostMediasResponseData = await response.data
+      if (response) dispatch(actions.resolved)
       else throw data.error
     } catch (error) {
       dispatch(actions.rejected(error))

@@ -37,7 +37,7 @@ export default function Profile() {
   const [sort, setSort] = useState<ISortType>(SORT_TYPES.LIKE)
   const [filter, setFilter] = useState<IFilterType>(FILTER_TYPES.ALL)
   const [search, setSearch] = useState('')
-  const [temporisation, setTemporisation] = useState('false')
+  const [temporisation, setTemporisation] = useState(false)
 
   useEffect(() => {
     dispatch(fetchOrUpdatePhotographer(photographerId))

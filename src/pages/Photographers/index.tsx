@@ -4,7 +4,7 @@ import {
   fetchOrUpdatePhotographers,
   I_PhotographersResponseData,
 } from '../../features/photographers'
-import { StyledPhotographersContainer, StyledPhotographersPage } from './style'
+import { StyledPhotographersContainer } from './style'
 import { selectPhotographers } from '../../utils/selectors'
 import { I_PhotographerModel } from '../../models/Photographer'
 import ControlBar from '../../components/ControlBar'
@@ -22,7 +22,7 @@ export default function Photographers() {
   const dispatch = useAppDispatch()
   const [sort, setSort] = useState<ISortType>(SORT_TYPES.NAME)
   const [search, setSearch] = useState('')
-  const [temporisation, setTemporisation] = useState('false')
+  const [temporisation, setTemporisation] = useState(false)
 
   useEffect(() => {
     dispatch(fetchOrUpdatePhotographers)

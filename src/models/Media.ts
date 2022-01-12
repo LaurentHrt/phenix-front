@@ -17,7 +17,7 @@ export type T_MediaLikes = number
 export type T_MediaTitle = string
 export type T_MediaDate = string
 export type T_MediaPrice = number
-export type T_MediaAlt = string
+export type T_MediaDescription = string
 
 export interface I_Media {
   id: T_MediaId
@@ -28,5 +28,5 @@ export interface I_Media {
   title: T_MediaTitle
   date: T_MediaDate
   price: T_MediaPrice
-  alt: T_MediaAlt
+  alt: T_MediaDescription
 }
