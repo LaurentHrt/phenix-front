@@ -8,6 +8,7 @@ import { GlobalStyle } from './utils/style/global'
 import { store } from './utils/store'
 import { Provider } from 'react-redux'
 import Login from './pages/Login/index'
+import Error404 from './pages/Error404'
 
 ReactDOM.render(
   <Provider store={store}>
@@ -19,6 +20,7 @@ ReactDOM.render(
           <Route path="/" element={<Photographers />} />
           <Route path="/login" element={<Login />} />
           <Route path="/profile/:id" element={<Profile />} />
+          <Route path="*" element={<Error404 />} />
         </Routes>
       </BrowserRouter>
     </React.StrictMode>
