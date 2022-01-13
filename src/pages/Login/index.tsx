@@ -1,8 +1,11 @@
 import { FormikHelpers, useFormik } from 'formik'
 import { TextField } from '@mui/material'
 import SimpleButton from '../../components/SimpleButton/index'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { fetchorUpdateUserToken } from '../../features/authentication'
+import { selectAuthentication } from '../../utils/selectors'
+import { STATUS_TYPES } from '../../utils/type'
+import Spinner from '../../components/Spinner'
 
 interface I_LoginValues {
   email: string
@@ -28,6 +31,8 @@ const signinInitialValues = {
 
 export default function Login() {
   const dispatch = useDispatch()
+  const loginStatus = useSelector(selectAuthentication).status
+  const loginErrorMessage = useSelector(selectAuthentication).error
 
   const onLoginSubmit = (
     values: I_LoginValues,
@@ -74,6 +79,10 @@ export default function Login() {
           />
           <SimpleButton onClick={loginFormik.handleSubmit} text="Login" />
         </form>
+        {loginStatus === STATUS_TYPES.PENDING && <Spinner />}
+        {loginStatus === STATUS_TYPES.REJECTED && (
+          <div>{loginErrorMessage}</div>
+        )}
       </div>
       <div>
         <h1>Signin</h1>
