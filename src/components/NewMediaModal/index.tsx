@@ -23,6 +23,7 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import SendIcon from '@mui/icons-material/Send'
 import { postMedia } from '../../features/postMedia'
 import { T_PhotographerId } from '../../models/Photographer'
+import { useAppDispatch } from '../../utils/hooks'
 
 interface NewMediaModalProps {
   isOpen: boolean
@@ -42,6 +43,7 @@ export default function NewMediaModal({
   handleCloseModal,
   isOpen,
 }: NewMediaModalProps) {
+  const dispatch = useAppDispatch()
   const params = useParams()
   const photographerId = parseInt(params.id || '0')
 
@@ -58,14 +60,18 @@ export default function NewMediaModal({
       values: I_PostMediaFormValues,
       { setSubmitting }: FormikHelpers<I_PostMediaFormValues>
     ) => {
-      postMedia({
-        file: values.file,
-        title: values.title,
-        price: values.price,
-        type: values.type,
-        description: values.description,
-        photographerId: photographerId,
-      })
+      console.log('ICIII')
+
+      dispatch(
+        postMedia({
+          file: values.file,
+          title: values.title,
+          price: values.price,
+          type: values.type,
+          description: values.description,
+          photographerId: photographerId,
+        })
+      )
     },
   })
 
@@ -141,7 +147,7 @@ export default function NewMediaModal({
             <Button
               variant="contained"
               endIcon={<SendIcon />}
-              onClick={() => formik.handleSubmit()}
+              onClick={formik.handleSubmit}
             >
               Valider
             </Button>

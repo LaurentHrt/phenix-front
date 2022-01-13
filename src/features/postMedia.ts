@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import axios from 'axios'
 import { I_Error, I_StatusType, STATUS_TYPES } from '../utils/type'
 import { selectPostMedia } from '../utils/selectors'
 import { I_PostMediaFormValues } from '../components/NewMediaModal/index'
@@ -20,26 +19,38 @@ const initialState: I_PostMediasResponseData = {
   error: undefined,
 }
 
-export function postMedia(data: I_PostMediaFormValues) {
+export function postMedia(mediaData: I_PostMediaFormValues) {
+  console.log(1)
+
   return async (dispatch: any, getState: any) => {
+    console.log(2)
     const status: I_StatusType = selectPostMedia(getState()).status
     if (status === STATUS_TYPES.PENDING) {
       return
     }
 
-    const formData = new FormData()
-    formData.append('file', data.file)
-    formData.append('title', data.title)
-    formData.append('price', data.price.toString())
-    formData.append('type', data.type)
-    formData.append('alt', data.description)
-    formData.append('photographerId', data.photographerId.toString() || '')
-
-    dispatch(actions.posting(formData))
+    dispatch(actions.posting())
 
     try {
-      const response = await axios.post(url, formData)
-      const data: I_PostMediasResponseData = await response.data
+      const formData = new FormData()
+      formData.append('file', mediaData.file)
+      formData.append('title', mediaData.title)
+      formData.append('price', mediaData.price.toString())
+      formData.append('type', mediaData.type)
+      formData.append('alt', mediaData.description)
+      formData.append(
+        'photographerId',
+        mediaData.photographerId.toString() || ''
+      )
+
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json',
+        },
+        body: formData,
+      })
+      const data: I_PostMediasResponseData = await response.json()
       if (response) dispatch(actions.resolved)
       else throw data.error
     } catch (error) {
@@ -53,9 +64,6 @@ const { actions, reducer } = createSlice({
   initialState,
   reducers: {
     posting: {
-      prepare: (data) => ({
-        payload: { data },
-      }),
       reducer: (draft, action: PayloadAction<any>) => {
         if (draft.status === STATUS_TYPES.VOID) {
           draft.status = STATUS_TYPES.PENDING
