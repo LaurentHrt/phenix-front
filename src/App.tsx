@@ -4,7 +4,7 @@ import Header from './components/Header'
 import Profile from './pages/Profile'
 import Photographers from './pages/Photographers'
 import { GlobalStyle } from './utils/style/global'
-import Login from './pages/Login/index'
+import Login from './pages/Login'
 import Error404 from './pages/Error404'
 import { store } from './utils/store'
 

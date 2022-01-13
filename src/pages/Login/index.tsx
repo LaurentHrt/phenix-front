@@ -19,6 +19,7 @@ const loginInitialValues = {
   email: '',
   password: '',
 }
+
 const signinInitialValues = {
   name: '',
   email: '',
@@ -51,8 +52,8 @@ export default function Login() {
     onSubmit: onSigninSubmit,
   })
 
-  const LoginForm = () => {
-    return (
+  return (
+    <div>
       <div>
         <h1>Login</h1>
         <form onSubmit={loginFormik.handleSubmit}>
@@ -74,11 +75,6 @@ export default function Login() {
           <SimpleButton onClick={loginFormik.handleSubmit} text="Login" />
         </form>
       </div>
-    )
-  }
-
-  const SigninForm = () => {
-    return (
       <div>
         <h1>Signin</h1>
         <form onSubmit={signinFormik.handleSubmit}>
@@ -108,13 +104,6 @@ export default function Login() {
           <SimpleButton onClick={signinFormik.handleSubmit} text="Signin" />
         </form>
       </div>
-    )
-  }
-
-  return (
-    <div>
-      <LoginForm />
-      <SigninForm />
     </div>
   )
 }
