@@ -24,9 +24,7 @@ const initialState: PhotographerState = {
 }
 
 export function fetchOrUpdatePhotographer(photographerId: T_PhotographerId) {
-  // on retourne un thunk
   return async (dispatch: any, getState: any) => {
-    // ...
     const status: I_StatusType = selectPhotographer(photographerId)(
       getState()
     ).status
@@ -84,11 +82,9 @@ const { actions, reducer } = createSlice({
       },
     },
     resolved: {
-      // prepare permet de modifier le payload
       prepare: (photographerId, data) => ({
         payload: { photographerId, data },
       }),
-      // la fonction de reducer
       reducer: (draft, action: PayloadAction<any>) => {
         setVoidIfUndefined(draft, action.payload.photographerId)
         if (

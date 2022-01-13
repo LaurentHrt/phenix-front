@@ -1,7 +1,18 @@
 import ReactModal from 'react-modal'
+import React from 'react'
 import { MouseEventHandler, useState } from 'react'
-import { StyledImagePreview, StyledNewMediaModal } from './style'
-import { FormikHelpers, useFormik } from 'formik'
+import {
+  StyledFileInput,
+  StyledImagePreview,
+  StyledNewMediaModal,
+} from './style'
+import {
+  Form,
+  FormikHelpers,
+  FormikProvider,
+  useField,
+  useFormik,
+} from 'formik'
 import {
   Button,
   FormControl,
@@ -24,6 +35,8 @@ import SendIcon from '@mui/icons-material/Send'
 import { postMedia } from '../../features/postMedia'
 import { T_PhotographerId } from '../../models/Photographer'
 import { useAppDispatch } from '../../utils/hooks'
+import * as Yup from 'yup'
+import PhotoCamera from '@mui/icons-material/PhotoCamera'
 
 interface NewMediaModalProps {
   isOpen: boolean
@@ -39,6 +52,30 @@ export interface I_PostMediaFormValues {
   photographerId: T_PhotographerId
 }
 
+const TextInputLiveFeedback = ({ helperText: string, ...props }) => {
+  const [field, meta] = useField(props)
+  const [didFocus, setDidFocus] = React.useState(false)
+  const handleFocus = () => setDidFocus(true)
+  const showError =
+    ((!!didFocus && field.value.trim().length > 2) || meta.touched) &&
+    meta.error
+      ? true
+      : false
+
+  return (
+    <div>
+      <TextField
+        {...props}
+        {...field}
+        variant="outlined"
+        onFocus={handleFocus}
+        helperText={showError ? helperText : ' '}
+        error={showError}
+      />
+    </div>
+  )
+}
+
 export default function NewMediaModal({
   handleCloseModal,
   isOpen,
@@ -47,6 +84,13 @@ export default function NewMediaModal({
   const params = useParams()
   const photographerId = parseInt(params.id || '0')
   const [imagePreview, setImagePreview] = useState()
+
+  const validationSchema = Yup.object().shape({
+    title: Yup.string().min(2, 'Too short').required('Required'),
+    description: Yup.string().min(2, 'Too short').required('Required'),
+    price: Yup.number().required('Required').positive().integer(),
+    file: Yup.string().required('Required'),
+  })
 
   const formik = useFormik({
     initialValues: {
@@ -60,7 +104,7 @@ export default function NewMediaModal({
     onSubmit: async (
       values: I_PostMediaFormValues,
       { setSubmitting }: FormikHelpers<I_PostMediaFormValues>
-    ) => {
+    ) =>
       dispatch(
         postMedia({
           file: values.file,
@@ -70,8 +114,8 @@ export default function NewMediaModal({
           description: values.description,
           photographerId: photographerId,
         })
-      )
-    },
+      ),
+    validationSchema: validationSchema,
   })
 
   ReactModal.setAppElement('#root')
@@ -85,83 +129,92 @@ export default function NewMediaModal({
     >
       <h1>Ajouter une nouvelle photo</h1>
       <StyledNewMediaModal>
-        <form onSubmit={formik.handleSubmit}>
-          <TextField
-            required
-            name="title"
-            label="Titre"
-            variant="outlined"
-            onChange={formik.handleChange}
-            value={formik.values.title}
-          />
-
-          <TextField
-            required
-            name="description"
-            label="Description"
-            variant="outlined"
-            onChange={formik.handleChange}
-            value={formik.values.description}
-          />
-
-          <FormControl>
-            <InputLabel id="type">Type</InputLabel>
-            <Select
-              name="type"
-              labelId="type"
-              id="type"
-              label="Type"
-              value={formik.values.type}
+        <FormikProvider value={formik}>
+          <Form>
+            <TextInputLiveFeedback
+              required
+              label="Titre"
+              helperText="Must be 2 characters minimum"
+              name="title"
               onChange={formik.handleChange}
-            >
-              <MenuItem value={MEDIA_TYPES.IMAGE}>Image</MenuItem>
-              <MenuItem value={MEDIA_TYPES.GIF}>Gif</MenuItem>
-              <MenuItem value={MEDIA_TYPES.VIDEO}>Vidéo</MenuItem>
-            </Select>
-          </FormControl>
-
-          <TextField
-            required
-            name="price"
-            label="Prix"
-            variant="outlined"
-            onChange={formik.handleChange}
-            value={formik.values.price}
-          />
-
-          <input
-            required
-            name="file"
-            onChange={(event: any) => {
-              formik.setFieldValue('file', event.currentTarget.files[0])
-              setImagePreview(event.currentTarget.files[0])
-            }}
-            type="file"
-          />
-          <StyledImagePreview>
-            {imagePreview && (
-              <img src={URL.createObjectURL(imagePreview)} alt="Preview" />
-            )}
-          </StyledImagePreview>
-
-          <Stack direction="row" spacing={2}>
-            {/* <SimpleButton onClick={formik.handleSubmit} text="Valider" /> */}
-            <Button
+              value={formik.values.title}
+            />
+            <TextInputLiveFeedback
+              required
+              label="Description"
+              helperText="Must be 2 characters minimum"
+              name="description"
+              onChange={formik.handleChange}
+              value={formik.values.description}
+            />
+            <FormControl>
+              <InputLabel id="type">Type</InputLabel>
+              <Select
+                name="type"
+                labelId="type"
+                id="type"
+                label="Type"
+                value={formik.values.type}
+                onChange={formik.handleChange}
+              >
+                <MenuItem value={MEDIA_TYPES.IMAGE}>Image</MenuItem>
+                <MenuItem value={MEDIA_TYPES.GIF}>Gif</MenuItem>
+                <MenuItem value={MEDIA_TYPES.VIDEO}>Vidéo</MenuItem>
+              </Select>
+            </FormControl>
+            <TextField
+              required
+              name="price"
+              label="Prix"
               variant="outlined"
-              startIcon={<DeleteIcon />}
-              onClick={handleCloseModal}
-            >
-              Annuler
-            </Button>
-            <Button
-              variant="contained"
-              endIcon={<SendIcon />}
-              onClick={formik.handleSubmit}
-            >
-              Valider
-            </Button>
-          </Stack>
-        </form>
+              onChange={formik.handleChange}
+              value={formik.values.price}
+              type="number"
+              min="1"
+            />
+            <label>
+              <StyledFileInput
+                required
+                accept="image/*"
+                name="file"
+                onChange={(event: any) => {
+                  formik.setFieldValue('file', event.currentTarget.files[0])
+                  setImagePreview(event.currentTarget.files[0])
+                }}
+                type="file"
+              />
+              <Button
+                variant="contained"
+                component="span"
+                endIcon={<PhotoCamera />}
+              >
+                Upload
+              </Button>
+            </label>
+            <StyledImagePreview>
+              {imagePreview && (
+                <img src={URL.createObjectURL(imagePreview)} alt="Preview" />
+              )}
+            </StyledImagePreview>
+            <Stack direction="row" spacing={2}>
+              <Button
+                variant="outlined"
+                startIcon={<DeleteIcon />}
+                onClick={handleCloseModal}
+              >
+                Annuler
+              </Button>
+              <Button
+                variant="contained"
+                endIcon={<SendIcon />}
+                onClick={formik.handleSubmit}
+                type="submit"
+              >
+                Valider
+              </Button>
+            </Stack>
+          </Form>
+        </FormikProvider>
       </StyledNewMediaModal>
     </ReactModal>
   )

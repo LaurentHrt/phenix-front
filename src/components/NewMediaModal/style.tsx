@@ -15,3 +15,7 @@ export const StyledImagePreview = styled.div`
     width: auto;
   }
 `
+
+export const StyledFileInput = styled('input')({
+  display: 'none',
+})

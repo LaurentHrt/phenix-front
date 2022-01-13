@@ -20,10 +20,7 @@ const initialState: I_PostMediasResponseData = {
 }
 
 export function postMedia(mediaData: I_PostMediaFormValues) {
-  console.log(1)
-
   return async (dispatch: any, getState: any) => {
-    console.log(2)
     const status: I_StatusType = selectPostMedia(getState()).status
     if (status === STATUS_TYPES.PENDING) {
       return
@@ -48,8 +45,13 @@ export function postMedia(mediaData: I_PostMediaFormValues) {
         body: formData,
       })
       const data: I_PostMediasResponseData = await response.json()
-      if (response.ok) dispatch(actions.resolved)
-      else throw data.error
+      console.log('ici')
+
+      if (response.ok) {
+        console.log('repsonse OK')
+
+        dispatch(actions.resolved(data))
+      } else throw data.error
     } catch (error) {
       dispatch(actions.rejected(error))
     }
@@ -61,11 +63,13 @@ const { actions, reducer } = createSlice({
   initialState,
   reducers: {
     posting: {
-      reducer: (draft, action: PayloadAction<any>) => {
+      reducer: (draft) => {
+        console.log('POSTING')
         if (draft.status === STATUS_TYPES.VOID) {
           draft.status = STATUS_TYPES.PENDING
           return
         }
+
         if (draft.status === STATUS_TYPES.REJECTED) {
           draft.error = undefined
           draft.status = STATUS_TYPES.PENDING
@@ -82,6 +86,8 @@ const { actions, reducer } = createSlice({
         payload: { response },
       }),
       reducer: (draft, action: PayloadAction<any>) => {
+        console.log(action.payload)
+
         if (draft.status === STATUS_TYPES.PENDING) {
           draft.response = action.payload.response
           draft.status = STATUS_TYPES.RESOLVED
