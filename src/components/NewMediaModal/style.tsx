@@ -7,3 +7,11 @@ export const StyledNewMediaModal = styled.div`
     gap: 20px;
   }
 `
+
+export const StyledImagePreview = styled.div`
+  height: 40vh;
+  img {
+    height: 100%;
+    width: auto;
+  }
+`

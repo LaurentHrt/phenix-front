@@ -1,6 +1,6 @@
 import ReactModal from 'react-modal'
-import { MouseEventHandler } from 'react'
-import { StyledNewMediaModal } from './style'
+import { MouseEventHandler, useState } from 'react'
+import { StyledImagePreview, StyledNewMediaModal } from './style'
 import { FormikHelpers, useFormik } from 'formik'
 import {
   Button,
@@ -46,6 +46,7 @@ export default function NewMediaModal({
   const dispatch = useAppDispatch()
   const params = useParams()
   const photographerId = parseInt(params.id || '0')
+  const [imagePreview, setImagePreview] = useState()
 
   const formik = useFormik({
     initialValues: {
@@ -60,8 +61,6 @@ export default function NewMediaModal({
       values: I_PostMediaFormValues,
       { setSubmitting }: FormikHelpers<I_PostMediaFormValues>
     ) => {
-      console.log('ICIII')
-
       dispatch(
         postMedia({
           file: values.file,
@@ -88,6 +87,7 @@ export default function NewMediaModal({
       <StyledNewMediaModal>
         <form onSubmit={formik.handleSubmit}>
           <TextField
+            required
             name="title"
             label="Titre"
             variant="outlined"
@@ -96,6 +96,7 @@ export default function NewMediaModal({
           />
 
           <TextField
+            required
             name="description"
             label="Description"
             variant="outlined"
@@ -120,6 +121,7 @@ export default function NewMediaModal({
           </FormControl>
 
           <TextField
+            required
             name="price"
             label="Prix"
             variant="outlined"
@@ -128,12 +130,19 @@ export default function NewMediaModal({
           />
 
           <input
+            required
             name="file"
             onChange={(event: any) => {
               formik.setFieldValue('file', event.currentTarget.files[0])
+              setImagePreview(event.currentTarget.files[0])
             }}
             type="file"
           />
+          <StyledImagePreview>
+            {imagePreview && (
+              <img src={URL.createObjectURL(imagePreview)} alt="Preview" />
+            )}
+          </StyledImagePreview>
 
           <Stack direction="row" spacing={2}>
             {/* <SimpleButton onClick={formik.handleSubmit} text="Valider" /> */}

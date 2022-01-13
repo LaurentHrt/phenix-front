@@ -45,13 +45,10 @@ export function postMedia(mediaData: I_PostMediaFormValues) {
 
       const response = await fetch(url, {
         method: 'POST',
-        headers: {
-          'Content-type': 'application/json',
-        },
         body: formData,
       })
       const data: I_PostMediasResponseData = await response.json()
-      if (response) dispatch(actions.resolved)
+      if (response.ok) dispatch(actions.resolved)
       else throw data.error
     } catch (error) {
       dispatch(actions.rejected(error))

@@ -4,3 +4,4 @@
 - idem pour la gallery de photograph
 - Boutique de vente de NFT avec un nouveau design
 - Une authetification admin qui permet CRUD vendeurs et media
+- Titre et description obligatoire pour poster
