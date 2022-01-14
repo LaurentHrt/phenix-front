@@ -26,7 +26,7 @@ export function postMedia(mediaData: I_PostMediaFormValues) {
       return
     }
 
-    dispatch(actions.posting())
+    dispatch(actions.posting(mediaData))
 
     try {
       const formData = new FormData()
@@ -63,8 +63,10 @@ const { actions, reducer } = createSlice({
   initialState,
   reducers: {
     posting: {
+      prepare: (mediaData) => ({
+        payload: { mediaData },
+      }),
       reducer: (draft) => {
-        console.log('POSTING')
         if (draft.status === STATUS_TYPES.VOID) {
           draft.status = STATUS_TYPES.PENDING
           return

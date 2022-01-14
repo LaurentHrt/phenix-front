@@ -2,8 +2,7 @@ import ReactModal from 'react-modal'
 import { MouseEventHandler } from 'react'
 import { StyledButtonContainer, StyledContactModal } from './style'
 import { FormikHelpers, useFormik } from 'formik'
-import { TextField } from '@mui/material'
-import SimpleButton from '../SimpleButton'
+import { Button, TextField } from '@mui/material'
 import SendIcon from '@mui/icons-material/Send'
 import CloseIcon from '@mui/icons-material/Close'
 
@@ -86,16 +85,23 @@ export default function ContactModal({
           />
 
           <StyledButtonContainer>
-            <SimpleButton
+            <Button
               onClick={handleCloseModal}
-              text="Fermer"
               startIcon={<CloseIcon />}
-            />
-            <SimpleButton
-              onClick={formik.handleSubmit}
+              size="large"
+              variant="contained"
+            >
+              Fermer
+            </Button>
+            <Button
+              // onClick={formik.handleSubmit}
+              type="submit"
               endIcon={<SendIcon />}
-              text="Envoyer"
-            />
+              size="large"
+              variant="contained"
+            >
+              Envoyer
+            </Button>
           </StyledButtonContainer>
         </form>
       </StyledContactModal>

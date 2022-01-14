@@ -5,11 +5,11 @@ import { useState } from 'react'
 import NewMediaModal from '../NewMediaModal'
 
 interface PhotographerBannerProps {
-  name: string
-  portrait: string
-  city: string
-  country: string
-  tagline: string
+  name?: string
+  portrait?: string
+  city?: string
+  country?: string
+  tagline?: string
 }
 
 export default function PhotographerBanner({

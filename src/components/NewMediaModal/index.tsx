@@ -6,13 +6,7 @@ import {
   StyledImagePreview,
   StyledNewMediaModal,
 } from './style'
-import {
-  Form,
-  FormikHelpers,
-  FormikProvider,
-  useField,
-  useFormik,
-} from 'formik'
+import { Form, FormikHelpers, FormikProvider, useFormik } from 'formik'
 import {
   Button,
   FormControl,
@@ -37,6 +31,7 @@ import { T_PhotographerId } from '../../models/Photographer'
 import { useAppDispatch } from '../../utils/hooks'
 import * as Yup from 'yup'
 import PhotoCamera from '@mui/icons-material/PhotoCamera'
+import TextInputLiveFeedback from '../TextInputLiveFeedback/index'
 
 interface NewMediaModalProps {
   isOpen: boolean
@@ -50,30 +45,6 @@ export interface I_PostMediaFormValues {
   type: T_MediaType
   file: string
   photographerId: T_PhotographerId
-}
-
-const TextInputLiveFeedback = ({ helperText: string, ...props }) => {
-  const [field, meta] = useField(props)
-  const [didFocus, setDidFocus] = React.useState(false)
-  const handleFocus = () => setDidFocus(true)
-  const showError =
-    ((!!didFocus && field.value.trim().length > 2) || meta.touched) &&
-    meta.error
-      ? true
-      : false
-
-  return (
-    <div>
-      <TextField
-        {...props}
-        {...field}
-        variant="outlined"
-        onFocus={handleFocus}
-        helperText={showError ? helperText : ' '}
-        error={showError}
-      />
-    </div>
-  )
 }
 
 export default function NewMediaModal({
@@ -132,7 +103,6 @@ export default function NewMediaModal({
         <FormikProvider value={formik}>
           <Form>
             <TextInputLiveFeedback
-              required
               label="Titre"
               helperText="Must be 2 characters minimum"
               name="title"
@@ -140,7 +110,6 @@ export default function NewMediaModal({
               value={formik.values.title}
             />
             <TextInputLiveFeedback
-              required
               label="Description"
               helperText="Must be 2 characters minimum"
               name="description"
@@ -163,18 +132,16 @@ export default function NewMediaModal({
               </Select>
             </FormControl>
             <TextField
-              required
               name="price"
               label="Prix"
               variant="outlined"
               onChange={formik.handleChange}
               value={formik.values.price}
               type="number"
-              min="1"
+              inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
             />
             <label>
               <StyledFileInput
-                required
                 accept="image/*"
                 name="file"
                 onChange={(event: any) => {
@@ -204,12 +171,7 @@ export default function NewMediaModal({
               >
                 Annuler
               </Button>
-              <Button
-                variant="contained"
-                endIcon={<SendIcon />}
-                onClick={formik.handleSubmit}
-                type="submit"
-              >
+              <Button variant="contained" endIcon={<SendIcon />} type="submit">
                 Valider
               </Button>
             </Stack>
