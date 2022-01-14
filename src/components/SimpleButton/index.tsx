@@ -7,7 +7,11 @@ interface StyledButtonProps {
   onClick: any
 }
 
-export default function SimpleButton({ text, onClick }: StyledButtonProps) {
+export default function SimpleButton({
+  text,
+  onClick,
+  ...props
+}: StyledButtonProps) {
   const StyledButton = styled(Button)<ButtonProps>(({ theme }) => ({
     minWidth: 'initial',
     color: theme.palette.getContrastText(colors.secondary),
@@ -18,7 +22,7 @@ export default function SimpleButton({ text, onClick }: StyledButtonProps) {
   }))
 
   return (
-    <StyledButton size="large" variant="contained" onClick={onClick}>
+    <StyledButton size="large" variant="contained" onClick={onClick} {...props}>
       {text}
     </StyledButton>
   )

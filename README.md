@@ -5,3 +5,7 @@
 - Boutique de vente de NFT avec un nouveau design
 - Une authetification admin qui permet CRUD vendeurs et media
 - Titre et description obligatoire pour poster
+
+Bug :
+
+- Contact modal: rester appuyer sur une touche bloque l'ecran
