@@ -6,6 +6,11 @@ import { fetchorUpdateUserToken } from '../../features/authentication'
 import { selectAuthentication } from '../../utils/selectors'
 import { STATUS_TYPES } from '../../utils/type'
 import Spinner from '../../components/Spinner'
+import {
+  StyledLoginContainer,
+  StyledLoginPage,
+  StyledSigninContainer,
+} from './style'
 
 interface I_LoginValues {
   email: string
@@ -58,8 +63,8 @@ export default function Login() {
   })
 
   return (
-    <div>
-      <div>
+    <StyledLoginPage>
+      <StyledLoginContainer>
         <h1>Login</h1>
         <form onSubmit={loginFormik.handleSubmit}>
           <TextField
@@ -83,8 +88,8 @@ export default function Login() {
         {loginStatus === STATUS_TYPES.REJECTED && (
           <div>{loginErrorMessage}</div>
         )}
-      </div>
-      <div>
+      </StyledLoginContainer>
+      <StyledSigninContainer>
         <h1>Signin</h1>
         <form onSubmit={signinFormik.handleSubmit}>
           <TextField
@@ -112,7 +117,7 @@ export default function Login() {
           />
           <SimpleButton onClick={signinFormik.handleSubmit} text="Signin" />
         </form>
-      </div>
-    </div>
+      </StyledSigninContainer>
+    </StyledLoginPage>
   )
 }
