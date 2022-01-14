@@ -11,6 +11,7 @@ export const StyledHeader = styled.header`
   }
 `
 export const StyledLogoContainer = styled.div`
+  height: 160px;
   display: flex;
   flex-direction: row;
   align-items: center;

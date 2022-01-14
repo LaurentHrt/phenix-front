@@ -152,15 +152,15 @@ export default function Profile() {
 
   return (
     <StyledProfilePage>
-      {profileData && (
+      {
         <PhotographerBanner
-          name={profileData.name}
-          city={profileData.city}
-          country={profileData.country}
-          tagline={profileData.tagline}
-          portrait={profileData.portrait}
+          name={profileData?.name}
+          city={profileData?.city}
+          country={profileData?.country}
+          tagline={profileData?.tagline}
+          portrait={profileData?.portrait}
         />
-      )}
+      }
 
       <ControlBar
         sort={{
