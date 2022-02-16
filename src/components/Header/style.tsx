@@ -1,19 +1,9 @@
 import styled from 'styled-components'
 
 export const StyledHeader = styled.header`
-  display: flex;
-  padding: 30px 15px;
-  align-items: center;
-  justify-content: space-between;
-
-  img {
-    width: 10em;
-  }
-`
-export const StyledLogoContainer = styled.div`
-  height: 160px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 3em;
+  text-align: center;
+  margin: 2rem;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
+    'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-size: 1.2em;
 `

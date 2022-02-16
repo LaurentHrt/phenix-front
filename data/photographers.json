@@ -1,0 +1,56 @@
+[
+  {
+    "name": "Mimi Keel",
+    "id": 243,
+    "portrait": "243.webp",
+    "city": "London",
+    "country": "UK",
+    "tagline": "Voir le beau dans le quotidien",
+    "price": 400
+  },
+  {
+    "name": "Ellie-Rose Wilkens",
+    "id": 930,
+    "portrait": "930.webp",
+    "city": "Paris",
+    "country": "France",
+    "tagline": "Capturer des compositions complexes",
+    "price": 250
+  },
+  {
+    "name": "Tracy Galindo",
+    "id": 82,
+    "portrait": "82.webp",
+    "city": "Montreal",
+    "country": "Canada",
+    "tagline": "Photographe freelance",
+    "price": 500
+  },
+  {
+    "name": "Nabeel Bradford",
+    "id": 527,
+    "portrait": "527.webp",
+    "city": "Mexico City",
+    "country": "Mexico",
+    "tagline": "Toujours aller de l'avant",
+    "price": 350
+  },
+  {
+    "name": "Rhode Dubois",
+    "id": 925,
+    "portrait": "925.webp",
+    "city": "Barcelona",
+    "country": "Spain",
+    "tagline": "Je crée des souvenirs",
+    "price": 275
+  },
+  {
+    "name": "Marcel Nikolic",
+    "id": 195,
+    "portrait": "195.webp",
+    "city": "Berlin",
+    "country": "Germany",
+    "tagline": "Toujours à la recherche de LA photo",
+    "price": 300
+  }
+]

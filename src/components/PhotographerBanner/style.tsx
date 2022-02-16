@@ -32,6 +32,7 @@ export const StyledBanner = styled.div`
   text-align: center;
   background-color: ${colors.quadrary};
   padding-bottom: 20px;
+  padding-right: 2rem;
 
   @media ${device.tablet} {
     flex-direction: row;

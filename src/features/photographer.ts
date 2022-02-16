@@ -4,9 +4,7 @@ import { I_Error, STATUS_TYPES } from '../utils/type'
 import type { I_StatusType } from '../utils/type'
 import { I_PhotographerModel, T_PhotographerId } from '../models/Photographer'
 
-const url = `http://${import.meta.env.VITE_API}:${
-  import.meta.env.VITE_PORT
-}/api/photographers/`
+const url = new URL(`../../data/photographers.json`, import.meta.url).href
 
 export interface I_PhotographerResponseData {
   status: I_StatusType
@@ -33,10 +31,18 @@ export function fetchOrUpdatePhotographer(photographerId: T_PhotographerId) {
     }
     dispatch(actions.fetching(photographerId))
     try {
-      const response = await fetch(url + photographerId)
+      const response = await fetch(url)
       const data: I_PhotographerResponseData = await response.json()
-      if (response.ok) dispatch(actions.resolved(photographerId, data))
-      else throw data.error
+      if (response.ok) {
+        const filteredData = data.filter(
+          (photographer: I_PhotographerModel) =>
+            photographer.id === photographerId
+        )
+        console.log(filteredData)
+        console.log(data)
+
+        dispatch(actions.resolved(photographerId, filteredData))
+      } else throw data.error
     } catch (error) {
       dispatch(actions.rejected(photographerId, error))
     }

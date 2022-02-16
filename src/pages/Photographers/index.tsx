@@ -113,22 +113,25 @@ export default function Photographers() {
         <Spinner />
       ) : (
         <StyledPhotographersContainer>
-          {displayedPhotographers?.map((photographer: I_PhotographerModel) => (
-            <PhotographerCard
-              key={photographer.id}
-              id={photographer.id}
-              name={photographer.name}
-              city={photographer.city}
-              country={photographer.country}
-              tagline={photographer.tagline}
-              price={photographer.price}
-              portrait={`http://${import.meta.env.VITE_API}:${
-                import.meta.env.VITE_PORT
-              }${import.meta.env.VITE_PATH_TO_PORTRAIT}${
-                photographer.portrait
-              }`}
-            />
-          ))}
+          {displayedPhotographers?.map((photographer: I_PhotographerModel) => {
+            const imageUrl = new URL(
+              `../../../data/images/portrait/${photographer.portrait}`,
+              import.meta.url
+            ).href
+
+            return (
+              <PhotographerCard
+                key={photographer.id}
+                id={photographer.id}
+                name={photographer.name}
+                city={photographer.city}
+                country={photographer.country}
+                tagline={photographer.tagline}
+                price={photographer.price}
+                portrait={imageUrl}
+              />
+            )
+          })}
         </StyledPhotographersContainer>
       )}
     </>

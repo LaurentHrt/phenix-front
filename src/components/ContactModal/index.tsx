@@ -30,7 +30,7 @@ export default function ContactModal({
       message: '',
     },
     onSubmit: (values: Values, { setSubmitting }: FormikHelpers<Values>) => {
-      alert(JSON.stringify(values, null, 2))
+      // alert(JSON.stringify(values, null, 2))
       // TODO: Send to backend with confirmation
     },
   })

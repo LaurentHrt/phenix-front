@@ -4,9 +4,7 @@ import { I_Error, I_StatusType, STATUS_TYPES } from '../utils/type'
 import { T_PhotographerId } from '../models/Photographer'
 import { I_Media, T_MediaId } from '../models/Media'
 
-const url = `http://${import.meta.env.VITE_API}:${
-  import.meta.env.VITE_PORT
-}/api/medias/`
+const url = new URL(`../../data/media.json`, import.meta.url).href
 
 export interface I_MediasResponseData {
   status: I_StatusType
@@ -32,10 +30,14 @@ export function fetchOrUpdateMedias(photographerId: T_PhotographerId) {
     }
     dispatch(actions.fetching(photographerId))
     try {
-      const response = await fetch(url + photographerId)
+      const response = await fetch(url)
       const data: I_MediasResponseData = await response.json()
-      if (response.ok) dispatch(actions.resolved(photographerId, data))
-      else throw data.error
+      if (response.ok) {
+        const filteredData = data.filter(
+          (media: I_Media) => media.photographerId === photographerId
+        )
+        dispatch(actions.resolved(photographerId, filteredData))
+      } else throw data.error
     } catch (error) {
       dispatch(actions.rejected(photographerId, error))
     }
