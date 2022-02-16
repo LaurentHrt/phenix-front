@@ -38,7 +38,7 @@ export default function PhotographerCard({
           {city}, {country}
         </StyledCity>
         <StyledTagline>{tagline}</StyledTagline>
-        <StyledPrice>{price}</StyledPrice>
+        <StyledPrice>{price}€</StyledPrice>
       </StyledPhotographerCard>
     </Link>
   )

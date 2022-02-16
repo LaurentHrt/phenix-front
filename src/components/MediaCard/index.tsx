@@ -18,6 +18,8 @@ export default function MediaCard({
   alt,
 }: MediaCardProps) {
   const isVideo = type === 'video'
+  const url = new URL(`../../../data/images/media/${filename}`, import.meta.url)
+    .href
 
   const numberWithSpaces = (x: number) =>
     x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
@@ -34,21 +36,10 @@ export default function MediaCard({
     <StyledMediaCard onClick={(e) => handleClick(e)}>
       {isVideo ? (
         <video loop autoPlay>
-          <source
-            src={`http://${import.meta.env.VITE_API}:${
-              import.meta.env.VITE_PORT
-            }${import.meta.env.VITE_PATH_TO_MEDIA_SMALL}${filename}`}
-            type="video/mp4"
-          />
+          <source src={url} type="video/mp4" />
         </video>
       ) : (
-        <img
-          src={`http://${import.meta.env.VITE_API}:${
-            import.meta.env.VITE_PORT
-          }${import.meta.env.VITE_PATH_TO_MEDIA_MEDIUM}${filename}`}
-          alt={alt}
-          onLoad={handlePictureLoaded}
-        />
+        <img src={url} alt={alt} onLoad={handlePictureLoaded} />
       )}
       <StyledSlidingBanner className="slidingBanner">
         <div>{title}</div>

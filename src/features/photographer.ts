@@ -38,10 +38,7 @@ export function fetchOrUpdatePhotographer(photographerId: T_PhotographerId) {
           (photographer: I_PhotographerModel) =>
             photographer.id === photographerId
         )
-        console.log(filteredData)
-        console.log(data)
-
-        dispatch(actions.resolved(photographerId, filteredData))
+        dispatch(actions.resolved(photographerId, filteredData[0]))
       } else throw data.error
     } catch (error) {
       dispatch(actions.rejected(photographerId, error))
