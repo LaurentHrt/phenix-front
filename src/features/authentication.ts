@@ -2,9 +2,9 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { selectAuthentication } from '../utils/selectors'
 import { STATUS_TYPES, I_Error, I_StatusType } from '../utils/type'
 
-const url = `http://${import.meta.env.VITE_API}:${
-  import.meta.env.VITE_PORT
-}/api/auth/login`
+const url = `http://${import.meta.env.VITE_API}:${import.meta.env.VITE_PORT}${
+  import.meta.env.VITE_ROUTE_API_AUTH
+}/login`
 
 export interface I_AuthenticationResponseData {
   status: I_StatusType

@@ -3,9 +3,9 @@ import { I_Error, I_StatusType, STATUS_TYPES } from '../utils/type'
 import { selectPostMedia } from '../utils/selectors'
 import { I_PostMediaFormValues } from '../components/NewMediaModal/index'
 
-const url = `http://${import.meta.env.VITE_API}:${
-  import.meta.env.VITE_PORT
-}/api/medias/`
+const url = `http://${import.meta.env.VITE_API}:${import.meta.env.VITE_PORT}${
+  import.meta.env.VITE_ROUTE_API_MEDIAS
+}/`
 
 export interface I_PostMediasResponseData {
   status: I_StatusType

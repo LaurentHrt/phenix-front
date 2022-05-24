@@ -4,9 +4,9 @@ import { I_Error, STATUS_TYPES } from '../utils/type'
 import type { I_StatusType } from '../utils/type'
 import { I_PhotographerModel, T_PhotographerId } from '../models/Photographer'
 
-const url = `http://${import.meta.env.VITE_API}:${
-  import.meta.env.VITE_PORT
-}/api/photographers/`
+const url = `http://${import.meta.env.VITE_API}:${import.meta.env.VITE_PORT}${
+  import.meta.env.VITE_ROUTE_API_PHOTOGRAPHERS
+}/`
 
 export interface I_PhotographerResponseData {
   status: I_StatusType

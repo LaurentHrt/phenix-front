@@ -4,9 +4,9 @@ import { I_Error, I_StatusType, STATUS_TYPES } from '../utils/type'
 import { T_PhotographerId } from '../models/Photographer'
 import { I_Media, T_MediaId } from '../models/Media'
 
-const url = `http://${import.meta.env.VITE_API}:${
-  import.meta.env.VITE_PORT
-}/api/medias/`
+const url = `http://${import.meta.env.VITE_API}:${import.meta.env.VITE_PORT}${
+  import.meta.env.VITE_ROUTE_API_MEDIAS
+}/`
 
 export interface I_MediasResponseData {
   status: I_StatusType
